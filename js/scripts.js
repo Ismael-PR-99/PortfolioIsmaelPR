@@ -1,92 +1,158 @@
-// Menú hamburguesa
-document.getElementById('menu-toggle').addEventListener('click', function() {
-    const nav = document.getElementById('main-nav');
-    nav.classList.toggle('hidden');
-});
+document.addEventListener('DOMContentLoaded', () => {
 
-// Fondo estrellado animado
-const canvas = document.getElementById('stars-bg');
-const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-const stars = [];
-const starCount = 150;
-
-for (let i = 0; i < starCount; i++) {
-    stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 2,
-        opacity: Math.random(),
-        speed: Math.random() * 0.5
+    // --- PRELOADER ---
+    const preloader = document.getElementById('preloader');
+    window.addEventListener('load', () => {
+        document.body.classList.add('loaded');
     });
-}
 
-function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    stars.forEach(star => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.fill();
-        
-        // Animación de parpadeo
-        star.opacity += (Math.random() - 0.5) * 0.02;
-        star.opacity = Math.max(0.1, Math.min(1, star.opacity));
-        
-        // Movimiento lento
-        star.y += star.speed;
-        if (star.y > canvas.height) {
-            star.y = 0;
-            star.x = Math.random() * canvas.width;
+    // --- CURSOR PERSONALIZADO ---
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+    const interactiveElements = document.querySelectorAll('.interactive');
+
+    // Ocultar el cursor inicialmente y prepararlo para la animación
+    gsap.set([cursorDot, cursorOutline], { opacity: 0 });
+
+    // Usamos GSAP para una animación más fluida y fiable
+    document.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+
+        // Hacemos visible el cursor en el primer movimiento
+        if (gsap.getProperty(cursorDot, "opacity") === 0) {
+            gsap.to([cursorDot, cursorOutline], { opacity: 1, duration: 0.3 });
         }
+
+        // Mueve el punto central instantáneamente
+        gsap.to(cursorDot, { 
+            x: clientX, 
+            y: clientY, 
+            duration: 0.1, 
+            ease: 'power2.out' 
+        });
+
+        // Mueve el contorno con un ligero retraso para el efecto de "arrastre"
+        gsap.to(cursorOutline, { 
+            x: clientX, 
+            y: clientY, 
+            duration: 0.4, 
+            ease: 'power2.out' 
+        });
     });
-    
-    requestAnimationFrame(drawStars);
-}
 
-drawStars();
-
-// Cursor trail
-const trail = document.getElementById('cursorTrail');
-let mouseX = 0, mouseY = 0;
-let posX = 0, posY = 0;
-const speed = 0.1; // suavizado
-
-// Captura posición del puntero
-document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-// Loop de animación del cursor trail
-function animate() {
-    // interpola la posición
-    posX += (mouseX - posX) * speed;
-    posY += (mouseY - posY) * speed;
-    trail.style.transform = `translate(${posX}px, ${posY}px)`;
-    requestAnimationFrame(animate);
-}
-animate();
-
-// Scroll suave para los enlaces de navegación
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+    // Añade la clase 'interactive' a todos los enlaces y botones para que el cursor reaccione
+    document.querySelectorAll('a, button, .interactive').forEach(el => {
+        el.addEventListener('mouseover', () => {
+            gsap.to(cursorOutline, { 
+                scale: 1.5, 
+                backgroundColor: 'rgba(61, 218, 215, 0.1)',
+                duration: 0.3
             });
-        }
+        });
+        el.addEventListener('mouseleave', () => {
+            gsap.to(cursorOutline, { 
+                scale: 1, 
+                backgroundColor: 'transparent',
+                duration: 0.3
+            });
+        });
     });
+
+
+    // --- BARRA DE PROGRESO DE SCROLL ---
+    const progressBar = document.getElementById('scroll-progress-bar');
+    window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercentage = (scrollTop / scrollHeight) * 100;
+        progressBar.style.width = `${scrollPercentage}%`;
+    });
+
+    // --- ANIMACIÓN DE TEXTO CON GSAP ---
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) {
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        text.split('').forEach(char => {
+            const span = document.createElement('span');
+            // Si el caracter es un espacio, usamos un espacio de no ruptura (&nbsp;)
+            // para asegurar que el span tenga anchura y el espacio se muestre.
+            if (char === ' ') {
+                span.innerHTML = '&nbsp;';
+            } else {
+                span.textContent = char;
+            }
+            span.style.display = 'inline-block';
+            heroTitle.appendChild(span);
+        });
+
+        gsap.from('.hero h1 span', {
+            y: 20,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out',
+            stagger: 0.05
+        });
+    }
+
+    // --- INICIALIZACIÓN DE AOS ---
+    AOS.init({
+        duration: 1000, // Duración de la animación
+        once: true,     // La animación solo ocurre una vez
+        offset: 100,    // Offset (en px) desde el borde de la ventana
+    });
+
+    // --- MENÚ HAMBURGUESA ---
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        const nav = document.getElementById('main-nav');
+        nav.classList.toggle('hidden');
+    });
+
+    // --- SCROLL SUAVE ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // --- THEME TOGGLE ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const sunIcon = document.getElementById('theme-icon-sun');
+    const moonIcon = document.getElementById('theme-icon-moon');
+    const leavesContainer = document.querySelector('.leaves-container');
+
+    // Función para aplicar el tema
+    const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+            leavesContainer.classList.add('spring');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+            leavesContainer.classList.remove('spring');
+        }
+    };
+
+    // Cargar el tema guardado al iniciar
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    // Event listener para el botón
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') ? 'dark' : 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
 });

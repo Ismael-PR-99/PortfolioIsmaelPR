@@ -6,24 +6,48 @@
     <title>Ismael Piña Ramos | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js" defer></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="css/style.css?v=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="font-sans">
 
-    <!-- Fondo estrellado animado -->
-    <canvas id="stars-bg"></canvas>
+    <!-- Falling Leaves Animation -->
+    <div class="leaves-container">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Cursor Personalizado -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Barra de Progreso -->
+    <div id="scroll-progress-bar"></div>
 
     <!-- Header -->
     <header class="backdrop-blur fixed top-0 left-0 w-full z-[100] shadow-lg transition-all duration-300">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="flex items-center gap-2 group">
-                <span class="text-2xl font-bold text-white tracking-tight group-hover:text-gray-300 transition-colors">Ismael-PR-99</span>
+            <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="flex items-center gap-2 group interactive">
+                <span class="text-2xl font-bold tracking-tight group-hover:text-gray-600 transition-colors">Ismael-PR-99</span>
             </a>
             <!-- Botón hamburguesa para móvil -->
-            <button id="menu-toggle" class="md:hidden flex items-center px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-white transition" aria-label="Abrir menú">
+            <button id="menu-toggle" class="md:hidden flex items-center px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-black transition interactive" aria-label="Abrir menú">
                 <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
@@ -38,10 +62,19 @@
                 top-full mt-2 md:mt-0
                 z-50
             ">
-                <a href="#about" class="px-3 py-1 rounded-md transition font-medium">Sobre mí</a>
-                <a href="#experience" class="px-3 py-1 rounded-md transition font-medium">Experiencia</a>
-                <a href="#projects" class="px-3 py-1 rounded-md transition font-medium">Proyectos</a>
-                <a href="#skills" class="px-3 py-1 rounded-md transition font-medium">Frameworks</a>
+                <a href="#about" class="px-3 py-1 rounded-md transition font-medium interactive">Sobre mí</a>
+                <a href="#experience" class="px-3 py-1 rounded-md transition font-medium interactive">Experiencia</a>
+                <a href="#projects" class="px-3 py-1 rounded-md transition font-medium interactive">Proyectos</a>
+                <a href="#skills" class="px-3 py-1 rounded-md transition font-medium interactive">Frameworks</a>
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="interactive ml-4 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    <svg id="theme-icon-sun" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
             </nav>
         </div>
     </header>
@@ -51,15 +84,15 @@
     <section class="hero">
       <!-- Texto principal -->
       <div class="intro">
-        <h1>Ismael Piña Ramos</h1>
+        <h1><span class="text-accent-bold">Ismael Piña Ramos</span></h1>
         <p class="subtitle">Desarrollador web full-stack</p>
         <p>
-          Ex-técnico de mantenimiento y frigorista reconvertido en desarrollador web full-stack. Combino la disciplina en diagnóstico y resolución de averías críticas con dominio de Java, Spring Boot, JavaScript, PHP, Laravel 12 y Tailwind para entregar aplicaciones robustas, seguras y orientadas a la experiencia de usuario. Perfil híbrido ideal para entornos que exigen fiabilidad operativa y agilidad en producto digital.
+          Ex-técnico de mantenimiento y frigorista reconvertido en desarrollador web full-stack. Combino la disciplina en diagnóstico y resolución de averías críticas con dominio de <span class="text-accent-bold">Java</span>, <span class="text-accent-bold">Spring Boot</span>, <span class="text-accent-bold">JavaScript</span>, <span class="text-accent-bold">PHP</span>, <span class="text-accent-bold">Laravel 12</span> y <span class="text-accent-bold">Tailwind</span> para entregar aplicaciones robustas, seguras y orientadas a la experiencia de usuario. Perfil híbrido ideal para entornos que exigen fiabilidad operativa y agilidad en producto digital.
         </p>
         <div class="btn-container">
-          <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="btn btn-linkedin">LinkedIn</a>
-          <a href="https://github.com/Ismael-PR-99" target="_blank" class="btn btn-primary">GitHub</a>
-          <a href="cv.html" class="btn btn-outline">Ver CV</a>
+          <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="btn btn-linkedin interactive">LinkedIn</a>
+          <a href="https://github.com/Ismael-PR-99" target="_blank" class="btn btn-primary interactive">GitHub</a>
+          <a href="cv.html" class="btn btn-outline interactive">Ver CV</a>
         </div>
       </div>
       <!-- Imagen de perfil -->
@@ -71,32 +104,35 @@
   <!-- FIN HERO NUEVO -->
 
   <!-- Experiencia -->
-    <section id="experience" class="max-w-6xl mx-auto px-4 py-20">
-        <h3 class="text-3xl font-bold mb-12 text-center animate-fadeInUp">Experiencia y Formación</h3>
+    <section id="experience" class="max-w-6xl mx-auto px-4 py-20" data-aos="fade-up">
+        <h3 class="text-3xl font-bold mb-12 text-center"><span class="text-accent-bold">Experiencia y Formación</span></h3>
         <div class="grid md:grid-cols-3 gap-10">
-            <div class="rounded-lg p-6 border shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-1">
+            <!-- Card Sobre Mí -->
+            <div class="content-card flex flex-col gap-4">
                 <h4 class="text-xl font-semibold mb-2">Sobre mí</h4>
                 <p class="text-sm">
-                    Ex-técnico de mantenimiento y frigorista reconvertido en desarrollador web full-stack. Combino la disciplina en diagnóstico y resolución de averías críticas con dominio de Java, Spring Boot, JavaScript, PHP, Laravel 12 y Tailwind para entregar aplicaciones robustas, seguras y orientadas a la experiencia de usuario. Perfil híbrido ideal para entornos que exigen fiabilidad operativa y agilidad en producto digital.
+                    Ex-técnico de mantenimiento y frigorista reconvertido en desarrollador web full-stack. Combino la disciplina en diagnóstico y resolución de averías críticas con dominio de <span class="text-accent-bold">Java</span>, <span class="text-accent-bold">Spring Boot</span>, <span class="text-accent-bold">JavaScript</span>, <span class="text-accent-bold">PHP</span>, <span class="text-accent-bold">Laravel 12</span> y <span class="text-accent-bold">Tailwind</span> para entregar aplicaciones robustas, seguras y orientadas a la experiencia de usuario. Perfil híbrido ideal para entornos que exigen fiabilidad operativa y agilidad en producto digital.
                 </p>
             </div>
-            <div class="rounded-lg p-6 border shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-2">
+            <!-- Card Experiencia -->
+            <div class="content-card flex flex-col gap-4">
                 <h4 class="text-xl font-semibold mb-2">Experiencia</h4>
                 <div>
                     <span class="font-semibold">Prácticas Grado Superior DAW</span>
                     <span class="block text-xs mb-1">Cesur Sevilla · 2023-2025</span>
                     <p class="text-sm mb-2">
-                        Desarrollo de aplicaciones web con tecnologías como Java, PHP, JavaScript, Spring Boot, Laravel, Tailwind CSS y Breeze. Participación en proyectos reales, trabajando tanto en frontend como en backend, y adquiriendo experiencia en el desarrollo de soluciones modernas y escalables.
+                        Desarrollo de aplicaciones web con tecnologías como <span class="text-accent-bold">Java</span>, <span class="text-accent-bold">PHP</span>, <span class="text-accent-bold">JavaScript</span>, <span class="text-accent-bold">Spring Boot</span>, <span class="text-accent-bold">Laravel</span>, <span class="text-accent-bold">Tailwind CSS</span> y <span class="text-accent-bold">Breeze</span>. Participación en proyectos reales, trabajando tanto en frontend como en backend, y adquiriendo experiencia en el desarrollo de soluciones modernas y escalables.
                     </p>
                 </div>
             </div>
-            <div class="rounded-lg p-6 border shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-3">
+            <!-- Card Educación -->
+            <div class="content-card flex flex-col gap-4">
                 <h4 class="text-xl font-semibold mb-2">Educación</h4>
                 <div>
                     <span class="font-semibold">Grado Superior DAW</span>
                     <span class="block text-xs mb-1">Cesur Sevilla · 2023-2025</span>
                     <p class="text-sm mb-2">
-                        Desarrollo de aplicaciones web con Java, PHP, JavaScript, Spring Boot, Laravel, Tailwind CSS, Breeze.
+                        Desarrollo de aplicaciones web con <span class="text-accent-bold">Java</span>, <span class="text-accent-bold">PHP</span>, <span class="text-accent-bold">JavaScript</span>, <span class="text-accent-bold">Spring Boot</span>, <span class="text-accent-bold">Laravel</span>, <span class="text-accent-bold">Tailwind CSS</span>, <span class="text-accent-bold">Breeze</span>.
                     </p>
                 </div>
                 <div>
@@ -111,30 +147,30 @@
     </section>
 
     <!-- Proyectos -->
-    <section id="projects" class="max-w-6xl mx-auto px-4 py-20">
-        <h3 class="text-3xl font-bold mb-12 text-center animate-fadeInUp">Proyectos Destacados</h3>
+    <section id="projects" class="max-w-6xl mx-auto px-4 py-20" data-aos="fade-up">
+        <h3 class="text-3xl font-bold mb-12 text-center"><span class="text-accent-bold">Proyectos Destacados</span></h3>
         <div class="flex flex-col gap-12">
                 <!-- Proyecto RefrigeraSpace -->
-                <div class="flex flex-col md:flex-row rounded-xl p-8 border shadow-lg animate-fadeInUp animate-delay-1 group transform hover:scale-[1.03] duration-300 transition-all">
+                <div class="project-card content-card interactive" data-aos="fade-left">
                     <div class="md:w-1/3 flex items-start justify-center mb-6 md:mb-0">
-                        <img src="images/RefrigeraSpace.png" alt="RefrigeraSpace" class="w-full max-w-xs h-auto rounded-lg object-contain object-center border shadow-xl" />
+                        <img src="images/RefrigeraSpace.png" alt="RefrigeraSpace" class="w-full h-auto object-contain object-center" />
                     </div>
                     <div class="md:w-2/3 md:pl-10 flex flex-col justify-center">
                         <h4 class="text-2xl font-bold mb-3 transition-colors duration-300">RefrigeraSpace</h4>
                         <p class="mb-4 text-lg transition-colors duration-300">
-                            Aplicación web en Laravel 12 para cálculo de frigorías y selección de equipos de aire acondicionado. Incluye scraping automático, generación de PDF y panel de administración.
+                            Aplicación web en <span class="text-accent-bold">Laravel 12</span> para cálculo de frigorías y selección de equipos de aire acondicionado. Incluye scraping automático, generación de PDF y panel de administración.
                         </p>
-                        <div class="flex items-center gap-3 mt-2">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" class="w-7 h-7" title="Laravel" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" class="w-7 h-7" title="PHP" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" class="w-7 h-7" title="MySQL" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" class="w-7 h-7" title="Tailwind CSS" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" class="w-7 h-7" title="JavaScript" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" class="w-7 h-7" title="Node.js" />
+                        <div class="flex items-center gap-3 mt-2 project-tech-icons">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" class="w-7 h-7 interactive" title="Laravel" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" class="w-7 h-7 interactive" title="PHP" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" class="w-7 h-7 interactive" title="MySQL" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" class="w-7 h-7 interactive" title="Tailwind CSS" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" class="w-7 h-7 interactive" title="JavaScript" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" class="w-7 h-7 interactive" title="Node.js" />
                         </div>
                         <div class="flex gap-4 mt-4">
-                            <a href="https://refrigeraspace.onrender.com" target="_blank" class="btn btn-primary">Ver App</a>
-                            <a href="https://github.com/Ismael-PR-99/refrigeraspace" target="_blank" class="btn btn-outline">GitHub</a>
+                            <a href="https://refrigeraspace.onrender.com" target="_blank" class="btn btn-primary interactive">Ver App</a>
+                            <a href="https://github.com/Ismael-PR-99/refrigeraspace" target="_blank" class="btn btn-outline interactive">GitHub</a>
                         </div>
                     </div>
                 </div>
@@ -143,85 +179,84 @@
     </section>
 
     <!-- Tecnologías -->
-    <section id="skills" class="relative py-24 overflow-hidden">
+    <section id="skills" class="relative py-24 overflow-hidden" data-aos="fade-up">
         <div class="absolute inset-0 pointer-events-none opacity-30" style="background: radial-gradient(ellipse at 80% 10%, #ffffff33 0%, transparent 70%), radial-gradient(ellipse at 10% 90%, #ffffff33 0%, transparent 70%);"></div>
         <div class="w-full px-0 relative z-10">
-            <h3 class="text-4xl font-extrabold mb-3 text-center animate-fadeInUp">Frameworks</h3>
-            <p class="text-center text-lg mb-14 animate-fadeInUp animate-delay-1 max-w-2xl mx-auto">
+            <h3 class="text-4xl font-extrabold mb-3 text-center"><span class="text-accent-bold">Frameworks</span></h3>
+            <p class="text-center text-lg mb-14 max-w-2xl mx-auto">
                 Herramientas y tecnologías que domino y utilizo en mis proyectos para crear soluciones modernas, robustas y escalables.
             </p>
-            <div class="overflow-x-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+            <div class="overflow-x-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-5">
                 <div id="frameworks-carousel" class="flex whitespace-nowrap animate-frameworks-carousel will-change-transform">
                     <!-- Frameworks (triplicados para bucle perfecto) -->
                     <div class="flex items-center">
                         <!-- Laravel -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" />
                             <span class="font-semibold tracking-wide text-lg transition">Laravel</span>
                         </div>
                         <!-- Angular -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-plain.svg" alt="Angular" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-plain.svg" alt="Angular" />
                             <span class="font-semibold tracking-wide text-lg transition">Angular</span>
                         </div>
                         <!-- Tailwind CSS -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" />
                             <span class="font-semibold tracking-wide text-lg transition">Tailwind CSS</span>
                         </div>
                         <!-- Postman -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-plain.svg" alt="Postman" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-plain.svg" alt="Postman" />
                             <span class="font-semibold tracking-wide text-lg transition">Postman</span>
                         </div>
                         <!-- Symfony -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/symfony/symfony-original.svg" alt="Symfony" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/symfony/symfony-original.svg" alt="Symfony" />
                             <span class="font-semibold tracking-wide text-lg transition">Symfony</span>
                         </div>
                         <!-- Visual Studio Code -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-plain.svg" alt="VisualStudio" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-plain.svg" alt="VisualStudio" />
                             <span class="font-semibold tracking-wide text-lg transition">VS Code</span>
                         </div>
                         <!-- React -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" />
                             <span class="font-semibold tracking-wide text-lg transition">React</span>
                         </div>
                         <!-- PostgreSQL -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain.svg" alt="PostgreSQL" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain.svg" alt="PostgreSQL" />
                             <span class="font-semibold tracking-wide text-lg transition">PostgreSQL</span>
                         </div>
                         <!-- Docker -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" alt="Docker" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" alt="Docker" />
                             <span class="font-semibold tracking-wide text-lg transition">Docker</span>
                         </div>
                         <!-- NestJS -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg" alt="NestJS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg" alt="NestJS" />
                             <span class="font-semibold tracking-wide text-lg transition">NestJS</span>
                         </div>
                         <!-- JavaScript -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg" alt="JavaScript" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                        <div class="content-card framework-card mx-4 interactive">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg" alt="JavaScript" />
                             <span class="font-semibold tracking-wide text-lg transition">JavaScript</span>
                         </div>
                         <!-- Github -->
-                        <div class="flex flex-col items-center backdrop-blur-md mx-4 p-7 rounded-2xl border hover:border-white transition-all duration-300 shadow-xl group min-w-[180px]">
+                        <div class="content-card framework-card mx-4 interactive">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="64"
                               height="64"
                               viewBox="0 0 24 24"
                               fill="none"
-                              stroke="#ffffff"
+                              stroke="#4a4a4a"
                               stroke-width="1"
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              class="mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110"
                             >
                               <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
                             </svg>
@@ -240,7 +275,8 @@
                         <p>© 2025 Ismael Piña Ramos. Todos los derechos reservados.</p>
                     </footer>
                     
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script src="js/scripts.js" defer></script>
 </body>
 </html>

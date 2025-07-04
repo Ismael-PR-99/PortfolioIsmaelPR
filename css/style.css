@@ -1,18 +1,41 @@
 /* Paleta de colores moderna y minimalista */
 :root {
-  --color-bg: #121619;
-  --color-text: #E1E1E1;
-  --color-highlight: #FFFFFF;
-  --color-accent: #3DDAD7;
-  --color-accent-hover: #28B8BA;
-  --border-color: rgba(255, 255, 255, 0.1);
+  --color-bg: #f0f2f5; /* Grisáceo muy claro (blanquecino) */
+  --color-text: #333333; /* Texto más oscuro para mayor contraste */
+  --color-highlight: #000000; /* Títulos en negro para máximo impacto */
+  --color-accent: #82d65a; /* Pistacho más vibrante */
+  --color-accent-hover: #69b347; /* Pistacho oscuro más intenso */
+  --cursor-color: #FF007A; /* Rosa vibrante para el cursor */
+  --border-color: rgba(0, 0, 0, 0.1); /* Borde oscuro */
+  --header-bg: rgba(240, 242, 245, 0.8);
+  --card-bg: #ffffff;
 }
+
+[data-theme='dark'] {
+  --color-bg: #1a1a1a; /* Negro casi puro */
+  --color-text: #e0e0e0; /* Texto gris claro */
+  --color-highlight: #ffffff; /* Títulos en blanco */
+  --color-accent: #ff8c00; /* Naranja oscuro como acento */
+  --color-accent-hover: #cc7000; /* Naranja más oscuro para hover */
+  --border-color: rgba(255, 255, 255, 0.15);
+  --header-bg: rgba(26, 26, 26, 0.85);
+  --card-bg: #2c2c2c;
+}
+
 
 /* 1. Aplicar fondo a body y contenedores principales */
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: 'Inter', sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Ocultar cursor por defecto en elementos interactivos */
+a,
+button,
+.interactive {
+  cursor: none;
 }
 
 /* 2. Títulos y enlaces */
@@ -34,7 +57,7 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 4rem 2rem;
-  background-color: var(--color-bg);
+  background-color: var(--card-bg);
   gap: 2rem;
   max-width: 64rem; /* Corregido: Usar propiedad CSS estándar */
   margin: 0 auto;
@@ -51,6 +74,7 @@ a {
   font-weight: 800;
   color: var(--color-highlight);
   margin-bottom: 1rem;
+  word-spacing: normal; /* Forzar el espaciado normal entre palabras */
 }
 
 p.subtitle {
@@ -87,7 +111,6 @@ p.subtitle {
   text-decoration: none;
   transition: background-color .3s, color .3s, transform .2s, box-shadow .2s;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
 }
 
 .btn-primary {
@@ -99,8 +122,8 @@ p.subtitle {
 .btn-primary:hover {
   background-color: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-linkedin {
@@ -112,8 +135,8 @@ p.subtitle {
 .btn-linkedin:hover {
   background-color: #005582;
   border-color: #005582;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-outline {
@@ -125,6 +148,13 @@ p.subtitle {
 .btn-outline:hover {
   background-color: var(--color-accent);
   color: var(--color-bg);
+}
+
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Aumentado para más separación */
+  margin-top: 2rem;
 }
 
 
@@ -145,7 +175,8 @@ p.subtitle {
 /* Ajustes específicos para el header */
 header {
     backdrop-filter: blur(10px);
-    background-color: rgba(18, 22, 25, 0.5);
+    background-color: var(--header-bg); /* Fondo de header claro y semitransparente */
+    transition: background-color 0.5s ease;
 }
 
 /* 4. Estado hover para enlaces de navegación */
@@ -163,8 +194,8 @@ nav a:hover {
 
 /* 5. Iconos y elementos decorativos */
 svg {
-  stroke: var(--accent-hover); /* Para SVGs con stroke */
-  fill: var(--accent-hover); /* Para SVGs con fill */
+  stroke: var(--color-text); /* Para SVGs con stroke */
+  fill: var(--color-text); /* Para SVGs con fill */
 }
 
 /* Ajustes para las tarjetas de frameworks */
@@ -175,8 +206,9 @@ svg {
 }
 
 #skills .flex-col:hover {
-    border-color: var(--accent) !important;
+    border-color: var(--color-accent) !important;
     transform: translateY(-5px);
+    background-color: #fff;
 }
 
 /* Animaciones y estilos personalizados */
@@ -189,7 +221,8 @@ svg {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
-.animate-fadeIn { animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1) both; }
+/* Se eliminan las animaciones de fadeIn para que no entren en conflicto con AOS */
+
 .animate-delay-1 { animation-delay: .2s; }
 .animate-delay-2 { animation-delay: .4s; }
 .animate-delay-3 { animation-delay: .6s; }
@@ -204,11 +237,9 @@ html { scroll-behavior: smooth; }
     width: 100%;
     height: 100%;
     z-index: -1;
+    pointer-events: none; /* Evita que el canvas intercepte eventos del ratón */
 }
-body > *:not(#stars-bg) {
-    position: relative;
-    z-index: 1;
-}
+
 /* Carrusel de frameworks */
 @keyframes frameworks-carousel {
     0% { transform: translateX(0); }
@@ -217,3 +248,251 @@ body > *:not(#stars-bg) {
 .animate-frameworks-carousel {
     animation: frameworks-carousel 60s linear infinite;
 }
+
+/* ===== Preloader ===== */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a0a;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-left-color: var(--color-accent); /* Corregido */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+body.loaded #preloader {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* ===== Cursor Personalizado ===== */
+body {
+    cursor: none;
+}
+
+.cursor-dot, .cursor-outline {
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    z-index: 10002; /* Aumentado para estar sobre la barra de progreso */
+    opacity: 0; /* La visibilidad inicial la controla JS */
+    transform: translate(-50%, -50%); /* Centra el cursor en el punto exacto */
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--cursor-color); /* Usar color de cursor */
+    transition: transform 0.1s linear;
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--cursor-color); /* Usar color de cursor */
+    /* Se elimina la transición de width/height para evitar conflictos con GSAP scale */
+    transition: transform 0.2s ease-out, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.cursor-outline.hover {
+    /* El cambio de tamaño ahora se gestiona con GSAP (scale) */
+    border-color: var(--color-accent-hover);
+    background-color: rgba(61, 218, 215, 0.1);
+}
+
+/* ===== Barra de Progreso de Scroll ===== */
+#scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--color-accent); /* Corregido */
+    width: 0%;
+    z-index: 10001;
+    transition: width 0.1s ease-out;
+}
+
+/* ===== Micro-interacciones y Hovers Avanzados ===== */
+.btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+/* ================================== */
+/* ===== Estilos de Tarjetas ===== */
+/* ================================== */
+
+/* Tarjeta base reutilizable */
+.content-card {
+    background-color: var(--card-bg);
+    border-radius: 1rem; /* 16px */
+    border: 1px solid var(--border-color);
+    padding: 1.5rem; /* 24px */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Tarjeta de Proyecto */
+.project-card {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.project-card img {
+    border-radius: 0.75rem; /* 12px */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 300px; /* Limitar el tamaño de la imagen */
+}
+
+@media (max-width: 768px) {
+    .project-card {
+        flex-direction: column;
+    }
+}
+
+/* Tarjetas de Experiencia y Formación */
+#experience .content-card {
+    height: 100%; /* Para que todas las tarjetas en la fila tengan la misma altura */
+}
+
+/* Tarjetas de Frameworks */
+.framework-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-width: 160px;
+    padding: 1.5rem 1rem;
+}
+
+.framework-card img, .framework-card svg {
+    width: 4rem;  /* 64px */
+    height: 4rem; /* 64px */
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.framework-card:hover img, .framework-card:hover svg {
+    transform: scale(1.1);
+}
+
+.project-card:hover .project-tech-icons img {
+    transform: rotate(5deg) scale(1.1);
+}
+
+.project-tech-icons img {
+    transition: transform 0.3s ease;
+}
+
+/* ===== Falling Leaves Animation ===== */
+.leaves-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.leaf {
+    position: absolute;
+    top: -100px; /* Start above the screen */
+    width: 20px;
+    height: 30px;
+    background-color: #f28c38; /* Autumn orange */
+    border-radius: 5px 50%;
+    opacity: 0.7;
+    animation: fall 10s linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(105vh) translateX(100px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Variations for different leaves */
+.leaf:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: -5s; background-color: #d95b43; transform: scale(1.2); }
+.leaf:nth-child(2) { left: 20%; animation-duration: 12s; animation-delay: -2s; background-color: #f2b705; }
+.leaf:nth-child(3) { left: 30%; animation-duration: 18s; animation-delay: -10s; background-color: #a64f03; transform: scale(0.8); }
+.leaf:nth-child(4) { left: 40%; animation-duration: 14s; animation-delay: 0s; background-color: #f28c38; }
+.leaf:nth-child(5) { left: 50%; animation-duration: 16s; animation-delay: -7s; background-color: #d95b43; transform: scale(1.1); }
+.leaf:nth-child(6) { left: 60%; animation-duration: 11s; animation-delay: -3s; background-color: #f2b705; animation-direction: reverse;}
+.leaf:nth-child(7) { left: 70%; animation-duration: 20s; animation-delay: -8s; background-color: #a64f03; transform: scale(0.9); }
+.leaf:nth-child(8) { left: 80%; animation-duration: 13s; animation-delay: -1s; background-color: #f28c38; animation-direction: reverse;}
+.leaf:nth-child(9) { left: 90%; animation-duration: 17s; animation-delay: -4s; background-color: #d95b43; }
+.leaf:nth-child(10) { left: 5%; animation-duration: 19s; animation-delay: -9s; background-color: #f2b705; animation-direction: reverse;}
+
+.leaves-container.spring .leaf {
+    background-color: #6a994e; /* Verde primavera */
+    animation-name: fall-spring;
+}
+
+.leaves-container.spring .leaf:nth-child(1) { background-color: #a7c957; animation-duration: 16s; }
+.leaves-container.spring .leaf:nth-child(2) { background-color: #f2e8cf; animation-duration: 13s; }
+.leaves-container.spring .leaf:nth-child(3) { background-color: #bc4749; animation-duration: 19s; }
+.leaves-container.spring .leaf:nth-child(4) { background-color: #6a994e; animation-duration: 15s; }
+.leaves-container.spring .leaf:nth-child(5) { background-color: #a7c957; animation-duration: 17s; }
+.leaves-container.spring .leaf:nth-child(6) { background-color: #f2e8cf; animation-duration: 12s; }
+.leaves-container.spring .leaf:nth-child(7) { background-color: #bc4749; animation-duration: 21s; }
+.leaves-container.spring .leaf:nth-child(8) { background-color: #6a994e; animation-duration: 14s; }
+.leaves-container.spring .leaf:nth-child(9) { background-color: #a7c957; animation-duration: 18s; }
+.leaves-container.spring .leaf:nth-child(10) { background-color: #f2e8cf; animation-duration: 20s; }
+
+
+@keyframes fall-spring {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(105vh) translateX(-80px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+
+/* Ocultar animaciones de Tailwind para que no entren en conflicto */
+/* Se elimina la regla .animate-fadeInUp para evitar conflictos con AOS */
