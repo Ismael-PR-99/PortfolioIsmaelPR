@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Guillermo Mateos | Full Stack Developer</title>
+    <title>🏠 RefrigeraSpace - Calculadora de Aire Acondicionado</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              mirage: '#000000', // fondo negro
+              blanco: '#FFFFFF', // texto blanco
+            }
+          }
+        }
+      }
+    </script>
     <style>
         @keyframes fadeInUp {
             0% { opacity: 0; transform: translateY(40px);}
@@ -39,20 +51,19 @@
         }
     </style>
 </head>
-<body class="bg-[#18141f] text-gray-100 font-sans">
+<body class="bg-black text-white font-sans">
 
     <!-- Fondo estrellado animado -->
     <canvas id="stars-bg"></canvas>
 
     <!-- Header -->
-    <header class="bg-[#18141f]/90 backdrop-blur fixed top-0 left-0 w-full z-[100] border-b border-[#2d223b]/60 shadow-lg transition-all duration-300">
+    <header class="bg-black/95 backdrop-blur fixed top-0 left-0 w-full z-[100] border-b border-white/10 shadow-lg transition-all duration-300">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-2 group">
-                <span class="text-2xl font-bold text-white tracking-tight group-hover:text-purple-300 transition-colors">moestilos</span>
-                <span class="w-3 h-3 bg-purple-400 rounded-full animate-pulse group-hover:bg-purple-300 transition"></span>
+            <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="flex items-center gap-2 group">
+                <span class="text-2xl font-bold text-white tracking-tight group-hover:text-gray-300 transition-colors">Ismael-PR-99</span>
             </a>
             <!-- Botón hamburguesa para móvil -->
-            <button id="menu-toggle" class="md:hidden flex items-center px-3 py-2 rounded text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-400 transition" aria-label="Abrir menú">
+            <button id="menu-toggle" class="md:hidden flex items-center px-3 py-2 rounded text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white transition" aria-label="Abrir menú">
                 <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
@@ -60,120 +71,77 @@
             <!-- Navegación -->
             <nav id="main-nav" class="flex-col md:flex-row flex md:flex items-center gap-2 md:gap-6
                 absolute md:static left-0 w-full md:w-auto
-                bg-[#18141f]/95 md:bg-transparent border-t md:border-none border-[#2d223b]/60 md:shadow-none shadow-lg
+                bg-black/95 md:bg-transparent border-t md:border-none border-white/10 md:shadow-none shadow-lg
                 md:rounded-none rounded-b-xl
                 transition-all duration-300
                 hidden md:flex
                 top-full mt-2 md:mt-0
                 z-50
             ">
-                <a href="#about" class="px-3 py-1 rounded-md text-gray-200 hover:text-white hover:bg-purple-900/30 transition font-medium">Sobre mí</a>
-                <a href="#experience" class="px-3 py-1 rounded-md text-gray-200 hover:text-white hover:bg-purple-900/30 transition font-medium">Experiencia</a>
-                <a href="#projects" class="px-3 py-1 rounded-md text-gray-200 hover:text-white hover:bg-purple-900/30 transition font-medium">Proyectos</a>
-                <a href="#skills" class="px-3 py-1 rounded-md text-gray-200 hover:text-white hover:bg-purple-900/30 transition font-medium">Frameworks</a>
+                <a href="#about" class="px-3 py-1 rounded-md text-gray-200 hover:text-white hover:bg-gray-800/30 transition font-medium">Sobre mí</a>
+                <a href="#experience" class="px-3 py-1 rounded-md text-gray-200 hover:text-white hover:bg-gray-800/30 transition font-medium">Experiencia</a>
+                <a href="#projects" class="px-3 py-1 rounded-md text-gray-200 hover:text-white hover:bg-gray-800/30 transition font-medium">Proyectos</a>
+                <a href="#skills" class="px-3 py-1 rounded-md text-gray-200 hover:text-white hover:bg-gray-800/30 transition font-medium">Frameworks</a>
             </nav>
         </div>
     </header>
 
-    <!-- Hero / About -->
-<section id="about" class="relative min-h-screen flex items-center justify-center pt-24 px-4 bg-transparent z-10 w-full">
-
-        <div class="absolute inset-0 pointer-events-none z-0"></div>
-        <div class="relative flex flex-col md:flex-row items-center justify-center w-full max-w-6xl z-10 bg-[#201a2b]/90 rounded-xl shadow-lg border border-[#2d223b] backdrop-blur-md p-6 md:p-12">
-            <div class="flex-shrink-0 flex items-center justify-center w-full md:w-auto mb-8 md:mb-0 md:mr-12">
-                <img src="Ismael.jpg" alt="Foto de Ismael Piña Ramos"
-                    class="w-40 h-40 md:w-52 md:h-52 rounded-full ring-2 ring-purple-700 p-1 shadow-lg bg-[#18141f] object-cover" />
-            </div>
-            <div class="flex-1 text-center md:text-left">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 animate-fadeInUp animate-delay-1">
-                    Ismael Piña Ramos
-                </h2>
-                <div class="text-purple-300 text-lg font-medium mb-1 animate-fadeInUp animate-delay-2">
-                    Ismael-PR-99
-                </div>
-                <div class="text-gray-300 text-base mb-4 animate-fadeInUp animate-delay-3">
-                    España &middot; Disponible para trabajar
-                </div>
-                <p class="text-gray-300 max-w-2xl mx-auto md:mx-0 leading-relaxed text-base mb-6 animate-fadeInUp animate-delay-4">
-                    Graduado en Desarrollo de Aplicaciones Web. Apasionado por la tecnología, el desarrollo web y la mejora continua. Me considero una persona responsable, resolutiva y con gran capacidad de adaptación. Disfruto aprendiendo nuevas tecnologías y trabajando en equipo para aportar soluciones eficientes y creativas.
-                </p>
-                <div class="flex flex-wrap justify-center md:justify-start gap-4 animate-fadeInUp animate-delay-5">
-                    <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" rel="noopener"
-                        class="flex items-center gap-2 bg-[#232136] hover:bg-[#2d223b] text-gray-200 px-4 py-2 rounded-full font-medium shadow transition">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#ffffff"
-                          stroke-width="1"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
-                          <path d="M8 11l0 5" />
-                          <path d="M8 8l0 .01" />
-                          <path d="M12 16l0 -5" />
-                          <path d="M16 16v-3a2 2 0 0 0 -4 0" />
-                        </svg>
-                        LinkedIn
-                    </a>
-                    <a href="https://github.com/Ismael-PR-99" target="_blank" rel="noopener"
-                        class="flex items-center gap-2 bg-[#232136] hover:bg-[#2d223b] text-gray-200 px-4 py-2 rounded-full font-medium shadow transition">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#ffffff"
-                          stroke-width="1"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-                        </svg>
-                        Ismael-PR-99
-                    </a>
-                </div>
-            </div>
+<!-- INICIO HERO NUEVO -->
+<main class="flex items-center justify-center min-h-screen w-full">
+    <section class="w-full max-w-5xl bg-black rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between p-10 gap-8 border border-white">
+      <!-- Texto principal -->
+      <div class="flex-1 flex flex-col justify-center h-full">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight text-white">Ismael Piña Ramos</h1>
+        <h2 class="text-xl md:text-2xl font-semibold mb-4 text-white">Desarrollador web full-stack</h2>
+        <p class="text-lg mb-8 text-white">
+          Ex-técnico de mantenimiento y frigorista reconvertido en desarrollador web full-stack. Combino la disciplina en diagnóstico y resolución de averías críticas con dominio de Java, Spring Boot, JavaScript, PHP, Laravel 12 y Tailwind para entregar aplicaciones robustas, seguras y orientadas a la experiencia de usuario. Perfil híbrido ideal para entornos que exigen fiabilidad operativa y agilidad en producto digital.
+        </p>
+        <div class="flex gap-4">
+          <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="px-6 py-3 rounded-lg border border-white bg-white text-black font-semibold text-base shadow hover:bg-black hover:text-white transition">LinkedIn</a>
+          <a href="https://github.com/Ismael-PR-99" target="_blank" class="px-6 py-3 rounded-lg border border-white bg-black text-white font-semibold text-base shadow hover:bg-white hover:text-black transition">Ismael-PR-99</a>
         </div>
+      </div>
+      <!-- Imagen de perfil -->
+      <div class="flex-1 flex justify-center items-center">
+        <img src="IsmaelFoto.png" alt="Foto de Ismael Piña Ramos" class="w-72 h-72 object-cover rounded-2xl shadow-lg border border-white bg-black" />
+      </div>
     </section>
+  </main>
+  <!-- FIN HERO NUEVO -->
 
     <!-- Experiencia -->
     <section id="experience" class="max-w-6xl mx-auto px-4 py-20">
         <h3 class="text-3xl font-bold mb-12 text-center text-white animate-fadeInUp">Experiencia y Formación</h3>
         <div class="grid md:grid-cols-3 gap-10">
-            <div class="bg-[#201a2b] rounded-lg p-6 border border-[#2d223b] shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-1">
-                <h4 class="text-xl font-semibold text-purple-200 mb-2">Sobre mí</h4>
+            <div class="bg-black rounded-lg p-6 border border-white/10 shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-1">
+                <h4 class="text-xl font-semibold text-white mb-2">Sobre mí</h4>
                 <p class="text-gray-300 text-sm">
-                    Soy una persona comprometida, trabajadora y tranquila, apasionada por el desarrollo web, especialmente en Frontend. Me motiva afrontar nuevos desafíos y mejorar constantemente mis habilidades. Disfruto trabajar en equipo, colaborando y aprendiendo de cada experiencia para seguir creciendo profesionalmente.
+                    Ex-técnico de mantenimiento y frigorista reconvertido en desarrollador web full-stack. Combino la disciplina en diagnóstico y resolución de averías críticas con dominio de Java, Spring Boot, JavaScript, PHP, Laravel 12 y Tailwind para entregar aplicaciones robustas, seguras y orientadas a la experiencia de usuario. Perfil híbrido ideal para entornos que exigen fiabilidad operativa y agilidad en producto digital.
                 </p>
                 <div class="flex flex-wrap gap-2 mt-2">
-                    <span class="bg-purple-900/40 text-purple-200 rounded-full px-3 py-1 text-xs">Edad: 21</span>
-                    <span class="bg-purple-900/40 text-purple-200 rounded-full px-3 py-1 text-xs">Carné B</span>
+                    <span class="bg-gray-800/40 text-white rounded-full px-3 py-1 text-xs">Edad: 21</span>
+                    <span class="bg-gray-800/40 text-white rounded-full px-3 py-1 text-xs">Carné B</span>
                 </div>
             </div>
-            <div class="bg-[#201a2b] rounded-lg p-6 border border-[#2d223b] shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-2">
-                <h4 class="text-xl font-semibold text-purple-200 mb-2">Experiencia</h4>
+            <div class="bg-black rounded-lg p-6 border border-white/10 shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-2">
+                <h4 class="text-xl font-semibold text-white mb-2">Experiencia</h4>
                 <div>
-                    <span class="font-semibold text-gray-200">Guadaltech Profesional Cloud</span>
-                    <span class="block text-xs text-gray-400 mb-1">Prácticas Grado Medio · 2022-2023</span>
+                    <span class="font-semibold text-gray-200">Prácticas Grado Superior DAW</span>
+                    <span class="block text-xs text-gray-400 mb-1">Cesur Sevilla · 2023-2025</span>
                     <p class="text-gray-300 text-sm mb-2">
-                        400h de formación en desarrollo web y sistemas, usando WordPress, Odoo y herramientas de Adobe Creative Cloud.
+                        Desarrollo de aplicaciones web con tecnologías como Java, PHP, JavaScript, Spring Boot, Laravel, Tailwind CSS y Breeze. Participación en proyectos reales, trabajando tanto en frontend como en backend, y adquiriendo experiencia en el desarrollo de soluciones modernas y escalables.
                     </p>
                 </div>
                 <div>
-                    <span class="font-semibold text-gray-200">Prácticas Grado Superior</span>
-                    <span class="block text-xs text-gray-400 mb-1">2025</span>
+                    <span class="font-semibold text-gray-200">Prácticas Grado Medio Microinformática y Redes</span>
+                    <span class="block text-xs text-gray-400 mb-1">Obicex Implika · 2020-2022</span>
                     <p class="text-gray-300 text-sm">
-                        Desarrollo en Linux con Angular, Symfony, Tailwind CSS, Docker, PostgreSQL, Figma e Illustrator.
+                        Formación en fundamentos de informática, administración de sistemas y redes, y desarrollo web con WordPress y Odoo. Trabajo en equipo y colaboración en entornos profesionales.
                     </p>
                 </div>
             </div>
-            <div class="bg-[#201a2b] rounded-lg p-6 border border-[#2d223b] shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-3">
-                <h4 class="text-xl font-semibold text-purple-200 mb-2">Educación</h4>
+            <div class="bg-black rounded-lg p-6 border border-white/10 shadow-md flex flex-col gap-4 animate-fadeInUp animate-delay-3">
+                <h4 class="text-xl font-semibold text-white mb-2">Educación</h4>
                 <div>
                     <span class="font-semibold text-gray-200">Grado Superior DAW</span>
                     <span class="block text-xs text-gray-400 mb-1">Cesur Sevilla · 2023-2025</span>
@@ -188,6 +156,13 @@
                         Fundamentos de informática, prácticas con WordPress y Odoo.
                     </p>
                 </div>
+                <div>
+                    <span class="font-semibold text-gray-200">Grado Medio en Técnico de Refrigeración</span>
+                    <span class="block text-xs text-gray-400 mb-1">IES Virgen de los Reyes · 2022</span>
+                    <p class="text-gray-300 text-sm mb-2">
+                        Formación profesional en sistemas de refrigeración, climatización y mantenimiento industrial. Adquisición de competencias técnicas y experiencia práctica en el sector.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
@@ -196,468 +171,236 @@
     <section id="projects" class="max-w-6xl mx-auto px-4 py-20">
         <h3 class="text-3xl font-bold mb-12 text-center text-white animate-fadeInUp">Proyectos Destacados</h3>
         <div class="flex flex-col gap-12">
-            <!-- Proyecto 1 -->
-            <div class="flex flex-col md:flex-row bg-gradient-to-br from-[#201a2b] via-[#241a2b] to-[#18141f] rounded-xl p-8 border border-[#2d223b] shadow-lg hover:shadow-purple-900/30 animate-fadeInUp animate-delay-1 group transform hover:scale-[1.03] duration-300 transition-all">
-                <div class="md:w-1/3 flex items-center justify-center mb-6 md:mb-0">
-                    <img src="pro1.png" alt="FunkMoes"
-                        class="w-full max-w-xs rounded-lg object-cover object-center bg-[#18141f] border border-[#2d223b]
-                               transform -rotate-6 hover:rotate-0 transition-transform duration-500 hover:scale-110 shadow-xl"
-                        />
-                </div>
-                <div class="md:w-2/3 md:pl-10 flex flex-col justify-center">
-                    <h4 class="text-2xl font-bold text-purple-200 mb-3 group-hover:text-fuchsia-300 transition-colors duration-300">FunkMoes</h4>
-                    <p class="text-gray-300 mb-4 text-lg group-hover:text-white transition-colors duration-300">
-                        Tienda de camisetas desarrollada con Laravel y Tailwind CSS. Incluye funcionalidades de carrito de compra, autenticación de usuarios y panel de administración.
-                    </p>
-                    <div class="flex items-center gap-3 mt-2">
-                        <!--
-tags: [logo, website, hosting, project, programming, software, development]
-category: Brand
-version: "1.18"
-unicode: "ec1c"
--->
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="32"
-  height="32"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#ffffff"
-  stroke-width="1"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
-
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" class="w-7 h-7" title="Laravel"/>
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/npm/npm-original-wordmark.svg" alt="Laravel" class="w-7 h-7" title="npm"/>
-                        <span title="Tailwind CSS">
-                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 fill-cyan-400">
-                                <title>Tailwind CSS</title>
-                                <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/>
-                            </svg>
-                        </span>
+                <!-- Proyecto RefrigeraSpace -->
+                <div class="flex flex-col md:flex-row bg-gradient-to-br from-black via-gray-900 to-black rounded-xl p-8 border border-white shadow-lg hover:shadow-white/30 animate-fadeInUp animate-delay-1 group transform hover:scale-[1.03] duration-300 transition-all">
+                    <div class="md:w-1/3 flex items-center justify-center mb-6 md:mb-0">
+                        <img src="RefrigeraSpace.png" alt="RefrigeraSpace" class="w-full max-w-xs rounded-lg object-cover object-center bg-black border border-white shadow-xl" />
+                    </div>
+                    <div class="md:w-2/3 md:pl-10 flex flex-col justify-center">
+                        <h4 class="text-2xl font-bold text-white mb-3 group-hover:text-gray-300 transition-colors duration-300">RefrigeraSpace</h4>
+                        <p class="text-gray-300 mb-4 text-lg group-hover:text-white transition-colors duration-300">
+                            Aplicación web en Laravel 12 para cálculo de frigorías y selección de equipos de aire acondicionado. Incluye scraping automático, generación de PDF y panel de administración.
+                        </p>
+                        <div class="flex items-center gap-3 mt-2">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" class="w-7 h-7" title="Laravel" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" class="w-7 h-7" title="PHP" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" class="w-7 h-7" title="MySQL" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" class="w-7 h-7" title="Node.js" />
+                        </div>
+                        <div class="flex gap-4 mt-4">
+                            <a href="https://refrigeraspace.onrender.com" target="_blank" class="px-6 py-3 rounded-lg border border-white bg-white text-black font-semibold text-base shadow hover:bg-black hover:text-white transition">Ver App</a>
+                            <a href="https://github.com/Ismael-PR-99/refrigeraspace" target="_blank" class="px-6 py-3 rounded-lg border border-white bg-black text-white font-semibold text-base shadow hover:bg-white hover:text-black transition">GitHub</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Proyecto 2 -->
-            <div class="flex flex-col md:flex-row bg-gradient-to-br from-[#201a2b] via-[#241a2b] to-[#18141f] rounded-xl p-8 border border-[#2d223b] shadow-lg hover:shadow-purple-900/30 animate-fadeInUp animate-delay-2 group transform hover:scale-[1.03] duration-300 transition-all">
-                <div class="md:w-1/3 flex items-center justify-center mb-6 md:mb-0">
-                    <img src="vuela21o.png" alt="Vuela21"
-                        class="w-full max-w-xs rounded-lg object-cover object-center bg-[#18141f] border border-[#2d223b]
-                               transform -rotate-6 hover:rotate-0 hover:scale-110 transition-transform duration-500 shadow-xl"
-                        />
-                </div>
-                <div class="md:w-2/3 md:pl-10 flex flex-col justify-center">
-                    <h4 class="text-2xl font-bold text-purple-200 mb-3 group-hover:text-fuchsia-300 transition-colors duration-300">Vuela21</h4>
-                    <p class="text-gray-300 mb-4 text-lg group-hover:text-white transition-colors duration-300">
-                        Aplicación de catas de vino con modo oscuro, chatbot y traducción automática. Experiencia de usuario moderna y responsive.
-                    </p>
-                    <div class="flex items-center gap-3 mt-2">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-plain.svg" alt="Angular" class="w-7 h-7" title="Angular"/>
-                        <span title="Tailwind CSS">
-        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 fill-cyan-400">
-            <title>Tailwind CSS</title>
-            <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/>
-        </svg>
-    </span>
-    <!--
-tags: [logo, website, hosting, project, programming, software, development]
-category: Brand
-version: "1.18"
-unicode: "ec1c"
--->
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="32"
-  height="32"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#ffffff"
-  stroke-width="1"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
-
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/npm/npm-original-wordmark.svg" alt="Laravel" class="w-7 h-7" title="npm"/>
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-plain.svg" alt="JavaScript" class="w-7 h-7" title="JavaScript"/>
-                    </div>
-                </div>
-            </div>
             
         </div>
     </section>
 
     <!-- Tecnologías -->
-    <section id="skills" class="relative py-24 bg-gradient-to-br from-[#18141f] via-[#241a2b] to-[#18141f] overflow-hidden">
-    <div class="absolute inset-0 pointer-events-none opacity-30" style="background: radial-gradient(ellipse at 80% 10%, #a78bfa33 0%, transparent 70%), radial-gradient(ellipse at 10% 90%, #f472b633 0%, transparent 70%);"></div>
-    <div class="w-full px-0 relative z-10">
-        <h3 class="text-4xl font-extrabold mb-3 text-center text-white animate-fadeInUp">Frameworks </h3>
-        <p class="text-center text-lg text-purple-200 mb-14 animate-fadeInUp animate-delay-1 max-w-2xl mx-auto">
-            Herramientas y tecnologías que domino y utilizo en mis proyectos para crear soluciones modernas, robustas y escalables.
-        </p>
-        <div class="overflow-x-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-            <div id="frameworks-carousel" class="flex whitespace-nowrap animate-frameworks-carousel will-change-transform">
-                <!-- Frameworks (triplicados para bucle perfecto) -->
-                <div class="flex items-center">
-                    <!-- Laravel -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-purple-200 transition">Laravel</span>
-                    </div>
-                    <!-- Angular -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-plain.svg" alt="Angular" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-pink-200 transition">Angular</span>
-                    </div>
-                    <!-- Tailwind CSS -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">Tailwind CSS</span>
-                    </div>
-                    <!-- Postman -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-plain.svg" alt="Postman" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-orange-200 transition">Postman</span>
-                    </div>
-                    <!-- Symfony -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/symfony/symfony-original.svg" alt="Symfony" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-gray-200 transition">Symfony</span>
-                    </div>
-                    <!-- Visual Studio Code -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-plain.svg" alt="VisualStudio" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-blue-200 transition">VS Code</span>
-                    </div>
-                    <!-- React -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">React</span>
-                    </div>
-                    <!-- PostgreSQL -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain.svg" alt="PostgreSQL" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-blue-200 transition">PostgreSQL</span>
-                    </div>
-                    <!-- Docker -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" alt="Docker" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">Docker</span>
-                    </div>
-                    <!-- NestJS -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg" alt="NestJS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-pink-200 transition">NestJS</span>
-                    </div>
-                    <!-- JavaScript -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg" alt="JavaScript" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-yellow-200 transition">JavaScript</span>
-                    </div>
-                    <!-- Github -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="64"
-                          height="64"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#ffffff"
-                          stroke-width="1"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110"
-                        >
-                          <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-                        </svg>
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-purple-200 transition">Github</span>
-                    </div>
-                </div>
-                <!-- Duplicado 1 -->
-                <div class="flex items-center">
-                    <!-- Laravel -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-purple-200 transition">Laravel</span>
-                    </div>
-                    <!-- Angular -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-plain.svg" alt="Angular" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-pink-200 transition">Angular</span>
-                    </div>
-                    <!-- Tailwind CSS -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">Tailwind CSS</span>
-                    </div>
-                    <!-- Postman -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-plain.svg" alt="Postman" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-orange-200 transition">Postman</span>
-                    </div>
-                    <!-- Symfony -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/symfony/symfony-original.svg" alt="Symfony" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-gray-200 transition">Symfony</span>
-                    </div>
-                    <!-- Visual Studio Code -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-plain.svg" alt="VisualStudio" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-blue-200 transition">VS Code</span>
-                    </div>
-                    <!-- React -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">React</span>
-                    </div>
-                    <!-- PostgreSQL -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain.svg" alt="PostgreSQL" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-blue-200 transition">PostgreSQL</span>
-                    </div>
-                    <!-- Docker -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" alt="Docker" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">Docker</span>
-                    </div>
-                    <!-- NestJS -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg" alt="NestJS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-pink-200 transition">NestJS</span>
-                    </div>
-                    <!-- JavaScript -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg" alt="JavaScript" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-yellow-200 transition">JavaScript</span>
-                    </div>
-                    <!-- Github -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="64"
-                          height="64"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#ffffff"
-                          stroke-width="1"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110"
-                        >
-                          <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-                        </svg>
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-purple-200 transition">Github</span>
-                    </div>
-                </div>
-                <!-- Duplicado 2 -->
-                <div class="flex items-center">
-                    <!-- Laravel -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-purple-200 transition">Laravel</span>
-                    </div>
-                    <!-- Angular -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-plain.svg" alt="Angular" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-pink-200 transition">Angular</span>
-                    </div>
-                    <!-- Tailwind CSS -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">Tailwind CSS</span>
-                    </div>
-                    <!-- Postman -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-plain.svg" alt="Postman" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-orange-200 transition">Postman</span>
-                    </div>
-                    <!-- Symfony -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/symfony/symfony-original.svg" alt="Symfony" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-gray-200 transition">Symfony</span>
-                    </div>
-                    <!-- Visual Studio Code -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-plain.svg" alt="VisualStudio" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-blue-200 transition">VS Code</span>
-                    </div>
-                    <!-- React -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">React</span>
-                    </div>
-                    <!-- PostgreSQL -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain.svg" alt="PostgreSQL" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-blue-200 transition">PostgreSQL</span>
-                    </div>
-                    <!-- Docker -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" alt="Docker" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-cyan-200 transition">Docker</span>
-                    </div>
-                    <!-- NestJS -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg" alt="NestJS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-pink-200 transition">NestJS</span>
-                    </div>
-                    <!-- JavaScript -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg" alt="JavaScript" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-yellow-200 transition">JavaScript</span>
-                    </div>
-                    <!-- Github -->
-                    <div class="flex flex-col items-center bg-[#232136]/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-[#a78bfa44] hover:border-purple-400 transition-all duration-300 shadow-xl hover:shadow-purple-700/40 group min-w-[180px]">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="64"
-                          height="64"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#ffffff"
-                          stroke-width="1"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110"
-                        >
-                          <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-                        </svg>
-                        <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-purple-200 transition">Github</span>
+    <section id="skills" class="relative py-24 bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none opacity-30" style="background: radial-gradient(ellipse at 80% 10%, #ffffff33 0%, transparent 70%), radial-gradient(ellipse at 10% 90%, #ffffff33 0%, transparent 70%);"></div>
+        <div class="w-full px-0 relative z-10">
+            <h3 class="text-4xl font-extrabold mb-3 text-center text-white animate-fadeInUp">Frameworks</h3>
+            <p class="text-center text-lg text-white mb-14 animate-fadeInUp animate-delay-1 max-w-2xl mx-auto">
+                Herramientas y tecnologías que domino y utilizo en mis proyectos para crear soluciones modernas, robustas y escalables.
+            </p>
+            <div class="overflow-x-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+                <div id="frameworks-carousel" class="flex whitespace-nowrap animate-frameworks-carousel will-change-transform">
+                    <!-- Frameworks (triplicados para bucle perfecto) -->
+                    <div class="flex items-center">
+                        <!-- Laravel -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">Laravel</span>
+                        </div>
+                        <!-- Angular -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-plain.svg" alt="Angular" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">Angular</span>
+                        </div>
+                        <!-- Tailwind CSS -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">Tailwind CSS</span>
+                        </div>
+                        <!-- Postman -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-plain.svg" alt="Postman" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">Postman</span>
+                        </div>
+                        <!-- Symfony -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/symfony/symfony-original.svg" alt="Symfony" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">Symfony</span>
+                        </div>
+                        <!-- Visual Studio Code -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-plain.svg" alt="VisualStudio" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">VS Code</span>
+                        </div>
+                        <!-- React -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">React</span>
+                        </div>
+                        <!-- PostgreSQL -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain.svg" alt="PostgreSQL" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">PostgreSQL</span>
+                        </div>
+                        <!-- Docker -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" alt="Docker" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">Docker</span>
+                        </div>
+                        <!-- NestJS -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg" alt="NestJS" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">NestJS</span>
+                        </div>
+                        <!-- JavaScript -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg" alt="JavaScript" class="w-16 h-16 mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110" />
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">JavaScript</span>
+                        </div>
+                        <!-- Github -->
+                        <div class="flex flex-col items-center bg-gray-800/70 backdrop-blur-md mx-4 p-7 rounded-2xl border border-white/44 hover:border-white transition-all duration-300 shadow-xl hover:shadow-white/40 group min-w-[180px]">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="64"
+                              height="64"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="#ffffff"
+                              stroke-width="1"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="mb-3 mx-auto drop-shadow-lg transition-transform duration-300 group-hover:scale-110"
+                            >
+                              <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+                            </svg>
+                            <span class="text-gray-100 font-semibold tracking-wide text-lg group-hover:text-white transition">Github</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<style>
-@keyframes frameworks-carousel {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-33.3333%); }
-}
-.animate-frameworks-carousel {
-  animation: frameworks-carousel 10s linear infinite;
-}
-</style>
-
-    <!-- Footer -->
-    <footer class="text-center text-sm text-gray-400 py-8 border-t border-[#2d223b]/60 bg-[#18141f] animate-fadeInUp animate-delay-4">
-        © 2025 Guillermo Mateos De Los Santos Aguilera.
-    </footer>
-
-    <!-- Fondo estrellado JS -->
-    <script>
-        // Responsive header menu
-        const menuToggle = document.getElementById('menu-toggle');
-        const mainNav = document.getElementById('main-nav');
-
-        // Función para abrir/cerrar menú móvil
-        function toggleMenu() {
-            mainNav.classList.toggle('hidden');
-            // Actualiza aria-expanded para accesibilidad
-            menuToggle.setAttribute('aria-expanded', mainNav.classList.contains('hidden') ? 'false' : 'true');
-        }
-
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMenu();
-        });
-
-        // Cierra el menú al hacer click fuera en móvil
-        document.addEventListener('click', (e) => {
-            if (
-                !mainNav.contains(e.target) &&
-                !menuToggle.contains(e.target) &&
-                window.innerWidth < 768 &&
-                !mainNav.classList.contains('hidden')
-            ) {
-                mainNav.classList.add('hidden');
-                menuToggle.setAttribute('aria-expanded', 'false');
+        
+        <!-- Animación CSS para el carrusel -->
+        <style>
+            @keyframes frameworks-carousel {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
             }
-        });
-
-        // Cierra el menú al hacer click en un enlace de navegación en móvil
-        mainNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth < 768) {
-                    mainNav.classList.add('hidden');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                }
-            });
-        });
-
-        // Asegura que el menú esté visible en escritorio al redimensionar
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                mainNav.classList.remove('hidden');
-                menuToggle.setAttribute('aria-expanded', 'true');
-            } else {
-                mainNav.classList.add('hidden');
-                menuToggle.setAttribute('aria-expanded', 'false');
+            .animate-frameworks-carousel {
+                animation: frameworks-carousel 30s linear infinite;
             }
-            // ...starfield resize...
-            resize();
-            createStars();
-        });
+        </style>
+    </section>
 
-        // Inicializa aria-expanded
-        menuToggle.setAttribute('aria-expanded', 'false');
-
-        // Simple starfield animation
-        const canvas = document.getElementById('stars-bg');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        const STAR_NUM = 120;
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        function randomStar() {
-            return {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.1 + 0.3,
-                speed: Math.random() * 0.15 + 0.05,
-                alpha: Math.random() * 0.5 + 0.5
-            };
-        }
-        function createStars() {
-            stars = [];
-            for (let i = 0; i < STAR_NUM; i++) {
-                stars.push(randomStar());
-            }
-        }
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let s of stars) {
-                ctx.save();
-                ctx.globalAlpha = s.alpha;
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
-                ctx.fillStyle = "#fff";
-                ctx.shadowColor = "#fff";
-                ctx.shadowBlur = 8;
-                ctx.fill();
-                ctx.restore();
-                s.y += s.speed;
-                if (s.y > canvas.height) {
-                    s.x = Math.random() * canvas.width;
-                    s.y = 0;
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        window.addEventListener('resize', () => {
-            resize();
-            createStars();
-        });
-        resize();
-        createStars();
-        animate();
-    </script>
-</body>
-</html>
-
+                    <!-- Footer (opcional) -->
+                    <footer class="bg-black border-t border-white/10 py-8 text-center">
+                        <p class="text-gray-400">© 2025 Ismael Piña Ramos. Todos los derechos reservados.</p>
+                    </footer>
+                    
+                    <!-- Elemento trail del cursor -->
+                    <div class="cursor-trail" id="cursorTrail"></div>
+                    
+                    <script>
+                    // Menú hamburguesa
+                    document.getElementById('menu-toggle').addEventListener('click', function() {
+                        const nav = document.getElementById('main-nav');
+                        nav.classList.toggle('hidden');
+                    });
+                    
+                    // Fondo estrellado animado
+                    const canvas = document.getElementById('stars-bg');
+                    const ctx = canvas.getContext('2d');
+                    
+                    function resizeCanvas() {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                    }
+                    
+                    window.addEventListener('resize', resizeCanvas);
+                    resizeCanvas();
+                    
+                    const stars = [];
+                    const starCount = 150;
+                    
+                    for (let i = 0; i < starCount; i++) {
+                        stars.push({
+                            x: Math.random() * canvas.width,
+                            y: Math.random() * canvas.height,
+                            radius: Math.random() * 2,
+                            opacity: Math.random(),
+                            speed: Math.random() * 0.5
+                        });
+                    }
+                    
+                    function drawStars() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        
+                        stars.forEach(star => {
+                            ctx.beginPath();
+                            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                            ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                            ctx.fill();
+                            
+                            // Animación de parpadeo
+                            star.opacity += (Math.random() - 0.5) * 0.02;
+                            star.opacity = Math.max(0.1, Math.min(1, star.opacity));
+                            
+                            // Movimiento lento
+                            star.y += star.speed;
+                            if (star.y > canvas.height) {
+                                star.y = 0;
+                                star.x = Math.random() * canvas.width;
+                            }
+                        });
+                        
+                        requestAnimationFrame(drawStars);
+                    }
+                    
+                    drawStars();
+                    
+                    // Cursor trail
+                    const trail = document.getElementById('cursorTrail');
+                    let mouseX = 0, mouseY = 0;
+                    let posX = 0, posY = 0;
+                    const speed = 0.1; // suavizado
+                    
+                    // Captura posición del puntero
+                    document.addEventListener('mousemove', e => {
+                        mouseX = e.clientX;
+                        mouseY = e.clientY;
+                    });
+                    
+                    // Loop de animación del cursor trail
+                    function animate() {
+                        // interpola la posición
+                        posX += (mouseX - posX) * speed;
+                        posY += (mouseY - posY) * speed;
+                        trail.style.transform = `translate(${posX}px, ${posY}px)`;
+                        requestAnimationFrame(animate);
+                    }
+                    animate();
+                    
+                    // Scroll suave para los enlaces de navegación
+                    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                        anchor.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            const target = document.querySelector(this.getAttribute('href'));
+                            if (target) {
+                                target.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        });
+                    });
+                    </script>
+                    
+                    </body>
+                    </html>
