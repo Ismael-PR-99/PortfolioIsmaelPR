@@ -1,3 +1,184 @@
+/* Paleta de colores moderna y minimalista */
+:root {
+  --color-bg: #121619;
+  --color-text: #E1E1E1;
+  --color-highlight: #FFFFFF;
+  --color-accent: #3DDAD7;
+  --color-accent-hover: #28B8BA;
+  --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 1. Aplicar fondo a body y contenedores principales */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', sans-serif;
+}
+
+/* 2. Títulos y enlaces */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-highlight);
+}
+
+p, span, div {
+    color: var(--color-text);
+}
+
+a {
+    color: var(--color-accent);
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 2rem;
+  background-color: var(--color-bg);
+  gap: 2rem;
+  max-width: 64rem; /* Corregido: Usar propiedad CSS estándar */
+  margin: 0 auto;
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+}
+
+.hero .intro {
+    flex: 1;
+}
+
+.hero .intro h1 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--color-highlight);
+  margin-bottom: 1rem;
+}
+
+p.subtitle {
+  font-size: 1.25rem;
+  color: var(--color-text);
+  margin-bottom: 2rem;
+}
+
+.profile-avatar {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--color-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+}
+
+/* -- Botones -- */
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .3s, color .3s, transform .2s, box-shadow .2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border: 2px solid var(--color-accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-linkedin {
+  background-color: #0077B5;
+  color: #fff !important;
+  border: 2px solid #0077B5;
+}
+
+.btn-linkedin:hover {
+  background-color: #005582;
+  border-color: #005582;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-accent);
+  border: 2px solid var(--color-accent);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .hero .intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Ajustes específicos para el header */
+header {
+    backdrop-filter: blur(10px);
+    background-color: rgba(18, 22, 25, 0.5);
+}
+
+/* 4. Estado hover para enlaces de navegación */
+nav a {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background-color: var(--border-color);
+    color: var(--color-highlight);
+}
+
+
+/* 5. Iconos y elementos decorativos */
+svg {
+  stroke: var(--accent-hover); /* Para SVGs con stroke */
+  fill: var(--accent-hover); /* Para SVGs con fill */
+}
+
+/* Ajustes para las tarjetas de frameworks */
+#skills .flex-col {
+    background-color: rgba(30, 35, 40, 0.7);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+#skills .flex-col:hover {
+    border-color: var(--accent) !important;
+    transform: translateY(-5px);
+}
+
 /* Animaciones y estilos personalizados */
 @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(40px); }
@@ -20,11 +201,9 @@ html { scroll-behavior: smooth; }
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -10;
-    display: block;
-    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
 body > *:not(#stars-bg) {
     position: relative;
@@ -36,5 +215,5 @@ body > *:not(#stars-bg) {
     100% { transform: translateX(-50%); }
 }
 .animate-frameworks-carousel {
-    animation: frameworks-carousel 30s linear infinite;
+    animation: frameworks-carousel 60s linear infinite;
 }
