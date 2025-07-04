@@ -165,7 +165,87 @@ p.subtitle {
     flex-direction: column;
     align-items: center;
   }
+
+  #desktop-nav { display: none; } /* Ocultar nav de escritorio en móvil */
+  #mobile-nav-container { display: flex; } /* Mostrar contenedor de nav móvil */
 }
+
+/* ================================== */
+/* ===== Menú Modal Móvil ===== */
+/* ================================== */
+
+#mobile-menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1999; /* Justo debajo del menú modal */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#mobile-menu-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 85%;
+    max-width: 320px;
+    height: 100%;
+    background-color: var(--card-bg);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+#mobile-menu-modal.hidden, #mobile-menu-backdrop.hidden {
+    display: none; /* Ocultar completamente cuando no se usa */
+}
+
+
+#mobile-menu-close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+}
+
+#mobile-menu-close-btn svg {
+    width: 2rem;
+    height: 2rem;
+    stroke: var(--color-highlight);
+}
+
+.mobile-menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espacio entre enlaces */
+    margin-top: 4rem; /* Espacio debajo del botón de cierre */
+    text-align: center;
+}
+
+.mobile-menu-nav a {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-highlight);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.mobile-menu-nav a:hover {
+    background-color: var(--border-color);
+}
+
+body.overflow-hidden {
+    overflow: hidden; /* Evita el scroll del body cuando el menú está abierto */
+}
+
 
 /* Ajustes específicos para el header */
 header {
@@ -412,6 +492,10 @@ body {
 
 .project-tech-icons img {
     transition: transform 0.3s ease;
+    background-color: transparent; /* Eliminar fondo */
+    border: none; /* Eliminar borde */
+    box-shadow: none; /* Eliminar sombra */
+    border-radius: 0; /* Eliminar borde redondeado */
 }
 
 /* ===== Falling Leaves Animation ===== */
@@ -422,7 +506,7 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 9999;
+    z-index: -1; /* Reducido para que esté detrás del contenido */
     overflow: hidden;
 }
 

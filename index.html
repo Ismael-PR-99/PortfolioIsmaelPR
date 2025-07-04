@@ -43,31 +43,36 @@
     <!-- Header -->
     <header class="backdrop-blur fixed top-0 left-0 w-full z-[100] shadow-lg transition-all duration-300">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="flex items-center gap-2 group interactive">
+            <!-- Logo/Nombre a la izquierda -->
+            <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="flex items-center gap-2 group interactive z-10">
                 <span class="text-2xl font-bold tracking-tight group-hover:text-gray-600 transition-colors">Ismael-PR-99</span>
             </a>
-            <!-- Botón hamburguesa para móvil -->
-            <button id="menu-toggle" class="md:hidden flex items-center px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-black transition interactive" aria-label="Abrir menú">
-                <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
+
+            <!-- Contenedor central para el botón hamburguesa (solo móvil) -->
+            <div class="md:hidden flex-1 flex justify-center">
+                <button id="menu-toggle" class="interactive p-2 rounded-md focus:outline-none" aria-label="Abrir menú">
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+
             <!-- Navegación -->
-            <nav id="main-nav" class="flex-col md:flex-row flex md:flex items-center gap-2 md:gap-6
-                absolute md:static left-0 w-full md:w-auto
-                bg-transparent border-t md:border-none md:shadow-none shadow-lg
-                md:rounded-none rounded-b-xl
-                transition-all duration-300
-                hidden md:flex
-                top-full mt-2 md:mt-0
-                z-50
-            ">
-                <a href="#about" class="px-3 py-1 rounded-md transition font-medium interactive">Sobre mí</a>
-                <a href="#experience" class="px-3 py-1 rounded-md transition font-medium interactive">Experiencia</a>
-                <a href="#projects" class="px-3 py-1 rounded-md transition font-medium interactive">Proyectos</a>
-                <a href="#skills" class="px-3 py-1 rounded-md transition font-medium interactive">Frameworks</a>
-                <!-- Theme Toggle Button -->
-                <button id="theme-toggle" class="interactive ml-4 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+            <nav id="main-nav" class="hidden md:flex md:items-center md:gap-6">
+                <!-- Navegación de Escritorio -->
+                <div id="desktop-nav" class="hidden md:flex items-center gap-6">
+                    <a href="#about" class="px-3 py-1 rounded-md transition font-medium interactive">Sobre mí</a>
+                    <a href="#experience" class="px-3 py-1 rounded-md transition font-medium interactive">Experiencia</a>
+                    <a href="#projects" class="px-3 py-1 rounded-md transition font-medium interactive">Proyectos</a>
+                    <a href="#skills" class="px-3 py-1 rounded-md transition font-medium interactive">Frameworks</a>
+                </div>
+            </nav>
+
+            <!-- Contenedor derecho para el botón de tema -->
+            <div class="flex items-center z-10">
+                <button id="theme-toggle" class="interactive p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <svg id="theme-icon-sun" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
@@ -75,9 +80,28 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                     </svg>
                 </button>
-            </nav>
+            </div>
         </div>
     </header>
+
+    <!-- Menú Modal para Móvil -->
+    <div id="mobile-menu-backdrop" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[1999]"></div>
+    <div id="mobile-menu-modal" class="hidden fixed top-0 right-0 h-full w-[85%] max-w-xs bg-white shadow-lg z-[2000] p-6 flex flex-col">
+        <div class="flex justify-end mb-8">
+            <button id="mobile-menu-close-btn" class="interactive p-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="mobile-menu-nav flex flex-col items-center gap-6 text-center">
+            <a href="#about" class="interactive text-2xl font-bold">Sobre mí</a>
+            <a href="#experience" class="interactive text-2xl font-bold">Experiencia</a>
+            <a href="#projects" class="interactive text-2xl font-bold">Proyectos</a>
+            <a href="#skills" class="interactive text-2xl font-bold">Frameworks</a>
+            <a href="cv.html" class="btn btn-outline interactive mt-6">Ver CV</a>
+        </nav>
+    </div>
 
 <!-- INICIO HERO NUEVO -->
 <main class="flex items-center justify-center min-h-screen w-full">

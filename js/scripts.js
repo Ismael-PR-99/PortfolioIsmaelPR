@@ -102,11 +102,50 @@ document.addEventListener('DOMContentLoaded', () => {
         offset: 100,    // Offset (en px) desde el borde de la ventana
     });
 
-    // --- MENÚ HAMBURGUESA ---
-    document.getElementById('menu-toggle').addEventListener('click', function() {
-        const nav = document.getElementById('main-nav');
-        nav.classList.toggle('hidden');
+    // --- MENÚ MODAL MÓVIL ---
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu-modal');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    const closeButton = document.getElementById('mobile-menu-close-btn');
+    const menuLinks = mobileMenu.querySelectorAll('a');
+
+    const openMenu = () => {
+        gsap.to(backdrop, { opacity: 1, duration: 0.3, onStart: () => backdrop.classList.remove('hidden') });
+        gsap.to(mobileMenu, { 
+            x: '0%', 
+            opacity: 1, 
+            duration: 0.4, 
+            ease: 'power3.out',
+            onStart: () => mobileMenu.classList.remove('hidden') 
+        });
+        document.body.classList.add('overflow-hidden'); // Evita el scroll del body
+    };
+
+    const closeMenu = () => {
+        gsap.to(mobileMenu, { 
+            x: '100%', 
+            opacity: 0, 
+            duration: 0.3, 
+            ease: 'power3.in',
+            onComplete: () => mobileMenu.classList.add('hidden') 
+        });
+        gsap.to(backdrop, { 
+            opacity: 0, 
+            duration: 0.3, 
+            onComplete: () => backdrop.classList.add('hidden') 
+        });
+        document.body.classList.remove('overflow-hidden');
+    };
+
+    menuToggle.addEventListener('click', openMenu);
+    closeButton.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    // Cierra el menú al hacer clic en un enlace para navegar a la sección
+    menuLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
     });
+
 
     // --- SCROLL SUAVE ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -153,6 +192,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         applyTheme(newTheme);
         localStorage.setItem('theme', newTheme);
+    });
+
+    // --- ANIMACIÓN DE SALIDA ---
+    document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const destination = this.href;
+            const isExternal = this.target === '_blank';
+
+            // Si es un enlace externo que se abre en una nueva pestaña, no hacemos la animación de salida.
+            if (isExternal) {
+                return;
+            }
+
+            // Prevenir la navegación inmediata para poder animar la salida
+            e.preventDefault();
+
+            // Animación de fade-out con GSAP
+            gsap.to(document.body, {
+                opacity: 0,
+                duration: 0.5, // Duración de la animación en segundos
+                ease: 'power1.in',
+                onComplete: () => {
+                    // Navegar a la nueva página cuando la animación termine
+                    window.location.href = destination;
+                }
+            });
+        });
     });
 
 });
