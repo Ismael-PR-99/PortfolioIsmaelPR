@@ -1,18 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.getElementById('hamburger-menu');
     const navPanel = document.getElementById('nav-panel');
+    let isMenuOpen = false;
 
     if (hamburger && navPanel) {
         const navLinks = navPanel.querySelectorAll('a');
 
-        // Función para alternar el menú
+        // Función para alternar el menú con efectos dinámicos
         const toggleMenu = () => {
-            hamburger.classList.toggle('is-active');
-            navPanel.classList.toggle('is-active');
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                // Abrir menú
+                hamburger.classList.add('is-active');
+                navPanel.classList.add('is-active');
+                document.body.style.overflow = 'hidden'; // Evitar scroll
+                
+                // Efecto de vibración en hamburger
+                hamburger.style.animation = 'hamburgerPulse 0.3s ease';
+                
+                // Añadir efecto de entrada a los enlaces
+                navLinks.forEach((link, index) => {
+                    setTimeout(() => {
+                        link.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
+                        link.style.opacity = '1';
+                    }, 200 + (index * 100));
+                });
+                
+            } else {
+                // Cerrar menú
+                hamburger.classList.remove('is-active');
+                
+                // Animación de salida para los enlaces
+                navLinks.forEach((link, index) => {
+                    setTimeout(() => {
+                        link.style.transform = 'translateY(30px) rotateX(20deg) scale(0.9)';
+                        link.style.opacity = '0';
+                    }, index * 50);
+                });
+                
+                // Cerrar panel después de que terminen las animaciones
+                setTimeout(() => {
+                    navPanel.classList.remove('is-active');
+                    document.body.style.overflow = 'auto';
+                }, 300);
+                
+                // Reset hamburger animation
+                hamburger.style.animation = '';
+            }
         };
 
         // Abrir/cerrar menú con el botón
-        hamburger.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleMenu();
+        });
 
         // Cerrar el menú al hacer clic en un enlace
         navLinks.forEach(link => {
@@ -21,6 +63,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     toggleMenu();
                 }
             });
+        });
+
+        // Cerrar menú con tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isMenuOpen) {
+                toggleMenu();
+            }
+        });
+
+        // Cerrar menú al hacer clic fuera
+        navPanel.addEventListener('click', (e) => {
+            if (e.target === navPanel) {
+                toggleMenu();
+            }
         });
     }
 
@@ -40,26 +96,126 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- CAMBIO DE COLOR DE HAMBURGUESA SOBRE FONDO OSCURO ---
-    const projectSection = document.getElementById('projects');
+    // --- CAMBIO DINÁMICO DE COLOR DE HAMBURGUESA SEGÚN SECCIÓN ---
+    if (hamburger) {
+        const sections = [
+            { element: document.querySelector('.hero'), class: 'on-green-bg' },
+            { element: document.getElementById('experience'), class: 'on-light-bg' },
+            { element: document.getElementById('projects'), class: 'on-dark-bg' },
+            { element: document.getElementById('contact'), class: 'on-light-bg' }
+        ];
 
-    if (hamburger && projectSection) {
+        // Establecer color inicial (hero section)
+        hamburger.classList.add('on-green-bg');
+
+        // Configuración diferente para móvil y escritorio
+        const isMobile = window.innerWidth <= 768;
         const observerOptions = {
-            root: null, // viewport
-            threshold: 0.01, // Se activa en cuanto un píxel sea visible
+            root: null,
+            threshold: isMobile ? 0.3 : 0.5, // Umbral más bajo en móvil
+            rootMargin: isMobile ? '-50px 0px' : '-100px 0px' // Menos margen en móvil
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    hamburger.classList.add('on-dark-bg');
-                } else {
-                    hamburger.classList.remove('on-dark-bg');
+                    // Remover todas las clases de color
+                    hamburger.classList.remove('on-green-bg', 'on-light-bg', 'on-dark-bg');
+                    
+                    // Encontrar la sección actual y aplicar la clase correspondiente
+                    const currentSection = sections.find(section => section.element === entry.target);
+                    if (currentSection) {
+                        hamburger.classList.add(currentSection.class);
+                        console.log(`Cambiando hamburger a: ${currentSection.class}`); // Debug
+                    }
                 }
             });
         }, observerOptions);
 
-        observer.observe(projectSection);
+        // Observar todas las secciones
+        sections.forEach(section => {
+            if (section.element) {
+                sectionObserver.observe(section.element);
+            }
+        });
+
+        // Reconfigurar observer en cambio de orientación/tamaño
+        window.addEventListener('resize', () => {
+            const newIsMobile = window.innerWidth <= 768;
+            if (newIsMobile !== isMobile) {
+                // Recrear observer con nueva configuración
+                sections.forEach(section => {
+                    if (section.element) {
+                        sectionObserver.unobserve(section.element);
+                    }
+                });
+                
+                // Reinicializar con nueva configuración
+                const newObserverOptions = {
+                    root: null,
+                    threshold: newIsMobile ? 0.3 : 0.5,
+                    rootMargin: newIsMobile ? '-50px 0px' : '-100px 0px'
+                };
+                
+                const newSectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            hamburger.classList.remove('on-green-bg', 'on-light-bg', 'on-dark-bg');
+                            const currentSection = sections.find(section => section.element === entry.target);
+                            if (currentSection) {
+                                hamburger.classList.add(currentSection.class);
+                            }
+                        }
+                    });
+                }, newObserverOptions);
+                
+                sections.forEach(section => {
+                    if (section.element) {
+                        newSectionObserver.observe(section.element);
+                    }
+                });
+            }
+        });
+
+        // Método alternativo: Detección por scroll position (para móvil)
+        const updateHamburgerColorByScroll = () => {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            // Obtener posiciones de las secciones
+            const heroSection = document.querySelector('.hero');
+            const experienceSection = document.getElementById('experience');
+            const projectsSection = document.getElementById('projects');
+            const contactSection = document.getElementById('contact');
+            
+            let currentClass = 'on-green-bg'; // Default
+            
+            if (heroSection && scrollY < heroSection.offsetHeight * 0.7) {
+                currentClass = 'on-green-bg';
+            } else if (experienceSection && scrollY >= experienceSection.offsetTop - windowHeight * 0.3 && 
+                       scrollY < experienceSection.offsetTop + experienceSection.offsetHeight - windowHeight * 0.3) {
+                currentClass = 'on-light-bg';
+            } else if (projectsSection && scrollY >= projectsSection.offsetTop - windowHeight * 0.3 && 
+                       scrollY < projectsSection.offsetTop + projectsSection.offsetHeight - windowHeight * 0.3) {
+                currentClass = 'on-dark-bg';
+            } else if (contactSection && scrollY >= contactSection.offsetTop - windowHeight * 0.3) {
+                currentClass = 'on-light-bg';
+            }
+            
+            // Aplicar clase solo si ha cambiado
+            if (!hamburger.classList.contains(currentClass)) {
+                hamburger.classList.remove('on-green-bg', 'on-light-bg', 'on-dark-bg');
+                hamburger.classList.add(currentClass);
+                console.log(`Scroll method: Cambiando hamburger a: ${currentClass} at scroll: ${scrollY}`);
+            }
+        };
+        
+        // Usar método de scroll en móvil como respaldo
+        if (window.innerWidth <= 768) {
+            window.addEventListener('scroll', updateHamburgerColorByScroll);
+            // Ejecutar una vez al cargar para establecer el estado inicial
+            updateHamburgerColorByScroll();
+        }
     }
 
     // --- SCROLL REVEAL ANIMATION ---
@@ -141,4 +297,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (profileImage) {
         profileImage.classList.add('animate-border');
     }
+
+    // Inicialización específica para móvil
+    const initializeMobileHamburger = () => {
+        if (hamburger && window.innerWidth <= 768) {
+            // Forzar el estado inicial en móvil
+            hamburger.classList.remove('on-green-bg', 'on-light-bg', 'on-dark-bg');
+            hamburger.classList.add('on-green-bg');
+            
+            // Añadir clase para identificar que está en móvil
+            hamburger.classList.add('mobile-mode');
+            
+            console.log('Hamburger inicializado para móvil con color verde');
+        }
+    };
+    
+    // Ejecutar inmediatamente
+    initializeMobileHamburger();
+    
+    // También ejecutar en resize
+    window.addEventListener('resize', initializeMobileHamburger);
 });

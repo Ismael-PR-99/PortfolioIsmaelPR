@@ -199,23 +199,143 @@ main {
     height: 3px;
     background-color: var(--primary); /* Dark color for visibility on green background */
     border-radius: 2px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-origin: center;
+}
+
+/* Estado activo - Cruz verde con animación dinámica */
+.hamburger-menu.is-active .line {
+    background-color: var(--lime-green) !important; /* Cruz siempre verde */
 }
 
 .hamburger-menu.is-active .line:nth-child(1) {
-    transform: translateY(11px) rotate(45deg);
+    transform: translateY(11px) rotate(45deg) scale(1.1);
 }
 
 .hamburger-menu.is-active .line:nth-child(2) {
     opacity: 0;
+    transform: scale(0);
 }
 
 .hamburger-menu.is-active .line:nth-child(3) {
-    transform: translateY(-11px) rotate(-45deg);
+    transform: translateY(-11px) rotate(-45deg) scale(1.1);
+}
+
+/* Efecto hover en hamburger */
+.hamburger-menu:hover .line {
+    transform: scale(1.05);
+}
+
+.hamburger-menu:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* Clases dinámicas para cambio de color según fondo */
+.hamburger-menu.on-green-bg .line {
+    background-color: var(--primary); /* Negro sobre fondo verde */
+}
+
+.hamburger-menu.on-light-bg .line {
+    background-color: var(--primary); /* Negro sobre fondo claro */
 }
 
 .hamburger-menu.on-dark-bg .line {
-    background-color: var(--lime-green);
+    background-color: var(--lime-green); /* Verde sobre fondo oscuro */
+}
+
+/* Mejoras específicas para hamburger menu en móvil */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 35px;
+        height: 35px;
+        z-index: 1002; /* Asegurar que esté siempre visible */
+        background: rgba(255, 255, 255, 0.1); /* Fondo sutil para mejor visibilidad */
+        border-radius: 4px;
+        padding: 4px;
+    }
+    
+    .hamburger-menu .line {
+        height: 3px; /* Más grueso en móvil */
+        transition: all 0.3s ease-in-out;
+        border-radius: 2px;
+    }
+    
+    /* Contraste máximo en móvil - Hero (fondo verde) */
+    .hamburger-menu.on-green-bg .line {
+        background-color: #1a1a1a !important; /* Negro sólido */
+        box-shadow: 0 0 4px rgba(0,0,0,0.4);
+    }
+    
+    /* Contraste máximo en móvil - Experiencia/Contacto (fondo claro) */
+    .hamburger-menu.on-light-bg .line {
+        background-color: #1a1a1a !important; /* Negro sólido */
+        box-shadow: 0 0 4px rgba(0,0,0,0.3);
+    }
+    
+    /* Contraste máximo en móvil - Proyectos (fondo oscuro) */
+    .hamburger-menu.on-dark-bg .line {
+        background-color: #a2e048 !important; /* Verde lima sólido */
+        box-shadow: 0 0 4px rgba(162,224,72,0.6);
+    }
+    
+    /* Estados hover en móvil */
+    .hamburger-menu.on-green-bg:hover .line {
+        background-color: #000 !important;
+    }
+    
+    .hamburger-menu.on-light-bg:hover .line {
+        background-color: #000 !important;
+    }
+    
+    .hamburger-menu.on-dark-bg:hover .line {
+        background-color: #b8f05c !important;
+    }
+}
+
+/* Animaciones para el hamburger menu */
+@keyframes hamburgerPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Animación de entrada para el menú */
+@keyframes menuSlideIn {
+    0% { 
+        transform: translateX(100%) scale(0.9);
+        opacity: 0;
+    }
+    100% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animación de salida para el menú */
+@keyframes menuSlideOut {
+    0% { 
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    100% { 
+        transform: translateX(100%) scale(0.9);
+        opacity: 0;
+    }
+}
+
+/* Animación para los enlaces */
+@keyframes linkFadeIn {
+    0% { 
+        opacity: 0;
+        transform: translateY(30px) rotateX(20deg);
+    }
+    100% { 
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
 }
 
 /* MAIN NAVIGATION PANEL */
@@ -225,40 +345,78 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, #2a2a2a 100%);
     z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transform: translateX(100%);
-    transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+    transform: translateX(100%) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    opacity: 0;
+    backdrop-filter: blur(10px);
 }
 
 .main-nav.is-active {
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
+    opacity: 1;
 }
 
 .main-nav a {
     color: var(--text-light);
     text-decoration: none;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 700;
-    margin: 1.5rem 0;
+    margin: 1.8rem 0;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(30px) rotateX(20deg);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    padding: 0.5rem 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Efecto hover en los enlaces */
+.main-nav a:hover {
+    color: var(--lime-green);
+    transform: translateY(0) scale(1.05);
+    background: rgba(162, 224, 72, 0.1);
+}
+
+.main-nav a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(162, 224, 72, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.main-nav a:hover::before {
+    left: 100%;
 }
 
 .main-nav.is-active a {
     opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.3s; /* Stagger the link animation */
+    transform: translateY(0) rotateX(0deg);
 }
 
-.main-nav a:nth-child(2) { transition-delay: 0.4s; }
-.main-nav a:nth-child(3) { transition-delay: 0.5s; }
-.main-nav a:nth-child(4) { transition-delay: 0.6s; }
+/* Animación escalonada mejorada */
+.main-nav.is-active a:nth-child(1) { 
+    transition-delay: 0.2s; 
+}
+.main-nav.is-active a:nth-child(2) { 
+    transition-delay: 0.3s; 
+}
+.main-nav.is-active a:nth-child(3) { 
+    transition-delay: 0.4s; 
+}
+.main-nav.is-active a:nth-child(4) { 
+    transition-delay: 0.5s; 
+}
 
 
 /* HERO SECTION */
@@ -1182,6 +1340,23 @@ footer {
     .hamburger-menu .line {
         height: 2px;
     }
+    
+    /* Mejoras para el menú de navegación móvil */
+    .main-nav a {
+        font-size: 1.8rem;
+        margin: 0.8rem 0;
+        padding: 0.4rem 1rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        line-height: 1.1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 90%;
+    }
 }
 
 /* Mejoras para móviles muy pequeños */
@@ -1213,5 +1388,24 @@ footer {
     .btn-download {
         padding: 0.5rem 1rem;
         font-size: 0.85rem;
+    }
+    
+    /* Menú de navegación para pantallas muy pequeñas */
+    .main-nav a {
+        font-size: 1.5rem !important;
+        margin: 0.6rem 0 !important;
+        padding: 0.3rem 0.8rem !important;
+        min-height: 45px !important;
+        line-height: 1.0 !important;
+    }
+}
+
+/* Mejoras para pantallas medianas */
+@media (max-width: 480px) and (min-width: 361px) {
+    .main-nav a {
+        font-size: 1.6rem !important;
+        margin: 0.7rem 0 !important;
+        padding: 0.35rem 0.9rem !important;
+        min-height: 48px !important;
     }
 }
