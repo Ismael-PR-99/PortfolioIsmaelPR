@@ -347,7 +347,7 @@ html { scroll-behavior: smooth; }
     width: 100%;
     height: 100%;
     z-index: -1;
-    pointer-events: none; /* Evita que el canvas intercepte eventos del ratón */
+    pointer-events: none;
 }
 
 /* Carrusel de frameworks */
@@ -653,4 +653,15 @@ button,
   /* Opcional: ocultar scrollbar visualmente */
   #frameworks-carousel::-webkit-scrollbar { display: none; }
   #frameworks-carousel { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* Canvas starry background */
+#stars-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
 }
