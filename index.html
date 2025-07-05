@@ -4,304 +4,162 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Ismael Piña Ramos | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js" defer></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="css/style.css?v=1.0">
+    <link rel="stylesheet" href="css/style.css?v=2.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="font-sans">
+<body>
 
-    <!-- Falling Leaves Animation -->
-    <div class="leaves-container">
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-        <div class="leaf"></div>
-    </div>
+    <div class="custom-cursor"></div>
 
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
+    <button class="hamburger-menu" id="hamburger-menu" aria-label="Abrir menú">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </button>
 
-    <!-- Barra de Progreso -->
-    <div id="scroll-progress-bar"></div>
+    <nav class="main-nav" id="nav-panel">
+        <a href="#experience">Sobre mí</a>
+        <a href="#experience">Experiencia y Formación</a>
+        <a href="#projects">Proyectos</a>
+        <a href="#contact">Contáctame</a>
+    </nav>
 
-    <!-- Header -->
-    <header class="backdrop-blur fixed top-0 left-0 w-full z-[100] shadow-lg transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- Logo/Nombre a la izquierda -->
-            <a href="https://github.com/Ismael-PR-99" target="_blank" class="flex items-center gap-2 group interactive z-10">
-                <span class="text-2xl font-bold tracking-tight group-hover:text-gray-600 transition-colors">Ismael-PR-99</span>
-            </a>
+    <main>
+        <!-- Hero Section -->
+        <section class="section-block hero">
+            <div class="hero-background">
+                <div class="hero-background-purple"></div>
+                <div class="hero-background-green"></div>
+            </div>
+            <div class="hero-decorations">
+                <div class="dots-square"></div>
+                <div class="stairs"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Ismael Piña Ramos</h1>
+                    <p><strong>Desarrollador web full-stack</strong></p>
+                    <p>Ex-técnico de mantenimiento y frigorista reconvertido en desarrollador web full-stack. Combino la disciplina en <span class="highlight">diagnóstico y resolución de averías críticas</span> con dominio de <span class="highlight">Java, Spring Boot, JavaScript, PHP, Laravel 12 y Tailwind</span> para entregar <span class="highlight">aplicaciones robustas, seguras</span> y orientadas a la experiencia de usuario. Perfil híbrido ideal para entornos que exigen <span class="highlight">fiabilidad operativa</span> y <span class="highlight">agilidad en producto digital</span>.</p>
+                </div> <!-- .hero-text -->
+                <div class="hero-image">
+                    <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="profile-link-container">
+                        <img src="images/IsmaelFoto.png" alt="Ismael Piña Ramos">
+                    </a>
+                    <div class="profile-arrow">&#8592; Pincha aquí</div>
+                </div>
+            </div>
+        </section>
 
-            <!-- Contenedor central para el botón hamburguesa (solo móvil) -->
-            <div class="md:hidden flex-1 flex justify-center">
-                <button id="menu-toggle" class="interactive p-2 rounded-md focus:outline-none" aria-label="Abrir menú">
-                    <div class="hamburger-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+        <!-- Experience and Education Section -->
+        <section id="experience" class="section-block alt fade-in-section">
+            <div class="decor-blob blob1"></div>
+            <div class="decor-blob blob2"></div>
+            <div class="container">
+                <h2 class="section-title">Experiencia y Formación</h2>
+                <div class="experience-grid">
+                    <div class="card">
+                        <h3>Sobre mí</h3>
+                        <p>Ex-técnico de mantenimiento y frigorista reconvertido en desarrollador web full-stack. Combino la disciplina en diagnóstico y resolución de averías críticas con dominio de <span class="highlight">Java, Spring Boot, JavaScript, PHP, Laravel 12 y Tailwind</span> para entregar aplicaciones robustas, seguras y orientadas a la experiencia de usuario. Perfil híbrido ideal para entornos que exigen fiabilidad operativa y agilidad en producto digital.</p>
                     </div>
-                </button>
-            </div>
-
-            <!-- Navegación -->
-            <nav id="main-nav" class="hidden md:flex md:items-center md:gap-6">
-                <!-- Navegación de Escritorio -->
-                <div id="desktop-nav" class="hidden md:flex items-center gap-6">
-                    <a href="#about" class="px-3 py-1 rounded-md transition font-medium interactive">Sobre mí</a>
-                    <a href="#experience" class="px-3 py-1 rounded-md transition font-medium interactive">Experiencia</a>
-                    <a href="#projects" class="px-3 py-1 rounded-md transition font-medium interactive">Proyectos</a>
-                    <a href="#skills" class="px-3 py-1 rounded-md transition font-medium interactive">Frameworks</a>
-                </div>
-            </nav>
-
-            <!-- Contenedor derecho para el botón de tema -->
-            <div class="flex items-center z-10">
-                <button id="theme-toggle" class="interactive p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                    <!-- Ahora el SVG de sol contiene el ícono de luna -->
-                    <svg id="theme-icon-sun" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                    </svg>
-                    <!-- Ahora el SVG de luna contiene el ícono de sol -->
-                    <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Menú Modal para Móvil -->
-    <div id="mobile-menu-backdrop" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[1999]"></div>
-    <div id="mobile-menu-modal" class="hidden fixed top-0 right-0 h-full w-[85%] max-w-xs bg-white shadow-lg z-[2000] p-6 flex flex-col">
-        <div class="flex justify-end mb-8">
-            <button id="mobile-menu-close-btn" class="interactive p-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-        <nav class="mobile-menu-nav flex flex-col items-center gap-6 text-center">
-            <a href="#about" class="interactive text-2xl font-bold">Sobre mí</a>
-            <a href="#experience" class="interactive text-2xl font-bold">Experiencia</a>
-            <a href="#projects" class="interactive text-2xl font-bold">Proyectos</a>
-            <a href="#skills" class="interactive text-2xl font-bold">Frameworks</a>
-            <a href="cv.html" class="btn btn-outline interactive mt-6">Ver CV</a>
-        </nav>
-    </div>
-
-    <!-- Starry Background (Dark Mode) -->
-    <canvas id="stars-bg"></canvas>
-
-<!-- INICIO HERO NUEVO -->
-<main class="flex items-center justify-center min-h-screen w-full">
-    <section class="hero">
-      <!-- Texto principal -->
-      <div class="intro">
-        <h1><span class="text-accent-bold">Ismael Piña Ramos</span></h1>
-        <p class="subtitle"><span class="highlight-text">Desarrollador web full-stack</span></p>
-        <p>
-          Ex-técnico de mantenimiento y frigorista reconvertido en <span class="highlight-text">desarrollador web full-stack</span>. Combino la disciplina en <span class="highlight-text">diagnóstico y resolución de averías críticas</span> con dominio de <span class="text-accent-bold">Java</span>, <span class="text-accent-bold">Spring Boot</span>, <span class="text-accent-bold">JavaScript</span>, <span class="text-accent-bold">PHP</span>, <span class="text-accent-bold">Laravel 12</span> y <span class="text-accent-bold">Tailwind</span> para entregar <span class="highlight-text">aplicaciones robustas, seguras</span> y orientadas a la <span class="highlight-text">experiencia de usuario</span>. Perfil híbrido ideal para entornos que exigen <span class="highlight-text">fiabilidad operativa</span> y <span class="highlight-text">agilidad en producto digital</span>.
-        </p>
-        <div class="btn-container">
-          <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="btn btn-linkedin interactive">LinkedIn</a>
-          <a href="https://github.com/Ismael-PR-99" target="_blank" class="btn btn-primary interactive">GitHub</a>
-          <a href="cv.html" class="btn btn-outline interactive">Ver CV</a>
-        </div>
-      </div>
-      <!-- Imagen de perfil -->
-      <div class="profile-avatar">
-        <img src="images/IsmaelFoto.png" alt="Foto de Ismael Piña Ramos" />
-      </div>
-    </section>
-  </main>
-  <!-- FIN HERO NUEVO -->
-
-  <!-- Experiencia -->
-    <section id="experience" class="max-w-6xl mx-auto px-4 py-20" data-aos="fade-up">
-        <h3 class="text-3xl font-bold mb-12 text-center"><span class="text-accent-bold">Experiencia y Formación</span></h3>
-        <div class="grid md:grid-cols-3 gap-10">
-            <!-- Card Sobre Mí -->
-            <div class="content-card flex flex-col gap-4">
-                <h4 class="text-xl font-semibold mb-2">Sobre mí</h4>
-                <p class="text-sm">
-                    Ex-técnico de mantenimiento y frigorista reconvertido en <span class="highlight-text">desarrollador web full-stack</span>. Combino la disciplina en <span class="highlight-text">diagnóstico y resolución de averías críticas</span> con dominio de <span class="text-accent-bold">Java</span>, <span class="text-accent-bold">Spring Boot</span>, <span class="text-accent-bold">JavaScript</span>, <span class="text-accent-bold">PHP</span>, <span class="text-accent-bold">Laravel 12</span> y <span class="text-accent-bold">Tailwind</span> para entregar <span class="highlight-text">aplicaciones robustas, seguras</span> y orientadas a la <span class="highlight-text">experiencia de usuario</span>. Perfil híbrido ideal para entornos que exigen <span class="highlight-text">fiabilidad operativa</span> y <span class="highlight-text">agilidad en producto digital</span>.
-                </p>
-            </div>
-            <!-- Card Experiencia -->
-            <div class="content-card flex flex-col gap-4">
-                <h4 class="text-xl font-semibold mb-2">Experiencia</h4>
-                <div>
-                    <span class="font-semibold">Prácticas Grado Superior DAW</span>
-                    <span class="block text-xs mb-1">Cesur Sevilla · 2023-2025</span>
-                    <p class="text-sm mb-2">
-                        <span class="highlight-text">Desarrollo de aplicaciones web</span> con tecnologías como <span class="text-accent-bold">Java</span>, <span class="text-accent-bold">PHP</span>, <span class="text-accent-bold">JavaScript</span>, <span class="text-accent-bold">Spring Boot</span>, <span class="text-accent-bold">Laravel</span>, <span class="text-accent-bold">Tailwind CSS</span> y <span class="text-accent-bold">Breeze</span>. Participación en proyectos reales, trabajando tanto en <span class="highlight-text">frontend</span> como en <span class="highlight-text">backend</span>, y adquiriendo experiencia en el desarrollo de <span class="highlight-text">soluciones modernas y escalables</span>.
-                    </p>
-                </div>
-            </div>
-            <!-- Card Educación -->
-            <div class="content-card flex flex-col gap-4">
-                <h4 class="text-xl font-semibold mb-2">Educación</h4>
-                <div>
-                    <span class="font-semibold">Grado Superior DAW</span>
-                    <span class="block text-xs mb-1">Cesur Sevilla · 2023-2025</span>
-                    <p class="text-sm mb-2">
-                        <span class="highlight-text">Desarrollo de aplicaciones web</span> con <span class="text-accent-bold">Java</span>, <span class="text-accent-bold">PHP</span>, <span class="text-accent-bold">JavaScript</span>, <span class="text-accent-bold">Spring Boot</span>, <span class="text-accent-bold">Laravel</span>, <span class="text-accent-bold">Tailwind CSS</span>, <span class="text-accent-bold">Breeze</span>.
-                    </p>
-                </div>
-                <div>
-                    <span class="font-semibold">Grado Medio en Técnico de Refrigeración</span>
-                    <span class="block text-xs mb-1">IES Virgen de los Reyes · 2022</span>
-                    <p class="text-sm mb-2">
-                        Formación profesional en sistemas de refrigeración, climatización y mantenimiento industrial. Adquisición de competencias técnicas y experiencia práctica en el sector.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Proyectos -->
-    <section id="projects" class="max-w-6xl mx-auto px-4 py-20" data-aos="fade-up">
-        <h3 class="text-3xl font-bold mb-12 text-center"><span class="text-accent-bold">Proyectos Destacados</span></h3>
-        <div class="flex flex-col gap-12">
-                <!-- Proyecto RefrigeraSpace -->
-                <div class="project-card content-card interactive" data-aos="fade-left">
-                    <div class="md:w-1/3 flex items-start justify-center mb-6 md:mb-0">
-                        <img src="images/RefrigeraSpace.png" alt="RefrigeraSpace" class="w-full h-auto object-contain object-center" />
-                    </div>
-                    <div class="md:w-2/3 md:pl-10 flex flex-col justify-center">
-                        <h4 class="text-2xl font-bold mb-3 transition-colors duration-300"><span class="highlight-text">RefrigeraSpace</span></h4>
-                        <p class="mb-4 text-lg transition-colors duration-300">
-                            <span class="highlight-text">Aplicación web</span> en <span class="text-accent-bold">Laravel 12</span> para cálculo de frigorías y selección de equipos de aire acondicionado. Incluye <span class="highlight-text">scraping automático</span>, <span class="highlight-text">generación de PDF</span> y <span class="highlight-text">panel de administración</span>.
-                        </p>
-                        <div class="flex items-center gap-3 mt-2 project-tech-icons">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" class="w-7 h-7 interactive" title="Laravel" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" class="w-7 h-7 interactive" title="PHP" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" class="w-7 h-7 interactive" title="MySQL" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" class="w-7 h-7 interactive" title="Tailwind CSS" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" class="w-7 h-7 interactive" title="JavaScript" />
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" class="w-7 h-7 interactive" title="Node.js" />
-                        </div>
-                        <div class="flex gap-4 mt-4">
-                            <a href="https://refrigeraspace.onrender.com" target="_blank" class="btn btn-primary interactive">Ver App</a>
-                            <a href="https://github.com/Ismael-PR-99/refrigeraspace" target="_blank" class="btn btn-outline interactive">GitHub</a>
+                    <div class="card">
+                        <h3>Experiencia</h3>
+                        <div class="experience-item">
+                            <h4>Prácticas Grado Superior DAW</h4>
+                            <p class="meta">Cesur Sevilla · 2023-2025</p>
+                            <p>Desarrollo de aplicaciones web con tecnologías como <span class="highlight">Java, PHP, JavaScript, Spring Boot, Laravel, Tailwind CSS y Breeze.</span> Participación en proyectos reales, trabajando tanto en frontend como en backend, y adquiriendo experiencia en el desarrollo de soluciones modernas y escalables.</p>
                         </div>
                     </div>
-                </div>
-            
-        </div>
-    </section>
-
-    <!-- Tecnologías -->
-    <section id="skills" class="relative py-24 overflow-hidden" data-aos="fade-up">
-        <div class="absolute inset-0 pointer-events-none opacity-30" style="background: radial-gradient(ellipse at 80% 10%, #ffffff33 0%, transparent 70%), radial-gradient(ellipse at 10% 90%, #ffffff33 0%, transparent 70%);"></div>
-        <div class="w-full px-0 relative z-10">
-            <h3 class="text-4xl font-extrabold mb-3 text-center"><span class="text-accent-bold">Frameworks</span></h3>
-            <p class="text-center text-lg mb-14 max-w-2xl mx-auto">
-                <span class="highlight-text">Herramientas y tecnologías</span> que domino y utilizo en mis proyectos para crear <span class="highlight-text">soluciones modernas, robustas y escalables.</span>
-            </p>
-            <div class="overflow-x-hidden w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-5">
-                <div id="frameworks-carousel" class="flex whitespace-nowrap animate-frameworks-carousel will-change-transform">
-                    <!-- Frameworks (triplicados para bucle perfecto) -->
-                    <div class="flex items-center">
-                        <!-- Laravel -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" />
-                            <span class="font-semibold tracking-wide text-lg transition">Laravel</span>
+                    <div class="card">
+                        <h3>Educación</h3>
+                        <div class="experience-item">
+                            <h4>Grado Superior DAW</h4>
+                            <p class="meta">Cesur Sevilla · 2023-2025</p>
+                            <p>Desarrollo de aplicaciones web con <span class="highlight">Java, PHP, JavaScript, Spring Boot, Laravel, Tailwind CSS, Breeze.</span></p>
                         </div>
-                        <!-- Angular -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-plain.svg" alt="Angular" />
-                            <span class="font-semibold tracking-wide text-lg transition">Angular</span>
-                        </div>
-                        <!-- Tailwind CSS -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" />
-                            <span class="font-semibold tracking-wide text-lg transition">Tailwind CSS</span>
-                        </div>
-                        <!-- Postman -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-plain.svg" alt="Postman" />
-                            <span class="font-semibold tracking-wide text-lg transition">Postman</span>
-                        </div>
-                        <!-- Symfony -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/symfony/symfony-original.svg" alt="Symfony" />
-                            <span class="font-semibold tracking-wide text-lg transition">Symfony</span>
-                        </div>
-                        <!-- Visual Studio Code -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-plain.svg" alt="VisualStudio" />
-                            <span class="font-semibold tracking-wide text-lg transition">VS Code</span>
-                        </div>
-                        <!-- React -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" />
-                            <span class="font-semibold tracking-wide text-lg transition">React</span>
-                        </div>
-                        <!-- PostgreSQL -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain.svg" alt="PostgreSQL" />
-                            <span class="font-semibold tracking-wide text-lg transition">PostgreSQL</span>
-                        </div>
-                        <!-- Docker -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" alt="Docker" />
-                            <span class="font-semibold tracking-wide text-lg transition">Docker</span>
-                        </div>
-                        <!-- NestJS -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg" alt="NestJS" />
-                            <span class="font-semibold tracking-wide text-lg transition">NestJS</span>
-                        </div>
-                        <!-- JavaScript -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg" alt="JavaScript" />
-                            <span class="font-semibold tracking-wide text-lg transition">JavaScript</span>
-                        </div>
-                        <!-- Github -->
-                        <div class="content-card framework-card mx-4 interactive">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="64"
-                              height="64"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="#4a4a4a"
-                              stroke-width="1"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            >
-                              <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-                            </svg>
-                            <span class="font-semibold tracking-wide text-lg transition">Github</span>
+                        <div class="experience-item">
+                            <h4>Grado Medio en Técnico de Refrigeración</h4>
+                            <p class="meta">IES Virgen de los Reyes · 2022</p>
+                            <p>Formación profesional en sistemas de refrigeración, climatización y mantenimiento industrial. Adquisición de competencias técnicas y experiencia práctica en el sector.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Animación CSS para el carrusel -->
-    </section>
+        </section>
 
-                    <!-- Footer (opcional) -->
-                    <footer class="border-t py-8 text-center">
-                        <p>© 2025 Ismael Piña Ramos. Todos los derechos reservados.</p>
-                    </footer>
-                    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <!-- Projects Section -->
+        <section id="projects" class="section-block fade-in-section">
+            <div class="container">
+                <h2 class="section-title project-title">Proyecto Destacado</h2>
+                <div class="project-featured-card">
+                    <div class="project-image-container">
+                        <img src="images/RefrigeraSpace.png" alt="Vista previa de RefrigeraSpace">
+                    </div>
+                    <div class="project-details">
+                        <h3>RefrigeraSpace</h3>
+                        <p>Aplicación web en <span class="highlight">Laravel 12</span> para cálculo de frigorías y selección de equipos de aire acondicionado. Incluye <strong>scraping automático, generación de PDF y panel de administración.</strong></p>
+                        <div class="project-tech">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" alt="Laravel" title="Laravel"/>
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" title="PHP"/>
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" title="MySQL"/>
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" title="Tailwind CSS"/>
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" title="JavaScript"/>
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" title="Node.js"/>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://refrigeraspace.onrender.com/" target="_blank" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                <span>Ver App</span>
+                            </a>
+                            <a href="https://github.com/Ismael-PR-99/RefrigeraSpace" target="_blank" class="btn btn-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                                <span>GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-block alt fade-in-section">
+             <div class="decor-blob blob3"></div>
+            <div class="container center-content">
+                <h2 class="section-title">Ponte en Contacto</h2>
+                <p>Siempre estoy abierto a conectar. ¡Hablemos!</p>
+                <div class="contact-links">
+                    <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"></path></svg>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/Ismael-PR-99" target="_blank" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2025 Ismael Piña Ramos</p>
+            <div class="footer-social-links">
+                <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+                </a>
+                <a href="https://github.com/Ismael-PR-99" target="_blank" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/ismael_pr99/" target="_blank" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.347 3.608 1.322.975.975 1.26 2.242 1.322 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.347 2.633-1.322 3.608-.975.975-2.242 1.26-3.608 1.322-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.347-3.608-1.322-.975-.975-1.26-2.242-1.322-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.058-1.366.347-2.633 1.322-3.608.975-.975 2.242-1.26 3.608-1.322C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.333.012 7.053.07 5.773.128 4.618.422 3.68 1.36S.128 5.773.07 7.053C.012 8.333 0 8.741 0 12c0 3.259.012 3.667.07 4.947.058 1.28.353 2.435 1.29 3.373.937.937 2.093 1.232 3.373 1.29C8.333 23.988 8.741 24 12 24s3.667-.012 4.947-.07c1.28-.058 2.435-.353 3.373-1.29.937-.937 1.232-2.093 1.29-3.373.058-1.28.07-1.688.07-4.947s-.012-3.667-.070-4.947c-.058-1.28-.353-2.435-1.29-3.373-.937-.937-2.093-1.232-3.373-1.30C15.667.012 15.259.004 12 0z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
 <script src="js/scripts.js" defer></script>
 </body>
 </html>
