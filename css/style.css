@@ -578,12 +578,15 @@ body {
 .text-accent-bold {
     font-weight: 600;
     color: var(--color-accent);
+    font-style: italic;
 }
 
 .highlight-text {
-    background-color: var(--highlight-bg);
-    padding: 0.1em 0.3em;
-    border-radius: 0.3em;
+    font-weight: bold;
+    font-style: italic;
+    background: none;
+    padding: 0;
+    border-radius: 0;
 }
 
 /* Ocultar cursor por defecto en elementos interactivos */
