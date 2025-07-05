@@ -6,59 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('loaded');
     });
 
-    // --- CURSOR PERSONALIZADO ---
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
-    const interactiveElements = document.querySelectorAll('.interactive');
-
-    // Ocultar el cursor inicialmente y prepararlo para la animación
-    gsap.set([cursorDot, cursorOutline], { opacity: 0 });
-
-    // Usamos GSAP para una animación más fluida y fiable
-    document.addEventListener('mousemove', (e) => {
-        const { clientX, clientY } = e;
-
-        // Hacemos visible el cursor en el primer movimiento
-        if (gsap.getProperty(cursorDot, "opacity") === 0) {
-            gsap.to([cursorDot, cursorOutline], { opacity: 1, duration: 0.3 });
-        }
-
-        // Mueve el punto central instantáneamente
-        gsap.to(cursorDot, { 
-            x: clientX, 
-            y: clientY, 
-            duration: 0.1, 
-            ease: 'power2.out' 
-        });
-
-        // Mueve el contorno con un ligero retraso para el efecto de "arrastre"
-        gsap.to(cursorOutline, { 
-            x: clientX, 
-            y: clientY, 
-            duration: 0.4, 
-            ease: 'power2.out' 
-        });
-    });
-
-    // Añade la clase 'interactive' a todos los enlaces y botones para que el cursor reaccione
-    document.querySelectorAll('a, button, .interactive').forEach(el => {
-        el.addEventListener('mouseover', () => {
-            gsap.to(cursorOutline, { 
-                scale: 1.5, 
-                backgroundColor: 'rgba(61, 218, 215, 0.1)',
-                duration: 0.3
-            });
-        });
-        el.addEventListener('mouseleave', () => {
-            gsap.to(cursorOutline, { 
-                scale: 1, 
-                backgroundColor: 'transparent',
-                duration: 0.3
-            });
-        });
-    });
-
-
     // --- BARRA DE PROGRESO DE SCROLL ---
     const progressBar = document.getElementById('scroll-progress-bar');
     window.addEventListener('scroll', () => {
@@ -274,6 +221,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         createStars();
         animateStars();
+    })();
+
+    // ===== Custom Crosshair Cursor Movement =====
+    (function() {
+        const customCursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            // Offset half the cursor size (20px/2 = 10px) to center it
+            customCursor.style.left = `${clientX - 10}px`;
+            customCursor.style.top = `${clientY - 10}px`;
+        });
     })();
 
 });

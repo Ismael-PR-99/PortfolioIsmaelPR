@@ -176,9 +176,9 @@ p.subtitle {
   #mobile-nav-container { display: flex; } /* Mostrar contenedor de nav móvil */
 
   /* Ocultar cursor personalizado en móvil y usar cursor nativo */
-  body { cursor: default; }
-  .cursor-dot,
-  .cursor-outline { display: none !important; }
+  /* body { cursor: default; } */
+  /* .cursor-dot,
+  .cursor-outline { display: none !important; } */
   /* Ajustes carrusel Frameworks en móvil */
   .animate-frameworks-carousel {
     animation-duration: 10s; /* Más rápido en móvil */
@@ -393,41 +393,7 @@ body.loaded #preloader {
 }
 
 /* ===== Cursor Personalizado ===== */
-body {
-    cursor: none;
-}
-
-.cursor-dot, .cursor-outline {
-    pointer-events: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
-    z-index: 10002; /* Aumentado para estar sobre la barra de progreso */
-    opacity: 0; /* La visibilidad inicial la controla JS */
-    transform: translate(-50%, -50%); /* Centra el cursor en el punto exacto */
-}
-
-.cursor-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--cursor-color); /* Usar color de cursor */
-    transition: transform 0.1s linear;
-}
-
-.cursor-outline {
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--cursor-color); /* Usar color de cursor */
-    /* Se elimina la transición de width/height para evitar conflictos con GSAP scale */
-    transition: transform 0.2s ease-out, border-color 0.3s ease, background-color 0.3s ease;
-}
-
-.cursor-outline.hover {
-    /* El cambio de tamaño ahora se gestiona con GSAP (scale) */
-    border-color: var(--color-accent-hover);
-    background-color: rgba(61, 218, 215, 0.1);
-}
+/* Se eliminan las reglas de cursor personalizado */
 
 /* ===== Barra de Progreso de Scroll ===== */
 #scroll-progress-bar {
@@ -625,11 +591,25 @@ body {
     border-radius: 0;
 }
 
-/* Ocultar cursor por defecto en elementos interactivos */
-a,
-button,
-.interactive {
-  cursor: none;
+/* ===== Custom Crosshair Cursor ===== */
+#custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 99999;
+    background-color: transparent;
+    /* Draw crosshair: vertical and horizontal lines centered */
+    background-image: 
+      linear-gradient(to right, transparent 9px, var(--cursor-color) 9px, var(--cursor-color) 11px, transparent 11px),
+      linear-gradient(to bottom, transparent 9px, var(--cursor-color) 9px, var(--cursor-color) 11px, transparent 11px);
+}
+
+/* Restore crosshair cursor */
+body, a, button, .interactive {
+    cursor: crosshair !important;
 }
 
 @media (max-width: 768px) {
