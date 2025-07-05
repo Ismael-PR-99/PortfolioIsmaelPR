@@ -158,12 +158,18 @@ p.subtitle {
     flex-direction: column-reverse;
     text-align: center;
     padding: 3rem 1.5rem;
+    margin-top: 5rem; /* Empuja el cuadro hacia abajo en móvil */
   }
 
   .hero .intro {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .hero .intro h1 {
+    font-size: 2rem;           /* Reducir tamaño en móvil */
+    white-space: nowrap;       /* Evitar que el nombre se divida en varias líneas */
   }
 
   #desktop-nav { display: none; } /* Ocultar nav de escritorio en móvil */
