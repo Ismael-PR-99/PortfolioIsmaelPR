@@ -135,4 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
             profileImg.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
         });
     }
+
+    /* Activar animación del marco de la foto de perfil */
+    const profileImage = document.querySelector('.hero-image');
+    if (profileImage) {
+        profileImage.classList.add('animate-border');
+    }
 });

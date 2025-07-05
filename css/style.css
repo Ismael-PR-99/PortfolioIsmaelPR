@@ -9,6 +9,7 @@
   --text-dark: #1a1a1a;
   --bg-light: #f7f7f7;
   --accent-orange: #fed8b1; /* Pastel orange for blobs */
+  --highlight: #93C572; /* Pistachio green for highlights */
 }
 
 * {
@@ -118,6 +119,31 @@ header nav a {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   color: var(--secondary);
+}
+
+/* Added download button style */
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--secondary);
+  color: var(--primary);
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--secondary);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+.btn-download svg {
+  margin-right: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  fill: var(--primary);
+}
+.btn-download:hover {
+  background-color: var(--highlight);
+  color: var(--text-light);
 }
 
 /*
@@ -326,32 +352,32 @@ main {
 
 .hero-image {
     position: relative;
-    padding: 0.4rem;
-    border: 4px solid var(--secondary);
-    background-color: var(--secondary);
-    border-radius: 50%; /* Circular shape */
-    z-index: 2; /* Ensure image is on top */
-    perspective: 1000px; /* Added perspective for 3D effect */
+    display: inline-block;
+    padding: 6px; /* Espacio para el neón */
+}
+
+.hero-image::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 50%;
+    border: 2px solid #fff; /* Borde neón blanco */
+    box-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 16px rgba(255,255,255,0.6), 0 0 24px rgba(0,0,0,0.8);
+    z-index: 1;
 }
 
 .hero-image img {
+    position: relative;
+    z-index: 2;
     display: block;
     width: 100%;
-    max-width: 300px;
+    max-width: 200px; /* Foto más pequeña */
     border-radius: 50%;
-    transform-style: preserve-3d;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.4s ease-out;
-    object-fit: cover;
-    object-position: center 15%; /* Adjusted for better framing */
-    border: 3px solid var(--primary);
-}
-
-.hero-image img:hover {
-    cursor: none; /* Mantener cursor personalizado */
-}
-
-.highlight {
-  color: var(--secondary);
 }
 
 /* ABOUT SECTION */
@@ -432,8 +458,6 @@ main {
     color: var(--primary);
     font-weight: 700;
     background-color: #e8f5e9; /* Light green highlight */
-    padding: 2px 4px;
-    border-radius: 4px;
 }
 
 .experience-item {
@@ -711,11 +735,11 @@ footer {
     .footer-social-links a svg {
         width: 24px;
         height: 24px;
-        fill: #fff;
+        fill: var(--secondary) !important;
         transition: fill 0.3s;
     }
     .footer-social-links a:hover svg {
-        fill: #6c63ff;
+        fill: var(--highlight) !important;
     }
 /* RESPONSIVE */
 @media (max-width: 992px) {
@@ -917,4 +941,10 @@ footer {
     height: 20px;
     fill: var(--lime-green);
     margin-right: 0.5rem;
+}
+
+/* Highlight important recruiter-focused text */
+.highlight {
+  color: var(--highlight);
+  font-weight: 700;
 }
