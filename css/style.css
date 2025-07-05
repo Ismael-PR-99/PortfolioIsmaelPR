@@ -179,6 +179,30 @@ p.subtitle {
   body { cursor: default; }
   .cursor-dot,
   .cursor-outline { display: none !important; }
+  /* Ajustes carrusel Frameworks en móvil */
+  .animate-frameworks-carousel {
+    animation-duration: 10s; /* Más rápido en móvil */
+  }
+  .framework-card {
+    min-width: 120px; /* Menor ancho en móvil */
+    padding: 1rem 0.5rem;
+  }
+  .framework-card img,
+  .framework-card svg {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  /* Asegurar animación más rápida con alta especificidad */
+  #frameworks-carousel.animate-frameworks-carousel {
+    animation: frameworks-carousel 2s linear infinite !important;
+  }
+
+  /* Ajuste tamaño carrusel */
+  #frameworks-carousel {
+    transform: scale(0.8);
+    transform-origin: center;
+  }
 }
 
 /* ================================== */
@@ -482,8 +506,9 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    min-width: 160px;
-    padding: 1.5rem 1rem;
+    width: 160px;    /* Ancho fijo para cuadrado uniforme */
+    height: 160px;   /* Alto fijo para cuadrado uniforme */
+    padding: 1rem;
 }
 
 .framework-card img, .framework-card svg {
@@ -605,4 +630,27 @@ a,
 button,
 .interactive {
   cursor: none;
+}
+
+@media (max-width: 768px) {
+  /* Quitar escala al carrusel para mostrar todos los elementos */
+  #frameworks-carousel { transform: none !important; }
+  
+  /* Ajustar ancho de tarjetas para más elementos visibles */
+  .framework-card { min-width: 100px !important; }
+  
+  /* Restaurar scroll manual de frameworks en móvil */
+  #frameworks-carousel {
+    animation: none !important;      /* Elimina auto-loop */
+    overflow-x: auto;                /* Permite scroll horizontal */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .framework-card {
+    flex: 0 0 auto;                  /* Evita shrink y mantiene el ancho */
+    scroll-snap-align: start;        /* Snap en inicio */
+  }
+  /* Opcional: ocultar scrollbar visualmente */
+  #frameworks-carousel::-webkit-scrollbar { display: none; }
+  #frameworks-carousel { -ms-overflow-style: none; scrollbar-width: none; }
 }
