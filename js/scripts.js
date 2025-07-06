@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (i < text.length) {
                 span.innerHTML = text.slice(0, i + 1);
                 i++;
-                setTimeout(typeWriter, 100);
+                setTimeout(typeWriter, 40); // Más rápido
             } else {
                 setTimeout(() => cursor.style.display = 'none', 2000);
             }
