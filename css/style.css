@@ -20,10 +20,11 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--primary);
+  background-color: #fff !important;
   color: var(--text-light);
   overflow-x: hidden;
   cursor: none; /* Oculta el cursor por defecto */
+  border-bottom: none !important;
 }
 
 /* Deshabilitar cursor por defecto (pointer) en elementos interactivos */
@@ -90,6 +91,11 @@ header {
   width: 100%;
   padding: 1.5rem 2rem;
   z-index: 100;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
 }
 
 .header-container {
@@ -157,6 +163,11 @@ header nav a {
 */
 main {
   width: 100%;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
 }
 
 .section-block {
@@ -165,10 +176,15 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
 }
 
 .section-block.alt {
-  background-color: #f8f9fa; /* Gris más claro */
+  background-color: #f5f6fa !important;
   color: var(--text-dark);
 }
 
@@ -192,6 +208,11 @@ main {
     flex-direction: column;
     justify-content: space-around;
     padding: 0;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    background-image: none !important;
+    background-color: transparent !important;
 }
 
 .hamburger-menu .line {
@@ -255,6 +276,11 @@ main {
         background: rgba(255, 255, 255, 0.1); /* Fondo sutil para mejor visibilidad */
         border-radius: 4px;
         padding: 4px;
+        border-bottom: none !important;
+        box-shadow: none !important;
+        background: none !important;
+        background-image: none !important;
+        background-color: transparent !important;
     }
     
     .hamburger-menu .line {
@@ -355,6 +381,11 @@ main {
     transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     opacity: 0;
     backdrop-filter: blur(10px);
+    border-bottom: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    background-image: none !important;
+    background-color: transparent !important;
 }
 
 .main-nav.is-active {
@@ -426,6 +457,11 @@ main {
     display: flex; /* Use flexbox for alignment */
     align-items: center;
     justify-content: center; /* Center the content container */
+    border-bottom: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    background-image: none !important;
+    background-color: transparent !important;
 }
 
 .hero-background {
@@ -434,19 +470,9 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    z-index: 0; /* Capa base */
-}
-
-.hero-background-purple {
-    flex: 1; /* Takes up remaining space */
-    background-color: var(--primary);
-}
-
-.hero-background-green {
-    width: 45%; /* Width of the green area */
-    background-color: var(--secondary);
-    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+    z-index: 0;
+    display: block;
+    background: linear-gradient(120deg, var(--primary) 60%, var(--secondary) 61%);
 }
 
 .hero-content {
@@ -578,10 +604,11 @@ main {
     gap: 2rem;
     position: relative;
     z-index: 1;
+    background-color: #f5f6fa !important;
 }
 
 .experience-grid .card {
-    background-color: #fff;
+    background-color: #fff !important;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -687,7 +714,7 @@ main {
     display: flex;
     align-items: center;
     gap: 3rem;
-    background-color: #2a2a2a; /* Tarjeta en un tono más claro de negro */
+    background-color: #2a2a2a !important;
     padding: 3rem;
     border-radius: 24px;
     box-shadow: 0 16px 40px rgba(0,0,0,0.2); /* Sombra más sutil */
@@ -941,8 +968,8 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .hero-background-green {
-        display: none; /* Hide green background on mobile */
+    .hero-background {
+        background: var(--primary) !important;
     }
     .hero-content {
         flex-direction: column;
@@ -1202,9 +1229,7 @@ footer {
 /* Posicionar social links al fondo del hero, verticalmente */
 .section-block.hero {
     position: relative;
-    border-bottom: none !important;
-    box-shadow: none !important;
-    background-image: none !important;
+    /* Elimina cualquier override de fondo transparente */
 }
 .hero-social-bottom {
     position: absolute;
@@ -1432,4 +1457,48 @@ footer {
     position: static !important;
     z-index: 100 !important;
   }
+}
+
+/* Eliminar barra verde solo en el menú desplegable */
+.main-nav,
+.main-nav.is-active,
+.main-nav.open {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: #1a1a1a !important;
+  background-image: none !important;
+}
+
+.main-nav::after,
+.main-nav::before,
+.main-nav.is-active::after,
+.main-nav.is-active::before {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  background-image: none !important;
+  height: 0 !important;
+}
+
+#projects.section-block {
+    background-color: #1a1a1a !important;
+}
+
+@media (max-width: 768px) {
+  hr, .divider, .section-block.alt::before, .section-block.alt::after {
+    border: none !important;
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    height: 0 !important;
+  }
+}
+
+.sticky-green-bar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 6px;
+    background: var(--secondary);
+    z-index: 9999;
 }
