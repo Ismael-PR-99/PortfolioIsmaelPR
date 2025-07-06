@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM cargado, inicializando scripts...');
+    
     const hamburger = document.getElementById('hamburger-menu');
     const navPanel = document.getElementById('nav-panel');
     let isMenuOpen = false;
@@ -91,7 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('=== DEBUG MENÚ HAMBURGUESA ===');
     console.log('Hamburger element:', hamburger);
     console.log('Nav panel element:', navPanel);
-    console.log('Nav links found:', navLinks.length);
+    if (navPanel) {
+        const debugNavLinks = navPanel.querySelectorAll('a');
+        console.log('Nav links found:', debugNavLinks.length);
+    }
     
     // Verificar que todas las secciones de destino existan
     const targetSections = ['#hero', '#experience', '#projects', '#contact'];
@@ -287,9 +292,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- CUSTOM CURSOR --- 
+    // --- CUSTOM CURSOR - SOLO ESCRITORIO --- 
     const cursor = document.querySelector('.custom-cursor');
-    if (cursor) {
+    console.log('🖱️ Inicializando cursor personalizado...');
+    console.log('Cursor element:', cursor);
+    console.log('Window width:', window.innerWidth);
+    
+    if (cursor && window.innerWidth > 768) {
+        console.log('✅ Activando cursor personalizado para escritorio');
+        cursor.style.display = 'block';
+        
         window.addEventListener('mousemove', e => {
             cursor.style.left = `${e.clientX}px`;
             cursor.style.top = `${e.clientY}px`;
@@ -300,7 +312,31 @@ document.addEventListener('DOMContentLoaded', () => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
+        
+        console.log('Cursor personalizado inicializado para escritorio');
+    } else if (cursor && window.innerWidth <= 768) {
+        // Ocultar cursor personalizado en móvil
+        cursor.style.display = 'none';
+        console.log('Cursor personalizado deshabilitado en móvil');
+    } else if (!cursor) {
+        console.warn('⚠️ Elemento cursor no encontrado en el DOM');
     }
+
+    // --- RESPONSIVE CURSOR HANDLING ---
+    window.addEventListener('resize', () => {
+        const cursor = document.querySelector('.custom-cursor');
+        if (cursor) {
+            if (window.innerWidth > 768) {
+                cursor.style.display = 'block';
+                document.body.style.cursor = 'none';
+                console.log('Cursor personalizado activado en escritorio');
+            } else {
+                cursor.style.display = 'none';
+                document.body.style.cursor = 'auto';
+                console.log('Cursor personalizado desactivado en móvil');
+            }
+        }
+    });
 
     // --- PARALLAX EFFECT ON HERO DECORATIONS ---
     const dots = document.querySelector('.dots-square');
@@ -1382,4 +1418,56 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar efecto de persecución del botón CV
     setTimeout(addCVButtonChaseEffect, 2000);
+    
+    // --- BARRA DE PROGRESO VERDE (SOLO MÓVIL) ---
+    let ticking = false;
+    
+    const updateScrollProgress = () => {
+        // Solo funcionar en móvil
+        if (window.innerWidth > 768) return;
+        
+        const progressBar = document.querySelector('.sticky-green-bar');
+        if (!progressBar) {
+            console.warn('Barra de progreso no encontrada');
+            return;
+        }
+        
+        // Calcular progreso del scroll
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+        
+        // Actualizar ancho de la barra
+        progressBar.style.width = `${scrollPercent}%`;
+        
+        // Debug log cada 10%
+        if (scrollPercent % 10 < 1) {
+            console.log(`Scroll progress: ${scrollPercent.toFixed(1)}%`);
+        }
+        
+        ticking = false;
+    };
+    
+    const requestScrollUpdate = () => {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollProgress);
+            ticking = true;
+        }
+    };
+    
+    // Solo añadir listener en móvil
+    if (window.innerWidth <= 768) {
+        window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 768) {
+                requestScrollUpdate();
+            }
+        });
+        
+        // Inicializar progreso
+        updateScrollProgress();
+        console.log('Barra de progreso móvil inicializada');
+    }
+    
+    console.log('✅ Todos los scripts inicializados correctamente');
 });

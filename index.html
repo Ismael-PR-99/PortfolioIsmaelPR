@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Ismael Piña Ramos | Portfolio</title>
-    <link rel="stylesheet" href="css/style.css?v=2.9">
+    <link rel="stylesheet" href="css/style.css?v=3.3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
@@ -166,5 +166,22 @@
     <div class="sticky-green-bar"></div>
 
 <script src="js/scripts.js" defer></script>
+
+<script>
+// Script de debug inmediato
+console.log('🔍 DEBUG INMEDIATO:');
+console.log('DOM Estado:', document.readyState);
+console.log('Viewport:', window.innerWidth + 'x' + window.innerHeight);
+
+// Verificar elementos críticos
+setTimeout(() => {
+    console.log('--- VERIFICACIÓN DE ELEMENTOS ---');
+    console.log('Hero section:', document.querySelector('#hero') ? '✅' : '❌');
+    console.log('Custom cursor:', document.querySelector('.custom-cursor') ? '✅' : '❌');
+    console.log('Hamburger menu:', document.querySelector('#hamburger-menu') ? '✅' : '❌');
+    console.log('Nav panel:', document.querySelector('#nav-panel') ? '✅' : '❌');
+    console.log('Body style cursor:', window.getComputedStyle(document.body).cursor);
+}, 100);
+</script>
 </body>
 </html>
