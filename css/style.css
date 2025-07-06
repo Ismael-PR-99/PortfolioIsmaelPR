@@ -1409,3 +1409,10 @@ footer {
         min-height: 48px !important;
     }
 }
+
+@media (max-width: 768px) {
+  .fade-in-section {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
