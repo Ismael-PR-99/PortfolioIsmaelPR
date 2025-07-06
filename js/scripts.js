@@ -58,10 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Cerrar el menú al hacer clic en un enlace
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (navPanel.classList.contains('is-active')) {
-                    toggleMenu();
-                }
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                console.log(`Clic en enlace del menú: ${href}`);
+                
+                // Permitir que el scroll suave se ejecute primero
+                setTimeout(() => {
+                    if (navPanel.classList.contains('is-active')) {
+                        console.log('Cerrando menú después del scroll');
+                        toggleMenu();
+                    }
+                }, 300); // Aumentar delay para dar más tiempo al scroll
             });
         });
 
@@ -80,6 +87,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- DEBUG: Verificar que todos los elementos existan ---
+    console.log('=== DEBUG MENÚ HAMBURGUESA ===');
+    console.log('Hamburger element:', hamburger);
+    console.log('Nav panel element:', navPanel);
+    console.log('Nav links found:', navLinks.length);
+    
+    // Verificar que todas las secciones de destino existan
+    const targetSections = ['#hero', '#experience', '#projects', '#contact'];
+    targetSections.forEach(target => {
+        const element = document.querySelector(target);
+        console.log(`Sección ${target}:`, element ? 'ENCONTRADA' : 'NO ENCONTRADA');
+        if (element) {
+            console.log(`  - Posición: ${element.offsetTop}px`);
+            console.log(`  - Altura: ${element.offsetHeight}px`);
+        }
+    });
+    console.log('=== FIN DEBUG ===');
+
     // --- SCROLL SUAVE ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -88,10 +113,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetElement = document.querySelector(targetId);
 
             if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                // Calcular offset para header fijo (ajustar según el dispositivo)
+                const isMobile = window.innerWidth <= 768;
+                const headerHeight = isMobile ? 60 : 80;
+                const elementPosition = targetElement.offsetTop - headerHeight;
+                
+                // Scroll suave con offset
+                window.scrollTo({
+                    top: Math.max(0, elementPosition),
+                    behavior: 'smooth'
                 });
+                
+                console.log(`Navegando a: ${targetId}, posición: ${elementPosition}, móvil: ${isMobile}`);
+                
+                // Método alternativo para navegadores que no soporten scrollTo smooth
+                if (!('scrollBehavior' in document.documentElement.style)) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            } else {
+                console.warn(`Elemento no encontrado: ${targetId}`);
             }
         });
     });
@@ -322,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // ESCRITORIO: Comportamiento normal según sección
             hamburger.classList.remove('mobile-mode');
-            hamburger.classList.add('on-green-bg'); // Estado inicial en hero
+            hamburger.classList.add('on-green-bg'); // Estado inicial in hero
             
             // Limpiar estilos inline para permitir CSS normal en escritorio
             const lines = hamburger.querySelectorAll('.line');

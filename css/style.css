@@ -176,6 +176,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  scroll-margin-top: 80px; /* Offset para header fijo */
   border-bottom: none !important;
   box-shadow: none !important;
   background: none !important;
@@ -1572,4 +1573,27 @@ body .hamburger-menu.is-active.on-dark-bg .line {
         background-color: #a2e048 !important; /* Verde lima fijo en móvil */
         box-shadow: 0 0 10px rgba(162,224,72,1) !important;
     }
+}
+
+/* SCROLL SUAVE - Mejoras para navegación */
+.section-block {
+  padding: 6rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-margin-top: 80px; /* Offset para header fijo */
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  background-image: none !important;
+  background-color: transparent !important;
+}
+
+/* Offset específico para móvil */
+@media (max-width: 768px) {
+  .section-block {
+    scroll-margin-top: 60px; /* Menos offset en móvil */
+    padding: 3rem 1rem;
+  }
 }
