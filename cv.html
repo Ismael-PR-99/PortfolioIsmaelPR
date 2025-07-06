@@ -4,20 +4,176 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CV - Ismael Piña Ramos</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --secondary: #a2e048;
+      --lime-green: #a2e048;
+      --text-light: #ffffff;
+      --text-dark: #1a1a1a;
+      --bg-light: #f7f7f7;
+      --highlight: #93C572;
+    }
+
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    html, body { 
+      height: 100%; 
+      background-color: var(--bg-light);
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .container { 
+      display: flex; 
+      flex-direction: column; 
+      height: 100vh; 
+      align-items: center; 
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    .back-btn {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--secondary);
+      color: var(--primary);
+      padding: 0.75rem 1.5rem;
+      border: 2px solid var(--secondary);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      gap: 0.5rem;
+    }
+    
+    .back-btn:hover { 
+      background-color: var(--highlight);
+      border-color: var(--highlight);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(162, 224, 72, 0.3);
+    }
+    
+    .pdf-viewer {
+      width: 100%;
+      max-width: 900px;
+      height: 80vh;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+    
+    .pdf-viewer iframe,
+    .pdf-viewer embed,
+    .pdf-viewer object {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .fallback-message {
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-dark);
+      font-size: 1.1rem;
+    }
+    
+    .fallback-message a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    
+    .fallback-message a:hover {
+      color: var(--highlight);
+      text-decoration: underline;
+    }
+    
+    .download-btn {
+      margin-top: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--secondary);
+      color: var(--primary);
+      padding: 0.75rem 1.5rem;
+      border: 2px solid var(--secondary);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      gap: 0.5rem;
+    }
+    
+    .download-btn:hover { 
+      background-color: var(--highlight);
+      border-color: var(--highlight);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(162, 224, 72, 0.3);
+    }
+    
+    .download-btn svg {
+      fill: var(--primary);
+    }
+    
+    @media (max-width: 768px) {
+      .pdf-viewer { 
+        height: 70vh; 
+        border-radius: 8px;
+      }
+      .container { 
+        padding: 1rem; 
+      }
+      .back-btn {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+      }
+      .download-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
-<body class="font-sans bg-black text-white">
-  <header class="backdrop-blur fixed top-0 left-0 w-full z-50 py-4 bg-opacity-50">
-    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between">
-      <a href="index.html" class="text-xl font-semibold text-accent hover:text-accent-hover">Volver</a>
-      <span class="text-2xl font-bold">Currículum</span>
+<body>
+  <a href="index.html" class="back-btn">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </svg>
+    Volver
+  </a>
+  <div class="container">
+    <div class="pdf-viewer">
+      <object data="cv_Ismael_Pi%C3%B1a_Ramos.pdf" type="application/pdf">
+        <embed src="cv_Ismael_Pi%C3%B1a_Ramos.pdf" type="application/pdf" />
+        <div class="fallback-message">
+          <p>Tu navegador no puede mostrar PDFs directamente.</p>
+          <p><a href="cv_Ismael_Pi%C3%B1a_Ramos.pdf" target="_blank">Haz clic aquí para descargar el CV</a></p>
+        </div>
+      </object>
     </div>
-  </header>
-  <main class="pt-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <embed src="cv_Ismael_Pi%C3%B1a_Ramos.pdf" type="application/pdf" width="100%" height="1000px" />
-      <p class="mt-4 text-center"><a href="cv_Ismael_Pi%C3%B1a_Ramos.pdf" download class="btn btn-outline">Descargar CV</a></p>
-    </div>
-  </main>
+    <a href="cv_Ismael_Pi%C3%B1a_Ramos.pdf" download class="download-btn">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 12l-4-4h3V4h2v4h3l-4 4z"/>
+        <path d="M2 14h12v2H2z"/>
+      </svg>
+      Descargar CV
+    </a>
+  </div>
 </body>
 </html>
