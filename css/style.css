@@ -51,28 +51,26 @@ body {
 
 /* --- Custom Cursor as White Cross - SOLO ESCRITORIO --- */
 .custom-cursor {
-    display: none; /* Oculto por defecto */
+    display: none; /* Oculto por defecto, activado por JS */
+    width: 24px;
+    height: 24px;
+    border: none !important;
+    background: transparent !important;
+    pointer-events: none;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    z-index: 999999;
+    mix-blend-mode: difference; /* Invierte el color según el fondo */
+    transition: width 0.2s ease, height 0.2s ease;
 }
 
 @media (min-width: 769px) {
-    .custom-cursor {
-        display: block;
-        width: 24px;
-        height: 24px;
-        border: none !important;
-        background: transparent !important;
-        pointer-events: none;
-        position: fixed;
-        transform: translate(-50%, -50%);
-        z-index: 999999;
-        mix-blend-mode: difference; /* Invierte el color según el fondo */
-    }
-
     .custom-cursor::before,
     .custom-cursor::after {
         content: '';
         position: absolute;
         background-color: #ffffff;
+        transition: all 0.2s ease;
     }
 
     .custom-cursor::before {
@@ -102,6 +100,15 @@ body {
     .custom-cursor.hover::before,
     .custom-cursor.hover::after {
         background-color: #ffffff;
+    }
+    
+    /* Ocultar cursor del sistema cuando el personalizado está activo */
+    body.custom-cursor-active {
+        cursor: none !important;
+    }
+    
+    body.custom-cursor-active * {
+        cursor: none !important;
     }
 }
 
@@ -151,36 +158,7 @@ header nav a {
   color: var(--secondary);
 }
 
-/* Added download button style */
-.btn-download {
-  display: inline-flex;
-  align-items: center;
-  background-color: var(--secondary);
-  color: var(--primary);
-  padding: 0.75rem 1.5rem;
-  border: 2px solid var(--secondary);
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: background-color 0.3s, color 0.3s;
-}
-.btn-download svg {
-  margin-right: 0.5rem;
-  width: 1rem;
-  height: 1rem;
-  fill: var(--primary);
-}
-.btn-download:hover {
-  background-color: var(--highlight);
-  color: #1a1a1a !important;
-}
-.btn-download:hover svg {
-  fill: #1a1a1a !important;
-}
-.btn-download:hover span {
-  color: #1a1a1a !important;
-}
+
 
 /*
   MAIN CONTENT & SECTIONS
@@ -200,7 +178,11 @@ main {
   box-shadow: none !important;
   background: none !important;
   background-image: none !important;
-  background-color: transparent !important;
+}
+
+/* Sección de proyectos con fondo negro */
+#projects.section-block {
+  background-color: #1a1a1a !important;
 }
 
 .section-block.alt {
@@ -505,7 +487,110 @@ main {
 .main-nav.is-active a:nth-child(4) { 
     transition-delay: 0.5s; 
 }
+.main-nav.is-active a:nth-child(5) { 
+    transition-delay: 0.6s; 
+}
 
+/* Estilos específicos para el enlace del CV en el menú */
+.main-nav a.cv-link {
+    background: linear-gradient(135deg, var(--lime-green), #8bc34a);
+    color: var(--primary) !important;
+    border-radius: 15px;
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: 0 8px 32px rgba(162, 224, 72, 0.3);
+    transition: all 0.3s ease;
+}
+
+.main-nav a.cv-link:hover {
+    background: linear-gradient(135deg, #b8f05c, var(--lime-green));
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 48px rgba(162, 224, 72, 0.4);
+    color: var(--primary) !important;
+}
+
+.main-nav a.cv-link svg {
+    transition: transform 0.3s ease;
+}
+
+.main-nav a.cv-link:hover svg {
+    transform: translateY(-2px);
+}
+
+/* Ajustes específicos para móvil */
+@media (max-width: 768px) {
+    .main-nav {
+        padding: 0;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .main-nav a {
+        font-size: 1.5rem;
+        margin: 0.3rem 0;
+        text-align: center;
+        padding: 0.4rem 0.6rem;
+        max-width: 80vw;
+        word-break: break-word;
+        line-height: 1.2;
+        flex-shrink: 0;
+    }
+    
+    .main-nav a.cv-link {
+        font-size: 1.3rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0;
+        padding: 0.5rem 1rem;
+        max-width: 160px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .main-nav a.cv-link svg {
+        width: 12px;
+        height: 12px;
+        flex-shrink: 0;
+    }
+    
+    .main-nav a.cv-link span {
+        font-size: 1.3rem;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .main-nav a {
+        font-size: 1.3rem;
+        margin: 0.2rem 0;
+        padding: 0.3rem 0.5rem;
+        max-width: 85vw;
+    }
+    
+    .main-nav a.cv-link {
+        font-size: 1.1rem;
+        padding: 0.4rem 0.8rem;
+        max-width: 140px;
+    }
+    
+    .main-nav a.cv-link span {
+        font-size: 1.1rem;
+    }
+    
+    .main-nav a.cv-link svg {
+        width: 10px;
+        height: 10px;
+    }
+}
 
 /* HERO SECTION */
 .hero {
@@ -914,21 +999,54 @@ main {
     background-color: #3f33e3; /* Original primary color for hover */
 }
 
-.contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 3rem;
-}
-
-.contact-links a {
+.btn-cv-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--secondary);
     color: var(--primary);
-    font-size: 1.8rem;
-    transition: color 0.3s ease;
+    font-weight: 800;
+    font-size: 2rem;
+    border: none;
+    border-radius: 16px;
+    padding: 0.7em 1.6em;
+    margin-top: 2.5rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 12px rgba(162,224,72,0.10);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
 }
-
-.contact-links a:hover {
-    color: var(--secondary);
+.btn-cv-contact svg {
+    margin-right: 0.5em;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+.btn-cv-contact span {
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 2rem;
+    line-height: 1;
+}
+.btn-cv-contact:hover {
+    background: #b8f05c;
+    box-shadow: 0 4px 24px rgba(162,224,72,0.18);
+    transform: translateY(-2px) scale(1.03);
+    text-decoration: none;
+}
+@media (max-width: 768px) {
+    .btn-cv-contact {
+        font-size: 1.2rem;
+        padding: 0.6em 1.2em;
+        border-radius: 12px;
+    }
+    .btn-cv-contact span {
+        font-size: 1.2rem;
+    }
+    .btn-cv-contact svg {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 /*
@@ -1160,10 +1278,7 @@ footer {
         height: 35px;
     }
     
-    .btn-download {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
-    }
+
     
     .footer-content {
         flex-direction: column;
@@ -1423,6 +1538,11 @@ footer {
     }
     
     /* Mejoras para el menú de navegación móvil */
+    .main-nav {
+        padding: 3rem 1rem 1rem; /* Reducir padding en móvil */
+        justify-content: flex-start !important; /* Asegurar que esté en la parte superior */
+    }
+    
     .main-nav a {
         font-size: 1.8rem;
         margin: 0.8rem 0;
@@ -1433,6 +1553,8 @@ footer {
         justify-content: center;
         min-height: 50px;
         line-height: 1.1;
+    /* Ensure navigation text doesn't overflow */
+    .main-nav a {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1440,54 +1562,22 @@ footer {
     }
 }
 
-/* Mejoras para móviles muy pequeños */
-@media (max-width: 360px) {
-    .hero-content {
-        padding: 3rem 0.5rem;
+/* Para pantallas móviles con altura limitada */
+@media (max-width: 768px) and (max-height: 650px) {
+    .main-nav {
+        padding-top: 10vh;
     }
     
-    .hero-text h1 {
+    .main-nav a {
+        margin: 0.5rem 0;
         font-size: 1.8rem;
     }
     
-    .hero-text > p {
-        font-size: 0.95rem;
-    }
-    
-    .section-block {
-        padding: 2.5rem 0.5rem;
-    }
-    
-    .card {
-        padding: 1.2rem;
-    }
-    
-    .project-featured-card {
-        padding: 1.2rem;
-    }
-    
-    .btn-download {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-    }
-    
-    /* Menú de navegación para pantallas muy pequeñas */
-    .main-nav a {
-        font-size: 1.5rem !important;
-        margin: 0.6rem 0 !important;
-        padding: 0.3rem 0.8rem !important;
-        min-height: 45px !important;
-        line-height: 1.0 !important;
-    }
-}
-
-/* Mejoras para pantallas medianas */
-@media (max-width: 480px) and (min-width: 361px) {
-    .main-nav a {
-        font-size: 1.6rem !important;
-        margin: 0.7rem 0 !important;
-        padding: 0.35rem 0.9rem !important;
-        min-height: 48px !important;
+    .main-nav a.cv-link {
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+        font-size: 1.4rem;
+        padding: 0.6rem 1.2rem;
     }
 }
 

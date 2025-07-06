@@ -5,6 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const navPanel = document.getElementById('nav-panel');
     let isMenuOpen = false;
 
+    // Verificar elementos críticos
+    console.log('=== VERIFICACIÓN INICIAL ===');
+    console.log('Hamburger menu:', hamburger ? '✅' : '❌');
+    console.log('Nav panel:', navPanel ? '✅' : '❌');
+    console.log('Custom cursor:', document.querySelector('.custom-cursor') ? '✅' : '❌');
+    
+    // Verificar secciones de destino
+    const sections = ['#hero', '#experience', '#projects', '#contact'];
+    sections.forEach(selector => {
+        const element = document.querySelector(selector);
+        console.log(`Sección ${selector}:`, element ? '✅' : '❌');
+    });
+    console.log('=== FIN VERIFICACIÓN ===');
+
     if (hamburger && navPanel) {
         const navLinks = navPanel.querySelectorAll('a');
 
@@ -62,15 +76,35 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
-                console.log(`Clic en enlace del menú: ${href}`);
+                console.log(`🔗 Clic en enlace del menú hamburguesa: ${href}`);
                 
-                // Permitir que el scroll suave se ejecute primero
-                setTimeout(() => {
+                // Si es el enlace del CV, cerrar menú inmediatamente y permitir navegación
+                if (link.classList.contains('cv-link')) {
+                    console.log('📄 Navegando al CV - cerrando menú inmediatamente');
                     if (navPanel.classList.contains('is-active')) {
-                        console.log('Cerrando menú después del scroll');
                         toggleMenu();
                     }
-                }, 300); // Aumentar delay para dar más tiempo al scroll
+                    return; // Permitir navegación normal al CV
+                }
+                
+                // Para enlaces de ancla, usar scroll suave
+                // No prevenir el default aquí, dejar que el scroll suave se ejecute
+                
+                // Cerrar el menú después de un breve delay para permitir el scroll
+                setTimeout(() => {
+                    if (navPanel.classList.contains('is-active')) {
+                        console.log('🔄 Cerrando menú después del scroll');
+                        toggleMenu();
+                    }
+                }, 100); // Delay corto para que el scroll inicie
+                
+                // Mecanismo de seguridad: cerrar menú después de 1 segundo si no se cerró
+                setTimeout(() => {
+                    if (navPanel.classList.contains('is-active')) {
+                        console.log('🚨 Forzando cierre del menú (mecanismo de seguridad)');
+                        toggleMenu();
+                    }
+                }, 1000);
             });
         });
 
@@ -110,36 +144,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     console.log('=== FIN DEBUG ===');
 
-    // --- SCROLL SUAVE ---
+    // --- SCROLL SUAVE MEJORADO ---
+    const smoothScrollToElement = (targetElement, source = 'general') => {
+        if (!targetElement) return false;
+        
+        // Calcular offset para header fijo
+        const isMobile = window.innerWidth <= 768;
+        const headerHeight = isMobile ? 60 : 80;
+        
+        // Obtener la posición real del elemento
+        const elementPosition = targetElement.offsetTop;
+        const finalPosition = Math.max(0, elementPosition - headerHeight);
+        
+        console.log(`📍 Scroll desde ${source}:`, {
+            target: targetElement.id || targetElement.className,
+            elementPosition,
+            headerHeight,
+            finalPosition,
+            isMobile
+        });
+        
+        // Usar scrollTo con behavior smooth
+        window.scrollTo({
+            top: finalPosition,
+            behavior: 'smooth'
+        });
+        
+        return true;
+    };
+
+    // Aplicar scroll suave a todos los enlaces de ancla
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-
+            
             if (targetElement) {
-                // Calcular offset para header fijo (ajustar según el dispositivo)
-                const isMobile = window.innerWidth <= 768;
-                const headerHeight = isMobile ? 60 : 80;
-                const elementPosition = targetElement.offsetTop - headerHeight;
+                const isFromHamburger = this.closest('#nav-panel') !== null;
+                const source = isFromHamburger ? 'hamburger' : 'general';
                 
-                // Scroll suave con offset
-                window.scrollTo({
-                    top: Math.max(0, elementPosition),
-                    behavior: 'smooth'
-                });
-                
-                console.log(`Navegando a: ${targetId}, posición: ${elementPosition}, móvil: ${isMobile}`);
-                
-                // Método alternativo para navegadores que no soporten scrollTo smooth
-                if (!('scrollBehavior' in document.documentElement.style)) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                console.log(`🎯 Clic en enlace: ${targetId} (fuente: ${source})`);
+                smoothScrollToElement(targetElement, source);
             } else {
-                console.warn(`Elemento no encontrado: ${targetId}`);
+                console.warn(`❌ Elemento no encontrado: ${targetId}`);
             }
         });
     });
@@ -293,49 +341,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- CUSTOM CURSOR - SOLO ESCRITORIO --- 
-    const cursor = document.querySelector('.custom-cursor');
-    console.log('🖱️ Inicializando cursor personalizado...');
-    console.log('Cursor element:', cursor);
-    console.log('Window width:', window.innerWidth);
-    
-    if (cursor && window.innerWidth > 768) {
-        console.log('✅ Activando cursor personalizado para escritorio');
-        cursor.style.display = 'block';
+    const initCustomCursor = () => {
+        const cursor = document.querySelector('.custom-cursor');
+        console.log('🖱️ Inicializando cursor personalizado...');
+        console.log('Cursor element:', cursor);
+        console.log('Window width:', window.innerWidth);
         
-        window.addEventListener('mousemove', e => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-        });
+        if (!cursor) {
+            console.warn('⚠️ Elemento cursor no encontrado en el DOM');
+            return;
+        }
 
-        const interactiveElements = document.querySelectorAll('a, button, .card');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-        
-        console.log('Cursor personalizado inicializado para escritorio');
-    } else if (cursor && window.innerWidth <= 768) {
-        // Ocultar cursor personalizado en móvil
-        cursor.style.display = 'none';
-        console.log('Cursor personalizado deshabilitado en móvil');
-    } else if (!cursor) {
-        console.warn('⚠️ Elemento cursor no encontrado en el DOM');
-    }
+        if (window.innerWidth > 768) {
+            console.log('✅ Activando cursor personalizado para escritorio');
+            cursor.style.display = 'block';
+            document.body.classList.add('custom-cursor-active');
+            
+            // Limpiar eventos previos
+            const existingHandler = cursor._mousemoveHandler;
+            if (existingHandler) {
+                window.removeEventListener('mousemove', existingHandler);
+            }
+
+            // Nuevo handler de movimiento
+            const mousemoveHandler = (e) => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            };
+            cursor._mousemoveHandler = mousemoveHandler;
+            window.addEventListener('mousemove', mousemoveHandler);
+
+            // Efectos hover para elementos interactivos
+            const interactiveElements = document.querySelectorAll('a, button, .card, input, textarea');
+            interactiveElements.forEach(el => {
+                // Limpiar listeners previos
+                el.removeEventListener('mouseenter', el._cursorEnter);
+                el.removeEventListener('mouseleave', el._cursorLeave);
+                
+                // Nuevos listeners
+                el._cursorEnter = () => cursor.classList.add('hover');
+                el._cursorLeave = () => cursor.classList.remove('hover');
+                
+                el.addEventListener('mouseenter', el._cursorEnter);
+                el.addEventListener('mouseleave', el._cursorLeave);
+            });
+            
+            console.log('✅ Cursor personalizado inicializado para escritorio');
+        } else {
+            // Ocultar cursor personalizado en móvil
+            cursor.style.display = 'none';
+            document.body.classList.remove('custom-cursor-active');
+            console.log('🚫 Cursor personalizado deshabilitado en móvil');
+        }
+    };
+
+    // Inicializar cursor
+    initCustomCursor();
 
     // --- RESPONSIVE CURSOR HANDLING ---
     window.addEventListener('resize', () => {
-        const cursor = document.querySelector('.custom-cursor');
-        if (cursor) {
-            if (window.innerWidth > 768) {
-                cursor.style.display = 'block';
-                document.body.style.cursor = 'none';
-                console.log('Cursor personalizado activado en escritorio');
-            } else {
-                cursor.style.display = 'none';
-                document.body.style.cursor = 'auto';
-                console.log('Cursor personalizado desactivado en móvil');
-            }
-        }
+        // Debounce para evitar múltiples ejecuciones
+        clearTimeout(window.cursorResizeTimeout);
+        window.cursorResizeTimeout = setTimeout(initCustomCursor, 100);
     });
 
     // --- PARALLAX EFFECT ON HERO DECORATIONS ---
@@ -570,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Efecto de Scroll Magnético en Botones
     const addMagneticEffect = () => {
-        const buttons = document.querySelectorAll('.btn, .btn-download, .btn-primary, .btn-secondary');
+        const buttons = document.querySelectorAll('.btn, .btn-primary, .btn-secondary');
         
         buttons.forEach(button => {
             button.addEventListener('mousemove', function(e) {
