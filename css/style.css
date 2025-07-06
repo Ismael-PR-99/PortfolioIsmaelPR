@@ -252,9 +252,58 @@ main {
     transition: transform 0.2s ease;
 }
 
+/* Comportamiento específico para ESCRITORIO */
+@media (min-width: 769px) {
+    .hamburger-menu {
+        top: 2.5rem;
+        right: 2.5rem;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .hamburger-menu .line {
+        height: 3px;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    /* En escritorio: Negro sobre fondo verde */
+    .hamburger-menu.on-green-bg .line {
+        background-color: var(--primary) !important; /* Negro sobre verde */
+        box-shadow: none;
+    }
+    
+    /* En escritorio: Negro sobre fondo claro */
+    .hamburger-menu.on-light-bg .line {
+        background-color: var(--primary) !important; /* Negro sobre claro */
+        box-shadow: none;
+    }
+    
+    /* En escritorio: Verde sobre fondo oscuro */
+    .hamburger-menu.on-dark-bg .line {
+        background-color: var(--lime-green) !important; /* Verde sobre oscuro */
+        box-shadow: none;
+    }
+    
+    /* Hover en escritorio */
+    .hamburger-menu.on-green-bg:hover .line {
+        background-color: #000 !important;
+        transform: scale(1.05);
+    }
+    
+    .hamburger-menu.on-light-bg:hover .line {
+        background-color: #000 !important;
+        transform: scale(1.05);
+    }
+    
+    .hamburger-menu.on-dark-bg:hover .line {
+        background-color: #b8f05c !important;
+        transform: scale(1.05);
+    }
+}
+
 /* Clases dinámicas para cambio de color según fondo */
 .hamburger-menu.on-green-bg .line {
-    background-color: var(--primary); /* Negro sobre fondo verde */
+    background-color: var(--primary); /* Negro sobre fondo verde en escritorio */
 }
 
 .hamburger-menu.on-light-bg .line {
@@ -291,25 +340,25 @@ main {
     
     /* Contraste máximo en móvil - Hero (fondo verde) */
     .hamburger-menu.on-green-bg .line {
-        background-color: #1a1a1a !important; /* Negro sólido */
-        box-shadow: 0 0 4px rgba(0,0,0,0.4);
+        background-color: var(--lime-green) !important; /* Verde lime sobre fondo verde */
+        box-shadow: 0 0 4px rgba(162,224,72,0.6);
     }
     
     /* Contraste máximo en móvil - Experiencia/Contacto (fondo claro) */
     .hamburger-menu.on-light-bg .line {
-        background-color: #1a1a1a !important; /* Negro sólido */
+        background-color: #1a1a1a !important; /* Negro sólido sobre fondo claro */
         box-shadow: 0 0 4px rgba(0,0,0,0.3);
     }
     
     /* Contraste máximo en móvil - Proyectos (fondo oscuro) */
     .hamburger-menu.on-dark-bg .line {
-        background-color: #a2e048 !important; /* Verde lima sólido */
+        background-color: #a2e048 !important; /* Verde lima sobre fondo oscuro */
         box-shadow: 0 0 4px rgba(162,224,72,0.6);
     }
     
     /* Estados hover en móvil */
     .hamburger-menu.on-green-bg:hover .line {
-        background-color: #000 !important;
+        background-color: #b8f05c !important; /* Verde más brillante en hover */
     }
     
     .hamburger-menu.on-light-bg:hover .line {

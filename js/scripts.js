@@ -126,7 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const currentSection = sections.find(section => section.element === entry.target);
                     if (currentSection) {
                         hamburger.classList.add(currentSection.class);
-                        console.log(`Cambiando hamburger a: ${currentSection.class}`); // Debug
+                        const deviceType = window.innerWidth <= 768 ? 'Móvil' : 'Escritorio';
+                        console.log(`${deviceType} - Cambiando hamburger a: ${currentSection.class}`);
                     }
                 }
             });
@@ -164,6 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             const currentSection = sections.find(section => section.element === entry.target);
                             if (currentSection) {
                                 hamburger.classList.add(currentSection.class);
+                                const deviceType = window.innerWidth <= 768 ? 'Móvil' : 'Escritorio';
+                                console.log(`${deviceType} - Resize - Cambiando hamburger a: ${currentSection.class}`);
                             }
                         }
                     });
@@ -177,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Método alternativo: Detección por scroll position (para móvil)
+        // Método alternativo: Detección por scroll position (para móvil y escritorio)
         const updateHamburgerColorByScroll = () => {
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
@@ -206,16 +209,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!hamburger.classList.contains(currentClass)) {
                 hamburger.classList.remove('on-green-bg', 'on-light-bg', 'on-dark-bg');
                 hamburger.classList.add(currentClass);
-                console.log(`Scroll method: Cambiando hamburger a: ${currentClass} at scroll: ${scrollY}`);
+                const deviceType = window.innerWidth <= 768 ? 'Móvil' : 'Escritorio';
+                console.log(`${deviceType} Scroll: Cambiando hamburger a: ${currentClass} at scroll: ${scrollY}`);
             }
         };
         
-        // Usar método de scroll en móvil como respaldo
-        if (window.innerWidth <= 768) {
-            window.addEventListener('scroll', updateHamburgerColorByScroll);
-            // Ejecutar una vez al cargar para establecer el estado inicial
-            updateHamburgerColorByScroll();
-        }
+        // Usar método de scroll para ambos móvil y escritorio como respaldo
+        window.addEventListener('scroll', updateHamburgerColorByScroll);
+        // Ejecutar una vez al cargar para establecer el estado inicial
+        updateHamburgerColorByScroll();
     }
 
     // --- SCROLL REVEAL ANIMATION ---
@@ -298,25 +300,47 @@ document.addEventListener('DOMContentLoaded', () => {
         profileImage.classList.add('animate-border');
     }
 
-    // Inicialización específica para móvil
-    const initializeMobileHamburger = () => {
-        if (hamburger && window.innerWidth <= 768) {
-            // Forzar el estado inicial en móvil
-            hamburger.classList.remove('on-green-bg', 'on-light-bg', 'on-dark-bg');
-            hamburger.classList.add('on-green-bg');
+    // Inicialización diferenciada para móvil vs escritorio
+    const initializeHamburgerBehavior = () => {
+        if (!hamburger) return;
+        
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            // MÓVIL: Verde siempre
+            hamburger.classList.remove('on-light-bg', 'on-dark-bg');
+            hamburger.classList.add('on-green-bg', 'mobile-mode');
             
-            // Añadir clase para identificar que está en móvil
-            hamburger.classList.add('mobile-mode');
+            // Forzar estilos inline como respaldo en móvil
+            const lines = hamburger.querySelectorAll('.line');
+            lines.forEach(line => {
+                line.style.backgroundColor = 'var(--lime-green)';
+                line.style.boxShadow = '0 0 4px rgba(162,224,72,0.6)';
+            });
             
-            console.log('Hamburger inicializado para móvil con color verde');
+            console.log('Hamburger MÓVIL: Verde forzado');
+        } else {
+            // ESCRITORIO: Comportamiento normal según sección
+            hamburger.classList.remove('mobile-mode');
+            hamburger.classList.add('on-green-bg'); // Estado inicial en hero
+            
+            // Limpiar estilos inline para permitir CSS normal en escritorio
+            const lines = hamburger.querySelectorAll('.line');
+            lines.forEach(line => {
+                line.style.backgroundColor = '';
+                line.style.boxShadow = '';
+            });
+            
+            console.log('Hamburger ESCRITORIO: Comportamiento dinámico activado');
         }
     };
     
-    // Ejecutar inmediatamente
-    initializeMobileHamburger();
+    // Ejecutar INMEDIATAMENTE
+    initializeHamburgerBehavior();
     
-    // También ejecutar en resize
-    window.addEventListener('resize', initializeMobileHamburger);
+    // También ejecutar en resize y load
+    window.addEventListener('resize', initializeHamburgerBehavior);
+    window.addEventListener('load', initializeHamburgerBehavior);
     
     // --- EFECTOS DECORATIVOS ADICIONALES ---
     
@@ -455,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (i < text.length) {
                 span.innerHTML = text.slice(0, i + 1);
                 i++;
-                setTimeout(typeWriter, 40); // Más rápido
+                setTimeout(typeWriter, 100);
             } else {
                 setTimeout(() => cursor.style.display = 'none', 2000);
             }
@@ -578,6 +602,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
     
     // --- ANIMACIONES ESPECÍFICAS PARA SECCIÓN EXPERIENCIA ---
+    
+    // Efecto de entrada escalonada para las cards de experiencia
+    const animateExperienceCards = () => {
+        const experienceSection = document.getElementById('experience');
+        const cards = experienceSection ? experienceSection.querySelectorAll('.card') : [];
+        
+        if (cards.length === 0) return;
+        
+        // Observer para activar animaciones cuando la sección sea visible
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionCards = entry.target.querySelectorAll('.card');
+                    
+                    sectionCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.transform = 'translateY(0px) scale(1)';
+                            card.style.opacity = '1';
+                            card.style.filter = 'blur(0px)';
+                            
+                            // Efecto de pulso al aparecer
+                            setTimeout(() => {
+                                card.style.transform = 'translateY(0px) scale(1.02)';
+                                setTimeout(() => {
+                                    card.style.transform = 'translateY(0px) scale(1)';
+                                }, 200);
+                            }, 100);
+                            
+                        }, index * 200); // Retraso escalonado
+                    });
+                    
+                    cardObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '-50px'
+        });
+        
+        // Preparar cards para animación (estado inicial)
+        cards.forEach(card => {
+            card.style.transform = 'translateY(50px) scale(0.95)';
+            card.style.opacity = '0';
+            card.style.filter = 'blur(5px)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        });
+        
+        cardObserver.observe(experienceSection);
+    };
     
     // Efecto de hover con profundidad en cards
     const addCardDepthEffect = () => {
@@ -790,7 +863,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar animaciones de experiencia con retraso
     setTimeout(() => {
-        // animateExperienceCards(); // Desactivada para prueba
+        animateExperienceCards();
         addCardDepthEffect();
         addCounterAnimation();
         addTechHighlight();
@@ -812,14 +885,15 @@ document.addEventListener('DOMContentLoaded', () => {
         let buttonY = 0;
         let animationId;
         
-        // Configuración ajustada para un efecto más gracioso y menos acosador
-        const chaseSpeed = 0.10; // Velocidad más baja para persecución suave
-        const chaseDistance = 600; // Área de activación amplia y cómoda
-        const returnSpeed = 0.06; // Retorno más suave
-        const smoothingFactor = 0.25; // Movimiento menos directo
-        const minDistance = 30; // Mantener más distancia del cursor
-        const proactiveDistance = 500; // Proactivo pero no excesivo
-        const escapeDistance = 60; // Escapa solo si el usuario se acerca mucho
+        // Configuración super proactiva - el botón será muy perseguidor
+        const chaseSpeed = 0.25; // Velocidad muy alta para persecución agresiva
+        const chaseDistance = 400; // Área de activación mucho más amplia
+        const returnSpeed = 0.08; // Retorno más lento para mantener "interés"
+        const smoothingFactor = 0.4; // Mayor factor para movimiento más directo
+        const minDistance = 15; // Distancia mínima reducida para seguir muy de cerca
+        const maxSpeed = 15; // Velocidad máxima aumentada para movimientos rápidos
+        const proactiveDistance = 300; // Nueva distancia para comportamiento proactivo
+        const escapeDistance = 80; // Distancia a la que el botón "escapa" juguetonamente
         
         // Variables adicionales para comportamiento proactivo
         let isEscaping = false;
@@ -835,11 +909,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetFPS = 60;
         const frameTime = 1000 / targetFPS;
         
-        // Variables para la posición objetivo
-        let targetButtonX = 0;
-        let targetButtonY = 0;
-        
-        // Guardar posición original del botón SOLO una vez al cargar
+        // Guardar posición original del botón
         const originalRect = cvButton.getBoundingClientRect();
         const originalX = originalRect.left + originalRect.width / 2;
         const originalY = originalRect.top + originalRect.height / 2;
@@ -857,7 +927,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const isMobile = window.innerWidth <= 768;
                     if (isMobile) {
                         // En móvil, hacer el efecto más sutil
-                        chaseDistance = 600;
+                        chaseDistance = 150;
                         chaseSpeed *= 0.7;
                     }
                     isChasing = true;
@@ -895,7 +965,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (distance < minDistance * 2) {
                 return 'dance'; // Bailar cerca del cursor
             } else {
-                return 'idle'; // No perseguir agresivamente
+                return 'chase'; // Perseguir normalmente
             }
         };
         
@@ -917,55 +987,120 @@ document.addEventListener('DOMContentLoaded', () => {
             return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         };
         
-        const lerp = (start, end, amt) => start + (end - start) * amt;
-        
-        // Estado para saber si el mouse está sobre el botón
-        let isHoveringButton = false;
-        
         // Función de persecución optimizada con control de tiempo y fluidez mejorada
         const chaseAnimation = (currentTime) => {
-            if (!isChasing || isHoveringButton) return;
+            if (!isChasing) return;
+            
+            // Control de framerate para fluidez consistente
             deltaTime = currentTime - lastTime;
             if (deltaTime < frameTime) {
                 animationId = requestAnimationFrame(chaseAnimation);
                 return;
             }
             lastTime = currentTime;
-            // Usar la posición original calculada al cargar
-            const distance = getDistance(mouseX, mouseY, originalX, originalY);
-            const behavior = getProactiveBehavior(distance, mouseSpeed);
-            if (behavior === 'dance') {
-                const angle = (performance.now() / 300) % (2 * Math.PI);
-                targetButtonX = (mouseX - originalX) + Math.cos(angle) * 6;
-                targetButtonY = (mouseY - originalY) + Math.sin(angle) * 6;
-            } else if (distance < chaseDistance && distance > minDistance && behavior !== 'idle') {
-                const deltaX = mouseX - originalX;
-                const deltaY = mouseY - originalY;
+            
+            const currentRect = cvButton.getBoundingClientRect();
+            const currentButtonX = currentRect.left + currentRect.width / 2;
+            const currentButtonY = currentRect.top + currentRect.height / 2;
+            
+            const distance = getDistance(mouseX, mouseY, currentButtonX, currentButtonY);
+            
+            if (distance < chaseDistance && distance > minDistance) {
+                // Calcular vector de dirección con suavizado avanzado
+                const deltaX = mouseX - currentButtonX;
+                const deltaY = mouseY - currentButtonY;
+                
+                // Normalizar la distancia para interpolación suave
                 const normalizedDistance = Math.min(distance / chaseDistance, 1);
                 const easeFacto = easeInOutCubic(1 - normalizedDistance);
+                
+                // Calcular target con factor de suavizado dinámico
                 const dynamicSmoothing = smoothingFactor * (1 + easeFacto * 0.5);
-                targetButtonX = deltaX * dynamicSmoothing;
-                targetButtonY = deltaY * dynamicSmoothing;
-            } else {
-                targetButtonX = 0;
-                targetButtonY = 0;
-            }
-            // Interpolación suave hacia la posición objetivo
-            buttonX = lerp(buttonX, targetButtonX, 0.18);
-            buttonY = lerp(buttonY, targetButtonY, 0.18);
-            // Efectos visuales
-            const intensity = Math.max(0, Math.min(1, distance < chaseDistance ? 1 - (distance / chaseDistance) : 0));
-            const scale = 1 + (intensity * 0.12);
-            const shadowIntensity = 0.2 + (intensity * 0.3);
-            const glowRadius = 10 + intensity * 15;
-            cvButton.style.transform = `translate3d(${buttonX}px, ${buttonY}px, 0) scale(${scale})`;
-            cvButton.style.boxShadow = `0 ${3 + intensity * 8}px ${glowRadius}px rgba(162, 224, 72, ${shadowIntensity}), 0 0 ${glowRadius * 0.7}px rgba(162, 224, 72, ${shadowIntensity * 0.5})`;
-            cvButton.style.filter = `brightness(${1 + intensity * 0.10}) saturate(${1 + intensity * 0.15})`;
-            if (behavior === 'dance') {
-                cvButton.style.animation = 'cvButtonExcited 1.2s ease-in-out infinite';
-            } else {
+                const targetX = deltaX * dynamicSmoothing;
+                const targetY = deltaY * dynamicSmoothing;
+                
+                // Limitar velocidad máxima para evitar saltos
+                const clampedTarget = clampVector(targetX - buttonX, targetY - buttonY, maxSpeed);
+                
+                // Aplicar interpolación exponencial mejorada con deltaTime
+                const timeMultiplier = deltaTime / 16; // Normalizar a 60fps
+                const adaptiveSpeed = chaseSpeed * timeMultiplier;
+                
+                buttonX += clampedTarget.x * adaptiveSpeed;
+                buttonY += clampedTarget.y * adaptiveSpeed;
+                
+                // Efectos visuales más fluidos y graduales
+                const intensity = Math.max(0, easeFacto);
+                const scale = 1 + (intensity * 0.2); // Escala más responsiva
+                const shadowIntensity = 0.2 + (intensity * 0.5);
+                const glowRadius = 15 + intensity * 25;
+                
+                // Aplicar transformación con hardware acceleration
+                cvButton.style.transform = `translate3d(${buttonX}px, ${buttonY}px, 0) scale(${scale})`;
+                cvButton.style.boxShadow = `
+                    0 ${3 + intensity * 12}px ${glowRadius}px rgba(162, 224, 72, ${shadowIntensity}),
+                    0 0 ${glowRadius * 0.8}px rgba(162, 224, 72, ${shadowIntensity * 0.6})
+                `;
+                cvButton.style.filter = `brightness(${1 + intensity * 0.15}) saturate(${1 + intensity * 0.2})`;
+                
+                // Animación de emoción más sofisticada
+                if (intensity > 0.8) {
+                    cvButton.style.animation = 'cvButtonExcited 0.6s ease-in-out infinite';
+                } else if (intensity > 0.5) {
+                    cvButton.style.animation = 'cvButtonExcited 1s ease-in-out infinite';
+                } else if (intensity > 0.2) {
+                    cvButton.style.animation = 'cvButtonExcited 1.5s ease-in-out infinite';
+                } else {
+                    cvButton.style.animation = '';
+                }
+                
+                // Añadir keyframes mejorados si no existen
+                if (!document.querySelector('#cv-button-excited-keyframes')) {
+                    const style = document.createElement('style');
+                    style.id = 'cv-button-excited-keyframes';
+                    style.textContent = `
+                        @keyframes cvButtonExcited {
+                            0%, 100% { 
+                                filter: brightness(1) hue-rotate(0deg) saturate(1); 
+                                transform: translate(${buttonX}px, ${buttonY}px) scale(${scale}) rotate(0deg);
+                            }
+                            25% { 
+                                filter: brightness(1.1) hue-rotate(5deg) saturate(1.1); 
+                                transform: translate(${buttonX}px, ${buttonY}px) scale(${scale * 1.02}) rotate(1deg);
+                            }
+                            50% { 
+                                filter: brightness(1.15) hue-rotate(8deg) saturate(1.15); 
+                                transform: translate(${buttonX}px, ${buttonY}px) scale(${scale * 1.03}) rotate(0deg);
+                            }
+                            75% { 
+                                filter: brightness(1.1) hue-rotate(5deg) saturate(1.1); 
+                                transform: translate(${buttonX}px, ${buttonY}px) scale(${scale * 1.02}) rotate(-1deg);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+            } else if (distance >= chaseDistance) {
+                // Retorno suave y natural con easing exponencial
+                const decayFactor = easeOutCubic(returnSpeed);
+                buttonX *= (1 - decayFactor * timeMultiplier);
+                buttonY *= (1 - decayFactor * timeMultiplier);
+                
+                // Efectos de transición durante el retorno
+                const returnIntensity = (Math.abs(buttonX) + Math.abs(buttonY)) / 100;
+                const returnScale = 1 + Math.max(0, returnIntensity * 0.08);
+                
+                cvButton.style.transform = `translate3d(${buttonX}px, ${buttonY}px, 0) scale(${returnScale})`;
+                cvButton.style.boxShadow = `
+                    0 ${2 + returnIntensity * 8}px ${10 + returnIntensity * 15}px rgba(162, 224, 72, ${Math.max(0.15, returnIntensity * 0.4)}),
+                    0 0 ${8 + returnIntensity * 12}px rgba(162, 224, 72, ${Math.max(0.1, returnIntensity * 0.25)})
+                `;
+                cvButton.style.filter = `brightness(${1 + returnIntensity * 0.05}) saturate(${1 + returnIntensity * 0.1})`;
                 cvButton.style.animation = '';
             }
+            
+            // Usar requestAnimationFrame con timestamp para fluidez óptima
             animationId = requestAnimationFrame(chaseAnimation);
         };
         
@@ -1038,21 +1173,149 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 8); // ~120fps máximo para mouse tracking
         }, { passive: true });
         
-        // Modificar eventos de hover para fijar el botón y solo aplicar efecto visual
-        cvButton.addEventListener('mouseenter', function() {
-            isHoveringButton = true;
-            buttonX = 0;
-            buttonY = 0;
-            cvButton.style.transform = 'translate3d(0, 0, 0) scale(1.08)';
-            cvButton.style.boxShadow = '0 8px 24px rgba(162, 224, 72, 0.4)';
-            cvButton.style.filter = 'brightness(1.15) saturate(1.1)';
-            cvButton.style.animation = '';
-        });
-        cvButton.addEventListener('mouseleave', function() {
-            isHoveringButton = false;
-            cvButton.style.filter = '';
-            cvButton.style.boxShadow = '';
-            cvButton.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        // Efecto especial mejorado cuando el usuario finalmente hace clic
+        cvButton.addEventListener('click', function(e) {
+            // Parar la animación de persecución temporalmente
+            isChasing = false;
+            
+            // Efecto de "victoria" más dramático al hacer clic
+            this.style.animation = 'cvButtonSuccess 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            this.style.transform = `translate3d(${buttonX}px, ${buttonY}px, 0) scale(1.4)`;
+            this.style.filter = 'brightness(1.3) saturate(1.4) hue-rotate(10deg)';
+            this.style.boxShadow = `
+                0 15px 35px rgba(162, 224, 72, 0.6),
+                0 0 25px rgba(162, 224, 72, 0.8),
+                inset 0 0 15px rgba(255, 255, 255, 0.3)
+            `;
+            
+            // Crear partículas de celebración más sofisticadas
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                const size = 4 + Math.random() * 8;
+                const hue = 60 + Math.random() * 60; // Colores dorados/verdes
+                
+                particle.style.cssText = `
+                    position: fixed;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: hsl(${hue}, 80%, 60%);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    left: ${e.clientX - size/2}px;
+                    top: ${e.clientY - size/2}px;
+                    box-shadow: 0 0 ${size * 2}px hsl(${hue}, 80%, 60%);
+                    animation: cvClickParticle${i} ${1.5 + Math.random() * 0.5}s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+                `;
+                
+                // Keyframes únicos para cada partícula con trayectorias más naturales
+                const angle = (i / 15) * Math.PI * 2;
+                const velocity = 100 + Math.random() * 100;
+                const gravity = 50 + Math.random() * 30;
+                const endX = Math.cos(angle) * velocity;
+                const endY = Math.sin(angle) * velocity + gravity;
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes cvClickParticle${i} {
+                        0% { 
+                            transform: translate(0, 0) scale(1) rotate(0deg); 
+                            opacity: 1; 
+                        }
+                        50% {
+                            transform: translate(${endX * 0.7}px, ${endY * 0.3}px) scale(1.2) rotate(180deg);
+                            opacity: 0.8;
+                        }
+                        100% { 
+                            transform: translate(${endX}px, ${endY}px) scale(0) rotate(360deg); 
+                            opacity: 0; 
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                document.body.appendChild(particle);
+                
+                // Limpiar partícula después de la animación
+                setTimeout(() => {
+                    if (particle.parentNode) particle.parentNode.removeChild(particle);
+                    if (style.parentNode) style.parentNode.removeChild(style);
+                }, 2000);
+            }
+            
+            // Mostrar mensaje de felicitación temporal
+            const message = document.createElement('div');
+            message.textContent = '¡Excelente! 🎉';
+            message.style.cssText = `
+                position: fixed;
+                left: 50%;
+                top: 30%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(45deg, var(--secondary), var(--accent));
+                color: var(--bg-primary);
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-weight: bold;
+                font-size: 1.2rem;
+                z-index: 10000;
+                pointer-events: none;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                animation: successMessage 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            `;
+            
+            document.body.appendChild(message);
+            
+            // Limpiar mensaje y reactivar persecución
+            setTimeout(() => {
+                if (message.parentNode) message.parentNode.removeChild(message);
+                isChasing = true; // Reactivar la persecución
+            }, 2000);
+            
+            // Añadir keyframes mejorados si no existen
+            if (!document.querySelector('#cv-button-success-keyframes')) {
+                const style = document.createElement('style');
+                style.id = 'cv-button-success-keyframes';
+                style.textContent = `
+                    @keyframes cvButtonSuccess {
+                        0% { 
+                            filter: brightness(1) hue-rotate(0deg) saturate(1); 
+                            box-shadow: 0 4px 12px rgba(162, 224, 72, 0.3);
+                        }
+                        20% { 
+                            filter: brightness(1.4) hue-rotate(30deg) saturate(1.3); 
+                            box-shadow: 0 8px 25px rgba(162, 224, 72, 0.5);
+                        }
+                        40% { 
+                            filter: brightness(1.6) hue-rotate(60deg) saturate(1.5); 
+                            box-shadow: 0 12px 35px rgba(162, 224, 72, 0.7);
+                        }
+                        60% { 
+                            filter: brightness(1.4) hue-rotate(90deg) saturate(1.3); 
+                            box-shadow: 0 15px 40px rgba(162, 224, 72, 0.6);
+                        }
+                        80% { 
+                            filter: brightness(1.2) hue-rotate(60deg) saturate(1.1); 
+                            box-shadow: 0 10px 30px rgba(162, 224, 72, 0.4);
+                        }
+                        100% { 
+                            filter: brightness(1) hue-rotate(0deg) saturate(1); 
+                            box-shadow: 0 4px 12px rgba(162, 224, 72, 0.3);
+                        }
+                    }
+                    
+                    @keyframes successMessage {
+                        0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 0; }
+                        20% { transform: translate(-50%, -50%) scale(1.1) rotate(2deg); opacity: 1; }
+                        80% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+                        100% { transform: translate(-50%, -50%) scale(0.8) rotate(0deg); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Deshabilitar persecución temporalmente después del clic para permitir navegación
+            setTimeout(() => {
+                returnToOriginalPosition();
+            }, 1200);
         });
         
         // Efectos de hover mejorados con transiciones suaves
@@ -1076,14 +1339,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar efecto de persecución del botón CV
     setTimeout(addCVButtonChaseEffect, 2000);
-
-    // Forzar visibilidad de las tarjetas de experiencia en móvil
-    if (window.innerWidth <= 768) {
-        document.querySelectorAll('#experience .card').forEach(card => {
-            card.style.transform = 'none';
-            card.style.opacity = '1';
-            card.style.filter = 'none';
-            card.style.transition = 'none';
-        });
-    }
 });
