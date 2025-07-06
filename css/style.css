@@ -586,6 +586,7 @@ main {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2.5rem !important;
 }
 
 .experience-grid .card:hover {
@@ -1201,6 +1202,9 @@ footer {
 /* Posicionar social links al fondo del hero, verticalmente */
 .section-block.hero {
     position: relative;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    background-image: none !important;
 }
 .hero-social-bottom {
     position: absolute;
