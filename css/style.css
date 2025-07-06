@@ -224,9 +224,13 @@ main {
     transform-origin: center;
 }
 
-/* Estado activo - Cruz verde con animación dinámica */
-.hamburger-menu.is-active .line {
-    background-color: var(--lime-green) !important; /* Cruz siempre verde */
+/* Estado activo - Cruz verde con animación dinámica - MÁXIMA PRIORIDAD */
+.hamburger-menu.is-active .line,
+.hamburger-menu.is-active.on-green-bg .line,
+.hamburger-menu.is-active.on-light-bg .line,
+.hamburger-menu.is-active.on-dark-bg .line {
+    background-color: var(--lime-green) !important; /* Cruz SIEMPRE verde */
+    box-shadow: 0 0 8px rgba(162,224,72,0.8) !important;
 }
 
 .hamburger-menu.is-active .line:nth-child(1) {
@@ -299,19 +303,6 @@ main {
         background-color: #b8f05c !important;
         transform: scale(1.05);
     }
-}
-
-/* Clases dinámicas para cambio de color según fondo */
-.hamburger-menu.on-green-bg .line {
-    background-color: var(--primary); /* Negro sobre fondo verde en escritorio */
-}
-
-.hamburger-menu.on-light-bg .line {
-    background-color: var(--primary); /* Negro sobre fondo claro */
-}
-
-.hamburger-menu.on-dark-bg .line {
-    background-color: var(--lime-green); /* Verde sobre fondo oscuro */
 }
 
 /* Mejoras específicas para hamburger menu en móvil */
@@ -1550,4 +1541,35 @@ footer {
     height: 6px;
     background: var(--secondary);
     z-index: 9999;
+}
+
+/* REGLA FINAL - MÁXIMA PRIORIDAD PARA HAMBURGER ACTIVO */
+/* Esta regla debe ser la última para asegurar máxima especificidad */
+body .hamburger-menu.is-active .line,
+body .hamburger-menu.is-active.on-green-bg .line,
+body .hamburger-menu.is-active.on-light-bg .line,
+body .hamburger-menu.is-active.on-dark-bg .line {
+    background-color: #a2e048 !important; /* Verde lima fijo */
+    box-shadow: 0 0 10px rgba(162,224,72,0.9) !important;
+}
+
+/* Media queries también con máxima prioridad */
+@media (min-width: 769px) {
+    body .hamburger-menu.is-active .line,
+    body .hamburger-menu.is-active.on-green-bg .line,
+    body .hamburger-menu.is-active.on-light-bg .line,
+    body .hamburger-menu.is-active.on-dark-bg .line {
+        background-color: #a2e048 !important; /* Verde lima fijo en escritorio */
+        box-shadow: 0 0 8px rgba(162,224,72,0.8) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    body .hamburger-menu.is-active .line,
+    body .hamburger-menu.is-active.on-green-bg .line,
+    body .hamburger-menu.is-active.on-light-bg .line,
+    body .hamburger-menu.is-active.on-dark-bg .line {
+        background-color: #a2e048 !important; /* Verde lima fijo en móvil */
+        box-shadow: 0 0 10px rgba(162,224,72,1) !important;
+    }
 }
