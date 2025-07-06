@@ -707,6 +707,63 @@ main {
     transition: transform 0.4s ease-out;
 }
 
+/* Estilos para los iconos sociales en el lado del texto */
+.hero-social-links {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    z-index: 3;
+    position: relative;
+}
+
+.hero-social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.hero-social-links a:hover {
+    transform: translateY(-3px) scale(1.1);
+}
+
+.hero-social-links a svg {
+    width: 24px;
+    height: 24px;
+    color: #a2e048;
+    fill: #a2e048;
+    stroke: #a2e048;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.hero-social-links a:hover svg {
+    color: #a2e048;
+    fill: #a2e048;
+    stroke: #a2e048;
+    transform: scale(1.1);
+}
+
+/* Ajustes específicos para Instagram */
+.hero-social-links a[aria-label="Instagram"] svg {
+    fill: none !important;
+    stroke: #a2e048 !important;
+    stroke-width: 2;
+}
+
+.hero-social-links a[aria-label="Instagram"]:hover svg {
+    fill: none !important;
+    stroke: #a2e048 !important;
+    stroke-width: 2;
+}
+
 /* ABOUT SECTION */
 .split-section {
   display: flex;
@@ -1226,6 +1283,23 @@ footer {
         max-width: 250px;
         justify-content: center;
     }
+    
+    /* Ajustes para iconos sociales en móvil */
+    .hero-social-links {
+        gap: 0.8rem;
+        margin-top: 1.5rem;
+        justify-content: center;
+    }
+    
+    .hero-social-links a {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .hero-social-links a svg {
+        width: 22px;
+        height: 22px;
+    }
 }
 
 /* Media query adicional para móviles pequeños */
@@ -1295,8 +1369,6 @@ footer {
         height: 35px;
     }
     
-
-    
     .footer-content {
         flex-direction: column;
         gap: 1rem;
@@ -1304,6 +1376,23 @@ footer {
     }
     
     .footer-social-links a svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    /* Ajustes para iconos sociales en móviles muy pequeños */
+    .hero-social-links {
+        gap: 0.6rem;
+        margin-top: 1.2rem;
+        justify-content: center;
+    }
+    
+    .hero-social-links a {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .hero-social-links a svg {
         width: 20px;
         height: 20px;
     }
@@ -1392,7 +1481,7 @@ footer {
 .hero-social-links a {
     display: flex;
     align-items: center;
-    color: var(--lime-green);
+    color: #a2e048;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: bold;
@@ -1401,8 +1490,16 @@ footer {
 .hero-social-links a svg {
     width: 20px;
     height: 20px;
-    fill: var(--lime-green);
+    fill: #a2e048;
+    stroke: #a2e048;
     margin-right: 0.25rem;
+}
+
+/* Ajustes específicos para Instagram en esta sección */
+.hero-social-links a[aria-label="Instagram"] svg {
+    fill: none !important;
+    stroke: #a2e048 !important;
+    stroke-width: 2;
 }
 
 .hero-separator {
