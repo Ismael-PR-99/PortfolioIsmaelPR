@@ -149,6 +149,165 @@
       }
     }
   </style>
+  <script>
+    // Efectos decorativos para la página del CV
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // Efecto de entrada animada
+      const container = document.querySelector('.container');
+      const pdfViewer = document.querySelector('.pdf-viewer');
+      const backBtn = document.querySelector('.back-btn');
+      const downloadBtn = document.querySelector('.download-btn');
+      
+      // Animación de entrada
+      container.style.opacity = '0';
+      container.style.transform = 'translateY(50px)';
+      
+      setTimeout(() => {
+        container.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+      }, 100);
+      
+      // Efecto de carga del PDF
+      pdfViewer.style.transform = 'scale(0.8)';
+      pdfViewer.style.opacity = '0';
+      
+      setTimeout(() => {
+        pdfViewer.style.transition = 'all 0.6s ease-out';
+        pdfViewer.style.transform = 'scale(1)';
+        pdfViewer.style.opacity = '1';
+      }, 400);
+      
+      // Efectos hover avanzados en botones
+      [backBtn, downloadBtn].forEach(btn => {
+        if (!btn) return;
+        
+        btn.addEventListener('mouseenter', function() {
+          this.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+          this.style.transform = 'translateY(-3px) scale(1.05)';
+          this.style.boxShadow = '0 8px 25px rgba(162, 224, 72, 0.4)';
+        });
+        
+        btn.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
+          this.style.boxShadow = '0 4px 12px rgba(162, 224, 72, 0.3)';
+        });
+        
+        // Efecto de click
+        btn.addEventListener('mousedown', function() {
+          this.style.transform = 'translateY(-1px) scale(1.02)';
+        });
+        
+        btn.addEventListener('mouseup', function() {
+          this.style.transform = 'translateY(-3px) scale(1.05)';
+        });
+      });
+      
+      // Efecto de partículas sutiles
+      const createCVParticles = () => {
+        const particleCount = 8;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.style.cssText = `
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: -1;
+            animation: cvFloat${i} ${15 + Math.random() * 10}s linear infinite;
+          `;
+          
+          // Keyframes únicos para cada partícula
+          const style = document.createElement('style');
+          style.textContent = `
+            @keyframes cvFloat${i} {
+              0% { 
+                transform: translateY(100vh) translateX(${Math.random() * 100}vw) rotate(0deg); 
+                opacity: 0; 
+              }
+              10% { opacity: 0.6; }
+              90% { opacity: 0.6; }
+              100% { 
+                transform: translateY(-20px) translateX(${Math.random() * 100}vw) rotate(360deg); 
+                opacity: 0; 
+              }
+            }
+          `;
+          document.head.appendChild(style);
+          document.body.appendChild(particle);
+        }
+      };
+      
+      // Efecto de respiración en el visor PDF
+      const addBreathingEffect = () => {
+        let breatheIn = true;
+        
+        setInterval(() => {
+          if (breatheIn) {
+            pdfViewer.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15)';
+          } else {
+            pdfViewer.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+          }
+          breatheIn = !breatheIn;
+        }, 3000);
+      };
+      
+      // Efecto de cursor personalizado
+      const createCustomCursor = () => {
+        const cursor = document.createElement('div');
+        cursor.className = 'custom-cv-cursor';
+        cursor.style.cssText = `
+          width: 20px;
+          height: 20px;
+          border: 2px solid var(--secondary);
+          border-radius: 50%;
+          position: fixed;
+          pointer-events: none;
+          z-index: 9999;
+          transition: all 0.1s ease;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+        `;
+        document.body.appendChild(cursor);
+        
+        document.addEventListener('mousemove', (e) => {
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+          cursor.style.opacity = '1';
+        });
+        
+        document.addEventListener('mouseleave', () => {
+          cursor.style.opacity = '0';
+        });
+        
+        // Efecto hover en elementos interactivos
+        [backBtn, downloadBtn].forEach(btn => {
+          if (!btn) return;
+          
+          btn.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            cursor.style.backgroundColor = 'rgba(162, 224, 72, 0.2)';
+          });
+          
+          btn.addEventListener('mouseleave', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursor.style.backgroundColor = 'transparent';
+          });
+        });
+      };
+      
+      // Inicializar efectos con retrasos
+      setTimeout(createCVParticles, 1000);
+      setTimeout(addBreathingEffect, 1500);
+      setTimeout(createCustomCursor, 500);
+      
+    });
+  </script>
 </head>
 <body>
   <a href="index.html" class="back-btn">
