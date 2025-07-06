@@ -579,55 +579,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- ANIMACIONES ESPECÍFICAS PARA SECCIÓN EXPERIENCIA ---
     
-    // Efecto de entrada escalonada para las cards de experiencia
-    const animateExperienceCards = () => {
-        const experienceSection = document.getElementById('experience');
-        const cards = experienceSection ? experienceSection.querySelectorAll('.card') : [];
-        
-        if (cards.length === 0) return;
-        
-        // Observer para activar animaciones cuando la sección sea visible
-        const cardObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const sectionCards = entry.target.querySelectorAll('.card');
-                    
-                    sectionCards.forEach((card, index) => {
-                        setTimeout(() => {
-                            card.style.transform = 'translateY(0px) scale(1)';
-                            card.style.opacity = '1';
-                            card.style.filter = 'blur(0px)';
-                            
-                            // Efecto de pulso al aparecer
-                            setTimeout(() => {
-                                card.style.transform = 'translateY(0px) scale(1.02)';
-                                setTimeout(() => {
-                                    card.style.transform = 'translateY(0px) scale(1)';
-                                }, 200);
-                            }, 100);
-                            
-                        }, index * 200); // Retraso escalonado
-                    });
-                    
-                    cardObserver.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '-50px'
-        });
-        
-        // Preparar cards para animación (estado inicial)
-        cards.forEach(card => {
-            card.style.transform = 'translateY(50px) scale(0.95)';
-            card.style.opacity = '0';
-            card.style.filter = 'blur(5px)';
-            card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        });
-        
-        cardObserver.observe(experienceSection);
-    };
-    
     // Efecto de hover con profundidad en cards
     const addCardDepthEffect = () => {
         const cards = document.querySelectorAll('.card');
@@ -839,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar animaciones de experiencia con retraso
     setTimeout(() => {
-        animateExperienceCards();
+        // animateExperienceCards(); // Desactivada para prueba
         addCardDepthEffect();
         addCounterAnimation();
         addTechHighlight();
