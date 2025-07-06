@@ -1416,3 +1416,16 @@ footer {
     transform: none !important;
   }
 }
+
+@media (max-width: 768px) {
+  #experience, #experience .card, #experience .experience-grid {
+    display: block !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    color: #111 !important;
+    background: #fff !important;
+    position: static !important;
+    z-index: 100 !important;
+  }
+}
