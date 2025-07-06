@@ -1546,55 +1546,6 @@ footer {
   }
 }
 
-/* BARRA DE PROGRESO VERDE - SOLO MÓVIL */
-.sticky-green-bar {
-    display: none; /* Oculta por defecto */
-}
-
-/* Asegurar que la barra NO aparezca en escritorio */
-@media (min-width: 769px) {
-    .sticky-green-bar {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .sticky-green-bar {
-        display: block;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 0%; /* Comienza en 0% */
-        height: 5px;
-        background: linear-gradient(90deg, var(--secondary) 0%, #b8f05c 100%);
-        z-index: 10000; /* Por encima de todo */
-        transition: width 0.2s ease-out;
-        box-shadow: 0 -2px 12px rgba(162, 224, 72, 0.5);
-        border-radius: 0; /* Sin border radius para que sea completamente recto */
-    }
-    
-    /* Efecto de brillo en la barra */
-    .sticky-green-bar::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 20px;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
-        border-radius: 0 2px 2px 0;
-        animation: shimmer 2s infinite;
-    }
-}
-
-@keyframes shimmer {
-    0% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
 /* REGLA FINAL - MÁXIMA PRIORIDAD PARA HAMBURGER ACTIVO */
 /* Esta regla debe ser la última para asegurar máxima especificidad */
 body .hamburger-menu.is-active .line,

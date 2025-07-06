@@ -833,60 +833,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     
-    // Efecto de progreso animado para habilidades
-    const addSkillProgressBars = () => {
-        const cards = document.querySelectorAll('.card');
-        
-        cards.forEach((card, cardIndex) => {
-            const h3 = card.querySelector('h3');
-            if (h3 && (h3.textContent.includes('Experiencia') || h3.textContent.includes('Educación'))) {
-                
-                // Crear barra de progreso visual
-                const progressContainer = document.createElement('div');
-                progressContainer.className = 'skill-progress-container';
-                progressContainer.style.cssText = `
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 4px;
-                    background: rgba(162, 224, 72, 0.2);
-                    overflow: hidden;
-                `;
-                
-                const progressBar = document.createElement('div');
-                progressBar.className = 'skill-progress-bar';
-                progressBar.style.cssText = `
-                    height: 100%;
-                    background: linear-gradient(90deg, var(--secondary), var(--highlight));
-                    width: 0%;
-                    transition: width 2s ease-out;
-                    box-shadow: 0 0 10px rgba(162, 224, 72, 0.5);
-                `;
-                
-                progressContainer.appendChild(progressBar);
-                card.style.position = 'relative';
-                card.appendChild(progressContainer);
-                
-                // Observer para animar cuando sea visible
-                const progressObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            setTimeout(() => {
-                                const percentage = cardIndex === 1 ? '85%' : cardIndex === 2 ? '95%' : '90%';
-                                progressBar.style.width = percentage;
-                            }, cardIndex * 300);
-                            
-                            progressObserver.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.5 });
-                
-                progressObserver.observe(card);
-            }
-        });
-    };
-    
     // Partículas específicas para la sección de experiencia
     const addExperienceParticles = () => {
         const experienceSection = document.getElementById('experience');
@@ -946,7 +892,6 @@ document.addEventListener('DOMContentLoaded', () => {
         addCardDepthEffect();
         addCounterAnimation();
         addTechHighlight();
-        addSkillProgressBars();
         addExperienceParticles();
     }, 1000);
     
@@ -1418,56 +1363,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar efecto de persecución del botón CV
     setTimeout(addCVButtonChaseEffect, 2000);
-    
-    // --- BARRA DE PROGRESO VERDE (SOLO MÓVIL) ---
-    let ticking = false;
-    
-    const updateScrollProgress = () => {
-        // Solo funcionar en móvil
-        if (window.innerWidth > 768) return;
-        
-        const progressBar = document.querySelector('.sticky-green-bar');
-        if (!progressBar) {
-            console.warn('Barra de progreso no encontrada');
-            return;
-        }
-        
-        // Calcular progreso del scroll
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
-        
-        // Actualizar ancho de la barra
-        progressBar.style.width = `${scrollPercent}%`;
-        
-        // Debug log cada 10%
-        if (scrollPercent % 10 < 1) {
-            console.log(`Scroll progress: ${scrollPercent.toFixed(1)}%`);
-        }
-        
-        ticking = false;
-    };
-    
-    const requestScrollUpdate = () => {
-        if (!ticking) {
-            requestAnimationFrame(updateScrollProgress);
-            ticking = true;
-        }
-    };
-    
-    // Solo añadir listener en móvil
-    if (window.innerWidth <= 768) {
-        window.addEventListener('scroll', requestScrollUpdate, { passive: true });
-        window.addEventListener('resize', () => {
-            if (window.innerWidth <= 768) {
-                requestScrollUpdate();
-            }
-        });
-        
-        // Inicializar progreso
-        updateScrollProgress();
-        console.log('Barra de progreso móvil inicializada');
-    }
     
     console.log('✅ Todos los scripts inicializados correctamente');
 });
