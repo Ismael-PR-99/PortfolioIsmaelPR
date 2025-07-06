@@ -1125,4 +1125,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar efecto de persecución del botón CV
     setTimeout(addCVButtonChaseEffect, 2000);
+
+    // Forzar visibilidad de las tarjetas de experiencia en móvil
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('#experience .card').forEach(card => {
+            card.style.transform = 'none';
+            card.style.opacity = '1';
+            card.style.filter = 'none';
+            card.style.transition = 'none';
+        });
+    }
 });
