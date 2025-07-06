@@ -1103,6 +1103,23 @@ footer {
     .footer-social-links a:hover svg {
         fill: var(--highlight) !important;
     }
+
+.footer-social-links a[aria-label="Instagram"] svg {
+    fill: none !important;
+    stroke: var(--secondary) !important;
+    background: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+}
+.footer-social-links a[aria-label="Instagram"]:hover svg {
+    stroke: #fff !important;
+}
+.footer-social-links a[aria-label="Instagram"] {
+    background: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
 /* RESPONSIVE */
 @media (max-width: 992px) {
     .hero-content {
