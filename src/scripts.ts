@@ -1,14 +1,12 @@
 import { 
   SectionConfig, 
   HamburgerConfig, 
-  CursorConfig,
   ChaseConfig,
   ScrollSource,
   DeviceType,
   SectionClass,
   HamburgerElement,
   NavPanelElement,
-  CursorElement,
   CVButtonElement
 } from './types';
 
@@ -21,7 +19,7 @@ const CONFIG = {
   CHASE_ESCAPE_DISTANCE: 150,
   CHASE_MAX_SPEED: 8,
   PARTICLE_COUNT: 15,
-  CURSOR_THROTTLE: 8
+
 } as const;
 
 // Estado global de la aplicación
@@ -32,11 +30,7 @@ class AppState {
     currentClass: SectionClass.ON_GREEN_BG
   };
 
-  private _cursorConfig: CursorConfig = {
-    isActive: false,
-    isHovering: false,
-    position: { x: 0, y: 0 }
-  };
+
 
   private _chaseConfig: ChaseConfig = {
     isChasing: false,
@@ -53,13 +47,7 @@ class AppState {
     this._hamburgerConfig = { ...this._hamburgerConfig, ...config };
   }
 
-  get cursorConfig(): CursorConfig {
-    return { ...this._cursorConfig };
-  }
 
-  set cursorConfig(config: Partial<CursorConfig>) {
-    this._cursorConfig = { ...this._cursorConfig, ...config };
-  }
 
   get chaseConfig(): ChaseConfig {
     return { ...this._chaseConfig };
@@ -79,7 +67,7 @@ class PortfolioApp {
   private state: AppState;
   private hamburger: HamburgerElement;
   private navPanel: NavPanelElement;
-  private cursor: CursorElement;
+
   private cvButton: CVButtonElement;
   private animationId: number | null = null;
   // private mouseMoveTimeout: number | null = null; // Para implementación futura
@@ -88,7 +76,7 @@ class PortfolioApp {
     this.state = new AppState();
     this.hamburger = document.getElementById('hamburger-menu') as HamburgerElement;
     this.navPanel = document.getElementById('nav-panel') as NavPanelElement;
-    this.cursor = document.querySelector('.custom-cursor') as CursorElement;
+
     this.cvButton = document.querySelector('.btn-cv-contact') as CVButtonElement;
   }
 
@@ -99,11 +87,11 @@ class PortfolioApp {
     this.initializeHamburgerMenu();
     this.initializeSmoothScroll();
     this.initializeHamburgerColorChange();
-    this.initializeCustomCursor();
+
     this.initializeEffects();
     this.initializeCVButtonChase();
     this.initializeScrollReveal();
-    this.initializeButtonEffects();
+
     
     console.log('✅ PortfolioApp inicializada correctamente');
   }
@@ -112,7 +100,7 @@ class PortfolioApp {
     console.log('=== VERIFICACIÓN DE ELEMENTOS ===');
     console.log('Hamburger menu:', this.hamburger ? '✅' : '❌');
     console.log('Nav panel:', this.navPanel ? '✅' : '❌');
-    console.log('Custom cursor:', this.cursor ? '✅' : '❌');
+
     console.log('CV button:', this.cvButton ? '✅' : '❌');
     
     const sections = ['#hero', '#experience', '#projects', '#contact'];
@@ -299,45 +287,7 @@ class PortfolioApp {
     });
   }
 
-  private initializeCustomCursor(): void {
-    if (!this.cursor) {
-      console.warn('⚠️ Elemento cursor no encontrado');
-      return;
-    }
 
-    if (this.state.isMobile) {
-      this.cursor.style.display = 'none';
-      document.body.classList.remove('custom-cursor-active');
-      console.log('🚫 Cursor deshabilitado en móvil');
-      return;
-    }
-
-    console.log('✅ Activando cursor para escritorio');
-    this.cursor.style.display = 'block';
-    document.body.classList.add('custom-cursor-active');
-    
-    const mousemoveHandler = (e: MouseEvent): void => {
-      this.cursor!.style.left = `${e.clientX}px`;
-      this.cursor!.style.top = `${e.clientY}px`;
-      this.state.cursorConfig.position = { x: e.clientX, y: e.clientY };
-    };
-
-    window.addEventListener('mousemove', mousemoveHandler);
-
-    // Efectos hover
-    const interactiveElements = document.querySelectorAll('a, button, .card');
-    interactiveElements.forEach((el: Element) => {
-      el.addEventListener('mouseenter', () => {
-        this.cursor?.classList.add('hover');
-        this.state.cursorConfig.isHovering = true;
-      });
-      
-      el.addEventListener('mouseleave', () => {
-        this.cursor?.classList.remove('hover');
-        this.state.cursorConfig.isHovering = false;
-      });
-    });
-  }
 
   private initializeEffects(): void {
     // Aquí se pueden agregar otros efectos como partículas, ripple, etc.

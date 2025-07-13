@@ -40,11 +40,7 @@ export interface HamburgerConfig {
   currentClass: string;
 }
 
-export interface CursorConfig {
-  isActive: boolean;
-  isHovering: boolean;
-  position: MousePosition;
-}
+
 
 export interface ChaseConfig {
   isChasing: boolean;
@@ -56,7 +52,7 @@ export interface ChaseConfig {
 // Tipos para elementos DOM
 export type HamburgerElement = HTMLButtonElement | null;
 export type NavPanelElement = HTMLElement | null;
-export type CursorElement = HTMLElement | null;
+
 export type CVButtonElement = HTMLAnchorElement | null;
 
 // Tipos para eventos
@@ -84,8 +80,4 @@ export enum MenuState {
   CLOSING = 'closing'
 }
 
-export enum CursorState {
-  NORMAL = 'normal',
-  HOVER = 'hover',
-  ACTIVE = 'active'
-} 
+ 

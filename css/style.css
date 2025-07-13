@@ -28,101 +28,13 @@ body {
   z-index: 1;
 }
 
-/* Solo deshabilitar cursor en escritorio */
-@media (min-width: 769px) {
-  body {
-    cursor: none; /* Oculta el cursor por defecto solo en escritorio */
-  }
-  
-  /* Deshabilitar cursor por defecto (pointer) en elementos interactivos */
-  a, button, input, textarea, select, .btn, .hamburger-menu {
-      cursor: none !important;
-  }
+/* Cursor nativo para todos los dispositivos */
+body {
+  cursor: auto;
 }
 
-/* En móvil usar cursor normal */
-@media (max-width: 768px) {
-  body {
-    cursor: auto;
-  }
-  
-  a, button, input, textarea, select, .btn, .hamburger-menu {
-      cursor: pointer;
-  }
-}
-
-/* --- Custom Cursor as White Cross - SOLO ESCRITORIO --- */
-.custom-cursor {
-    display: none; /* Oculto por defecto, activado por JS */
-    width: 24px;
-    height: 24px;
-    border: none !important;
-    background: transparent !important;
-    pointer-events: none;
-    position: fixed;
-    transform: translate(-50%, -50%);
-    z-index: 999999;
-    mix-blend-mode: difference; /* Invierte el color según el fondo */
-    transition: width 0.2s ease, height 0.2s ease;
-}
-
-@media (min-width: 769px) {
-    .custom-cursor::before,
-    .custom-cursor::after {
-        content: '';
-        position: absolute;
-        background-color: #ffffff;
-        transition: all 0.2s ease;
-    }
-
-    .custom-cursor::before {
-        /* Horizontal line */
-        top: 50%;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        transform: translateY(-50%);
-    }
-
-    .custom-cursor::after {
-        /* Vertical line */
-        top: 0;
-        left: 50%;
-        width: 2px;
-        height: 100%;
-        transform: translateX(-50%);
-    }
-
-    .custom-cursor.hover {
-        /* Slight expansion on hover */
-        width: 32px;
-        height: 32px;
-    }
-
-    .custom-cursor.hover::before,
-    .custom-cursor.hover::after {
-        background-color: #ffffff;
-    }
-    
-    /* Ocultar cursor del sistema cuando el personalizado está activo */
-    body.custom-cursor-active {
-        cursor: none !important;
-    }
-    
-    body.custom-cursor-active * {
-        cursor: none !important;
-    }
-}
-
-@media (min-width: 769px) {
-  .custom-cursor {
-    display: block !important;
-  }
-}
-@media (max-width: 768px) {
-  .custom-cursor {
-    display: none !important;
-  }
+a, button, input, textarea, select, .btn, .hamburger-menu {
+  cursor: pointer;
 }
 
 /*
@@ -1610,20 +1522,7 @@ footer {
     text-align: center;
 }
 
-/* Deshabilitar cursor personalizado en dispositivos táctiles */
-@media (hover: none) and (pointer: coarse) {
-    .custom-cursor {
-        display: none !important;
-    }
-    
-    body {
-        cursor: auto !important;
-    }
-    
-    a, button, input, textarea, select, .btn, .hamburger-menu {
-        cursor: auto !important;
-    }
-}
+
 
 /* Mejoras adicionales para texto largo en móvil */
 @media (max-width: 768px) {

@@ -11,8 +11,6 @@
     <link rel="icon" type="image/png" href="images/PiñaFavicon.png">
 </head>
 <body>
-  <div class="custom-cursor"></div>
-
     <button class="hamburger-menu" id="hamburger-menu" aria-label="Abrir menú">
         <span class="line"></span>
         <span class="line"></span>
@@ -198,10 +196,8 @@ console.log('Viewport:', window.innerWidth + 'x' + window.innerHeight);
 setTimeout(() => {
     console.log('--- VERIFICACIÓN DE ELEMENTOS ---');
     console.log('Hero section:', document.querySelector('#hero') ? '✅' : '❌');
-    console.log('Custom cursor:', document.querySelector('.custom-cursor') ? '✅' : '❌');
     console.log('Hamburger menu:', document.querySelector('#hamburger-menu') ? '✅' : '❌');
     console.log('Nav panel:', document.querySelector('#nav-panel') ? '✅' : '❌');
-    console.log('Body style cursor:', window.getComputedStyle(document.body).cursor);
 }, 200);
 </script>
 </body>

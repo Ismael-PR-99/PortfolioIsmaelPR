@@ -2,8 +2,7 @@ import {
   SectionClass, 
   DeviceType,
   HamburgerElement,
-  NavPanelElement,
-  CursorElement
+  NavPanelElement
 } from './types';
 
 // Configuración
@@ -17,13 +16,13 @@ const CONFIG = {
 class SimplePortfolioApp {
   private hamburger: HamburgerElement;
   private navPanel: NavPanelElement;
-  private cursor: CursorElement;
+
   private isMenuOpen: boolean = false;
 
   constructor() {
     this.hamburger = document.getElementById('hamburger-menu') as HamburgerElement;
     this.navPanel = document.getElementById('nav-panel') as NavPanelElement;
-    this.cursor = document.querySelector('.custom-cursor') as CursorElement;
+
   }
 
   public init(): void {
@@ -33,7 +32,7 @@ class SimplePortfolioApp {
     this.initializeHamburgerMenu();
     this.initializeSmoothScroll();
     this.initializeHamburgerColorChange();
-    this.initializeCustomCursor();
+
     
     console.log('✅ Scripts simplificados cargados');
   }
@@ -191,48 +190,7 @@ class SimplePortfolioApp {
     window.addEventListener('resize', initializeHamburgerBehavior);
   }
 
-  private initializeCustomCursor(): void {
-    if (!this.cursor) {
-      console.warn('⚠️ Elemento cursor no encontrado');
-      return;
-    }
 
-    if (window.innerWidth > CONFIG.MOBILE_BREAKPOINT) {
-      console.log('✅ Activando cursor para escritorio');
-      this.cursor.style.display = 'block';
-      document.body.classList.add('custom-cursor-active');
-      
-      const mousemoveHandler = (e: MouseEvent): void => {
-        this.cursor!.style.left = `${e.clientX}px`;
-        this.cursor!.style.top = `${e.clientY}px`;
-      };
-
-      window.addEventListener('mousemove', mousemoveHandler);
-
-      const interactiveElements = document.querySelectorAll('a, button, .card');
-      interactiveElements.forEach((el: Element) => {
-        el.addEventListener('mouseenter', () => {
-          this.cursor?.classList.add('hover');
-        });
-        
-        el.addEventListener('mouseleave', () => {
-          this.cursor?.classList.remove('hover');
-        });
-      });
-    } else {
-      this.cursor.style.display = 'none';
-      document.body.classList.remove('custom-cursor-active');
-      console.log('🚫 Cursor deshabilitado en móvil');
-    }
-
-    // Responsive cursor handling
-    window.addEventListener('resize', () => {
-      clearTimeout((window as any).cursorResizeTimeout);
-      (window as any).cursorResizeTimeout = setTimeout(() => {
-        this.initializeCustomCursor();
-      }, 100);
-    });
-  }
 }
 
 // Inicialización
