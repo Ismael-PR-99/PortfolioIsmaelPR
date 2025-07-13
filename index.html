@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Ismael Piña Ramos | Portfolio</title>
-    <link rel="stylesheet" href="css/style.css?v=5.0">
+    <link rel="stylesheet" href="./css/style.css?v=5.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/PiñaFavicon.png">
+    <link rel="icon" type="image/png" href="./images/PiñaFavicon.png">
 </head>
 <body>
     <button class="hamburger-menu" id="hamburger-menu" aria-label="Abrir menú">
@@ -22,7 +22,7 @@
         <a href="#experience">Experiencia y Formación</a>
         <a href="#projects">Proyectos</a>
         <a href="#contact">Contáctame</a>
-        <a href="cv.html" class="cv-link">
+        <a href="./cv.html" class="cv-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                 <path d="M12 16l4-5h-3V4h-2v7H8l4 5z"/>
                 <path d="M4 20h16v2H4z"/>
@@ -69,7 +69,7 @@
                 </div> <!-- .hero-text -->
                 <div class="hero-image">
                     <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" class="profile-link-container">
-                        <img src="images/IsmaelFoto.png" alt="Ismael Piña Ramos">
+                        <img src="./images/IsmaelFoto.png" alt="Ismael Piña Ramos">
                     </a>
                     <div class="profile-arrow">&#8592; Pincha</div>
                 </div>
@@ -118,7 +118,7 @@
                 <h2 class="section-title project-title">Proyecto Destacado</h2>
                 <div class="project-featured-card">
                     <div class="project-image-container">
-                        <img src="images/RefrigeraSpace.png" alt="Vista previa de RefrigeraSpace">
+                        <img src="./images/RefrigeraSpace.png" alt="Vista previa de RefrigeraSpace">
                     </div>
                     <div class="project-details">
                         <h3>RefrigeraSpace</h3>
@@ -153,7 +153,7 @@
                 <h2 class="section-title">Ponte en Contacto</h2>
                 <p>Siempre estoy abierto a conectar. ¡Hablemos!</p>
 
-                <a href="cv_Ismael_Piña_Ramos.pdf" target="_blank" class="btn-cv-contact">
+                <a href="./cv_Ismael_Piña_Ramos.pdf" target="_blank" class="btn-cv-contact">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 10px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     <span style="font-weight: 800; font-size: 2rem; vertical-align: middle;">Ver mi CV</span>
                 </a>
@@ -184,95 +184,146 @@
         </div>
     </footer>
 
-    <script type="module" src="/src/scripts.ts"></script>
-
-<script>
-// Script de debug detallado para el menú hamburguesa
-console.log('🔍 DEBUG DETALLADO DEL MENÚ HAMBURGUESA:');
-console.log('DOM Estado:', document.readyState);
-console.log('Viewport:', window.innerWidth + 'x' + window.innerHeight);
-
-// Verificar elementos críticos
-setTimeout(() => {
-    console.log('=== VERIFICACIÓN DETALLADA DE ELEMENTOS ===');
+    <script type="module" src="./src/scripts.ts"></script>
     
-    // Verificar elementos principales
-    const hamburger = document.querySelector('#hamburger-menu');
-    const navPanel = document.querySelector('#nav-panel');
-    
-    console.log('Hamburger menu:', hamburger ? '✅' : '❌');
-    console.log('Nav panel:', navPanel ? '✅' : '❌');
-    
-    if (hamburger) {
-        console.log('Hamburger clases:', hamburger.className);
-        console.log('Hamburger z-index:', window.getComputedStyle(hamburger).zIndex);
-        console.log('Hamburger position:', window.getComputedStyle(hamburger).position);
-        console.log('Hamburger display:', window.getComputedStyle(hamburger).display);
-    }
-    
-    if (navPanel) {
-        console.log('Nav panel clases:', navPanel.className);
-        console.log('Nav panel z-index:', window.getComputedStyle(navPanel).zIndex);
-        console.log('Nav panel transform:', window.getComputedStyle(navPanel).transform);
-        console.log('Nav panel opacity:', window.getComputedStyle(navPanel).opacity);
-        console.log('Nav panel pointer-events:', window.getComputedStyle(navPanel).pointerEvents);
-    }
-    
-    // Verificar enlaces del menú
-    const navLinks = navPanel?.querySelectorAll('a');
-    console.log('Enlaces en nav panel:', navLinks ? navLinks.length : 0);
-    
-    // Verificar secciones para el cambio de color
-    const sections = ['#hero', '#experience', '#projects', '#contact'];
-    sections.forEach(selector => {
-        const element = document.querySelector(selector);
-        console.log(`Sección ${selector}:`, element ? '✅' : '❌');
+    <!-- Fallback script para asegurar que el menú funcione en producción -->
+    <script>
+    // Fallback para asegurar que el menú hamburguesa funcione
+    window.addEventListener('DOMContentLoaded', function() {
+        console.log('🔧 Inicializando fallback del menú hamburguesa...');
+        
+        // Esperar un poco para que el módulo TypeScript tenga oportunidad de cargar
+        setTimeout(function() {
+            const hamburger = document.getElementById('hamburger-menu');
+            const navPanel = document.getElementById('nav-panel');
+            
+            if (!hamburger || !navPanel) {
+                console.warn('⚠️ Elementos del menú no encontrados en fallback');
+                return;
+            }
+            
+            // Verificar si ya hay event listeners (del módulo TypeScript)
+            if (hamburger.dataset.initialized === 'true') {
+                console.log('✅ Menú ya inicializado por TypeScript, saltando fallback');
+                return;
+            }
+            
+            console.log('🚀 Ejecutando fallback del menú hamburguesa...');
+            
+            // Marcar como inicializado para evitar duplicados
+            hamburger.dataset.initialized = 'true';
+            
+            // Función para alternar el menú
+            function toggleMenu() {
+                const isActive = navPanel.classList.contains('is-active');
+                
+                if (isActive) {
+                    // Cerrar menú
+                    hamburger.classList.remove('is-active');
+                    navPanel.classList.remove('is-active');
+                    document.body.style.overflow = 'auto';
+                    console.log('🚪 Menú cerrado (fallback)');
+                } else {
+                    // Abrir menú
+                    hamburger.classList.add('is-active');
+                    navPanel.classList.add('is-active');
+                    document.body.style.overflow = 'hidden';
+                    console.log('🚀 Menú abierto (fallback)');
+                }
+            }
+            
+            // Event listener para el botón hamburguesa
+            hamburger.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('🖱️ Click en hamburger detectado (fallback)');
+                toggleMenu();
+            });
+            
+            // Event listeners para los enlaces del menú
+            const navLinks = navPanel.querySelectorAll('a');
+            navLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    console.log('🔗 Clic en enlace:', href, '(fallback)');
+                    
+                    // No cerrar el menú si es el enlace del CV
+                    if (!this.classList.contains('cv-link')) {
+                        setTimeout(function() {
+                            toggleMenu();
+                        }, 100);
+                    } else {
+                        toggleMenu();
+                    }
+                });
+            });
+            
+            // Cerrar con tecla Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && navPanel.classList.contains('is-active')) {
+                    toggleMenu();
+                }
+            });
+            
+            // Cerrar al hacer clic fuera del menú
+            navPanel.addEventListener('click', function(e) {
+                if (e.target === navPanel) {
+                    toggleMenu();
+                }
+            });
+            
+            // Inicializar el cambio de color del hamburger según la sección
+            initializeHamburgerColorChange();
+            
+            console.log('✅ Fallback del menú hamburguesa inicializado correctamente');
+            
+        }, 500); // Dar tiempo para que el módulo TypeScript se cargue
     });
     
-    // Verificar variables CSS
-    const rootStyles = getComputedStyle(document.documentElement);
-    console.log('CSS Variables:');
-    console.log('- --primary:', rootStyles.getPropertyValue('--primary'));
-    console.log('- --lime-green:', rootStyles.getPropertyValue('--lime-green'));
-    console.log('- --text-light:', rootStyles.getPropertyValue('--text-light'));
-    
-    // Verificar si hay errores de JavaScript
-    window.addEventListener('error', (e) => {
-        console.error('❌ Error de JavaScript:', e.error);
-    });
-    
-    // Verificar eventos del hamburger
-    if (hamburger) {
-        hamburger.addEventListener('click', (e) => {
-            console.log('🖱️ Click en hamburger detectado');
-            console.log('Evento:', e);
-            console.log('Target:', e.target);
-            console.log('Current target:', e.currentTarget);
+    // Función para cambiar el color del hamburger según la sección
+    function initializeHamburgerColorChange() {
+        const hamburger = document.getElementById('hamburger-menu');
+        if (!hamburger) return;
+        
+        const sections = [
+            { element: document.querySelector('.hero'), class: 'on-green-bg' },
+            { element: document.getElementById('experience'), class: 'on-light-bg' },
+            { element: document.getElementById('projects'), class: 'on-dark-bg' },
+            { element: document.getElementById('contact'), class: 'on-light-bg' }
+        ];
+        
+        // Establecer clase inicial
+        hamburger.classList.add('on-green-bg');
+        
+        // Configurar observer para cambio de colores
+        const observerOptions = {
+            root: null,
+            threshold: window.innerWidth <= 768 ? 0.3 : 0.5,
+            rootMargin: window.innerWidth <= 768 ? '-50px 0px' : '-100px 0px'
+        };
+        
+        const sectionObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    hamburger.classList.remove('on-green-bg', 'on-light-bg', 'on-dark-bg');
+                    
+                    const currentSection = sections.find(function(section) {
+                        return section.element === entry.target;
+                    });
+                    
+                    if (currentSection) {
+                        hamburger.classList.add(currentSection.class);
+                        console.log('🎨 Cambiando hamburger a:', currentSection.class, '(fallback)');
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(function(section) {
+            if (section.element) {
+                sectionObserver.observe(section.element);
+            }
         });
     }
-    
-    console.log('=== FIN VERIFICACIÓN ===');
-}, 500);
-
-// Verificar después de que se cargue todo
-window.addEventListener('load', () => {
-    console.log('📄 Página completamente cargada');
-    
-    const hamburger = document.querySelector('#hamburger-menu');
-    const navPanel = document.querySelector('#nav-panel');
-    
-    if (hamburger && navPanel) {
-        console.log('✅ Elementos encontrados después de carga completa');
-        
-        // Simular clic para debug
-        setTimeout(() => {
-            console.log('🧪 Simulando clic en hamburger...');
-            hamburger.dispatchEvent(new Event('click'));
-        }, 1000);
-    } else {
-        console.error('❌ Elementos no encontrados después de carga completa');
-    }
-});
-</script>
+    </script>
 </body>
 </html>

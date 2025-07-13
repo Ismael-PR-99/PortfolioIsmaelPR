@@ -9,6 +9,7 @@ import {
   NavPanelElement,
   CVButtonElement
 } from './types';
+import { initProductionDebug } from './production-debug';
 
 // Configuración global
 const CONFIG = {
@@ -83,6 +84,11 @@ class PortfolioApp {
   public init(): void {
     console.log('🚀 Inicializando PortfolioApp...');
     
+    // Inicializar debug de producción si estamos en producción
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      initProductionDebug();
+    }
+    
     this.verifyElements();
     this.initializeHamburgerMenu();
     this.initializeSmoothScroll();
@@ -118,6 +124,11 @@ class PortfolioApp {
       console.log('Hamburger:', this.hamburger);
       console.log('Nav panel:', this.navPanel);
       return;
+    }
+
+    // Marcar como inicializado para evitar conflictos con el fallback
+    if (this.hamburger instanceof HTMLElement) {
+      this.hamburger.dataset['initialized'] = 'true';
     }
 
     console.log('✅ Elementos encontrados, configurando eventos...');
