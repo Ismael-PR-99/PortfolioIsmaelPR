@@ -111,16 +111,24 @@ class PortfolioApp {
   }
 
   private initializeHamburgerMenu(): void {
+    console.log('🔧 Inicializando menú hamburguesa...');
+    
     if (!this.hamburger || !this.navPanel) {
       console.warn('⚠️ Elementos del menú hamburguesa no encontrados');
+      console.log('Hamburger:', this.hamburger);
+      console.log('Nav panel:', this.navPanel);
       return;
     }
 
+    console.log('✅ Elementos encontrados, configurando eventos...');
     const navLinks = this.navPanel.querySelectorAll('a');
+    console.log('Enlaces encontrados:', navLinks.length);
     
     const toggleMenu = (): void => {
+      console.log('🔄 Alternando menú...');
       const newState = !this.state.hamburgerConfig.isActive;
       this.state.hamburgerConfig = { isActive: newState };
+      console.log('Nuevo estado:', newState);
       
       if (newState) {
         this.openMenu(navLinks);
@@ -131,6 +139,7 @@ class PortfolioApp {
 
     // Event listeners
     this.hamburger.addEventListener('click', (e: Event) => {
+      console.log('🖱️ Click en hamburger detectado en TypeScript');
       e.preventDefault();
       toggleMenu();
     });
@@ -157,9 +166,13 @@ class PortfolioApp {
   }
 
   private openMenu(navLinks: NodeListOf<Element>): void {
+    console.log('🚀 Abriendo menú...');
     this.hamburger?.classList.add('is-active');
     this.navPanel?.classList.add('is-active');
     document.body.style.overflow = 'hidden';
+    
+    console.log('Clases hamburger después de abrir:', this.hamburger?.className);
+    console.log('Clases nav panel después de abrir:', this.navPanel?.className);
     
     // Efecto de entrada para los enlaces
     navLinks.forEach((link: Element, index: number) => {
@@ -171,7 +184,10 @@ class PortfolioApp {
   }
 
   private closeMenu(navLinks: NodeListOf<Element>): void {
+    console.log('🚪 Cerrando menú...');
     this.hamburger?.classList.remove('is-active');
+    
+    console.log('Clases hamburger después de cerrar:', this.hamburger?.className);
     
     // Animación de salida
     navLinks.forEach((link: Element, index: number) => {
@@ -184,6 +200,7 @@ class PortfolioApp {
     setTimeout(() => {
       this.navPanel?.classList.remove('is-active');
       document.body.style.overflow = 'auto';
+      console.log('Clases nav panel después de cerrar:', this.navPanel?.className);
     }, 300);
   }
 

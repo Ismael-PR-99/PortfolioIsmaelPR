@@ -195,12 +195,9 @@ main {
 }
 
 /* Estado activo - Cruz verde con animación dinámica */
-.hamburger-menu.is-active .line,
-.hamburger-menu.is-active.on-green-bg .line,
-.hamburger-menu.is-active.on-light-bg .line,
-.hamburger-menu.is-active.on-dark-bg .line {
-    background-color: var(--lime-green); /* Cruz SIEMPRE verde por defecto */
-    box-shadow: 0 0 8px rgba(162,224,72,0.8);
+.hamburger-menu.is-active .line {
+    background-color: var(--lime-green) !important; /* Cruz SIEMPRE verde */
+    box-shadow: 0 0 8px rgba(162,224,72,0.8) !important;
 }
 
 /* Comportamiento específico para ESCRITORIO */
@@ -1637,36 +1634,7 @@ footer {
   }
 }
 
-/* REGLA FINAL - MÁXIMA PRIORIDAD PARA HAMBURGER ACTIVO */
-/* Esta regla debe ser la última para asegurar máxima especificidad */
-body .hamburger-menu.is-active .line,
-body .hamburger-menu.is-active.on-green-bg .line,
-body .hamburger-menu.is-active.on-light-bg .line,
-body .hamburger-menu.is-active.on-dark-bg .line {
-    background-color: #a2e048 !important; /* Verde lima fijo */
-    box-shadow: 0 0 10px rgba(162,224,72,0.9) !important;
-}
 
-/* Media queries también con máxima prioridad */
-@media (min-width: 769px) {
-    body .hamburger-menu.is-active .line,
-    body .hamburger-menu.is-active.on-green-bg .line,
-    body .hamburger-menu.is-active.on-light-bg .line,
-    body .hamburger-menu.is-active.on-dark-bg .line {
-        background-color: #a2e048 !important; /* Verde lima fijo en escritorio */
-        box-shadow: 0 0 8px rgba(162,224,72,0.8) !important;
-    }
-}
-
-@media (max-width: 768px) {
-    body .hamburger-menu.is-active .line,
-    body .hamburger-menu.is-active.on-green-bg .line,
-    body .hamburger-menu.is-active.on-light-bg .line,
-    body .hamburger-menu.is-active.on-dark-bg .line {
-        background-color: #a2e048 !important; /* Verde lima fijo en móvil */
-        box-shadow: 0 0 10px rgba(162,224,72,1) !important;
-    }
-}
 
 /* SCROLL SUAVE - Mejoras para navegación */
 .section-block {

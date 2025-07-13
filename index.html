@@ -187,18 +187,92 @@
     <script type="module" src="/src/scripts.ts"></script>
 
 <script>
-// Script de debug inmediato
-console.log('🔍 DEBUG INMEDIATO:');
+// Script de debug detallado para el menú hamburguesa
+console.log('🔍 DEBUG DETALLADO DEL MENÚ HAMBURGUESA:');
 console.log('DOM Estado:', document.readyState);
 console.log('Viewport:', window.innerWidth + 'x' + window.innerHeight);
 
 // Verificar elementos críticos
 setTimeout(() => {
-    console.log('--- VERIFICACIÓN DE ELEMENTOS ---');
-    console.log('Hero section:', document.querySelector('#hero') ? '✅' : '❌');
-    console.log('Hamburger menu:', document.querySelector('#hamburger-menu') ? '✅' : '❌');
-    console.log('Nav panel:', document.querySelector('#nav-panel') ? '✅' : '❌');
-}, 200);
+    console.log('=== VERIFICACIÓN DETALLADA DE ELEMENTOS ===');
+    
+    // Verificar elementos principales
+    const hamburger = document.querySelector('#hamburger-menu');
+    const navPanel = document.querySelector('#nav-panel');
+    
+    console.log('Hamburger menu:', hamburger ? '✅' : '❌');
+    console.log('Nav panel:', navPanel ? '✅' : '❌');
+    
+    if (hamburger) {
+        console.log('Hamburger clases:', hamburger.className);
+        console.log('Hamburger z-index:', window.getComputedStyle(hamburger).zIndex);
+        console.log('Hamburger position:', window.getComputedStyle(hamburger).position);
+        console.log('Hamburger display:', window.getComputedStyle(hamburger).display);
+    }
+    
+    if (navPanel) {
+        console.log('Nav panel clases:', navPanel.className);
+        console.log('Nav panel z-index:', window.getComputedStyle(navPanel).zIndex);
+        console.log('Nav panel transform:', window.getComputedStyle(navPanel).transform);
+        console.log('Nav panel opacity:', window.getComputedStyle(navPanel).opacity);
+        console.log('Nav panel pointer-events:', window.getComputedStyle(navPanel).pointerEvents);
+    }
+    
+    // Verificar enlaces del menú
+    const navLinks = navPanel?.querySelectorAll('a');
+    console.log('Enlaces en nav panel:', navLinks ? navLinks.length : 0);
+    
+    // Verificar secciones para el cambio de color
+    const sections = ['#hero', '#experience', '#projects', '#contact'];
+    sections.forEach(selector => {
+        const element = document.querySelector(selector);
+        console.log(`Sección ${selector}:`, element ? '✅' : '❌');
+    });
+    
+    // Verificar variables CSS
+    const rootStyles = getComputedStyle(document.documentElement);
+    console.log('CSS Variables:');
+    console.log('- --primary:', rootStyles.getPropertyValue('--primary'));
+    console.log('- --lime-green:', rootStyles.getPropertyValue('--lime-green'));
+    console.log('- --text-light:', rootStyles.getPropertyValue('--text-light'));
+    
+    // Verificar si hay errores de JavaScript
+    window.addEventListener('error', (e) => {
+        console.error('❌ Error de JavaScript:', e.error);
+    });
+    
+    // Verificar eventos del hamburger
+    if (hamburger) {
+        hamburger.addEventListener('click', (e) => {
+            console.log('🖱️ Click en hamburger detectado');
+            console.log('Evento:', e);
+            console.log('Target:', e.target);
+            console.log('Current target:', e.currentTarget);
+        });
+    }
+    
+    console.log('=== FIN VERIFICACIÓN ===');
+}, 500);
+
+// Verificar después de que se cargue todo
+window.addEventListener('load', () => {
+    console.log('📄 Página completamente cargada');
+    
+    const hamburger = document.querySelector('#hamburger-menu');
+    const navPanel = document.querySelector('#nav-panel');
+    
+    if (hamburger && navPanel) {
+        console.log('✅ Elementos encontrados después de carga completa');
+        
+        // Simular clic para debug
+        setTimeout(() => {
+            console.log('🧪 Simulando clic en hamburger...');
+            hamburger.dispatchEvent(new Event('click'));
+        }, 1000);
+    } else {
+        console.error('❌ Elementos no encontrados después de carga completa');
+    }
+});
 </script>
 </body>
 </html>
