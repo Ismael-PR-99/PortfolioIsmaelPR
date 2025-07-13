@@ -103,10 +103,7 @@ class PortfolioApp {
     this.initializeEffects();
     this.initializeCVButtonChase();
     this.initializeScrollReveal();
-    this.initializeSparkles();
-    this.initializeGeometricShapes();
     this.initializeButtonEffects();
-    this.initializeDecorativeShapesScroll();
     
     console.log('✅ PortfolioApp inicializada correctamente');
   }
@@ -347,140 +344,6 @@ class PortfolioApp {
     console.log('✨ Efectos inicializados');
   }
 
-  private initializeSparkles(): void {
-    if (this.state.isMobile) {
-      console.log('🚫 Chispitas deshabilitadas en móvil');
-      return;
-    }
-
-    const sparklesContainer = document.createElement('div');
-    sparklesContainer.className = 'sparkles';
-    document.body.appendChild(sparklesContainer);
-
-    const createSparkle = (): void => {
-      const sparkle = document.createElement('div');
-      sparkle.className = 'sparkle';
-      
-      // Posición aleatoria
-      const x = Math.random() * window.innerWidth;
-      const delay = Math.random() * 8;
-      const duration = 8 + Math.random() * 4;
-      
-      sparkle.style.left = `${x}px`;
-      sparkle.style.animationDelay = `${delay}s`;
-      sparkle.style.animationDuration = `${duration}s`;
-      
-      sparklesContainer.appendChild(sparkle);
-      
-      // Remover chispita después de la animación
-      setTimeout(() => {
-        if (sparkle.parentNode) {
-          sparkle.parentNode.removeChild(sparkle);
-        }
-      }, (delay + duration) * 1000);
-    };
-
-    // Crear chispitas iniciales
-    for (let i = 0; i < 6; i++) {
-      setTimeout(createSparkle, i * 1500);
-    }
-
-    // Crear nuevas chispitas periódicamente
-    setInterval(createSparkle, 4000);
-
-    console.log('✨ Chispitas inicializadas');
-  }
-
-  private initializeGeometricShapes(): void {
-    if (this.state.isMobile) {
-      console.log('🚫 Formas geométricas deshabilitadas en móvil');
-      return;
-    }
-
-    const shapesContainer = document.createElement('div');
-    shapesContainer.className = 'geometric-shapes';
-    document.body.appendChild(shapesContainer);
-
-    const shapeTypes = ['circle', 'square', 'triangle', 'hexagon'];
-    
-    const createShape = (): void => {
-      const shape = document.createElement('div');
-      const randomType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
-      shape.className = `shape ${randomType}`;
-      
-      // Posición aleatoria
-      const x = Math.random() * window.innerWidth;
-      const delay = Math.random() * 15;
-      const duration = 15 + Math.random() * 10;
-      
-      shape.style.left = `${x}px`;
-      shape.style.animationDelay = `${delay}s`;
-      shape.style.animationDuration = `${duration}s`;
-      
-      shapesContainer.appendChild(shape);
-      
-      // Remover forma después de la animación
-      setTimeout(() => {
-        if (shape.parentNode) {
-          shape.parentNode.removeChild(shape);
-        }
-      }, (delay + duration) * 1000);
-    };
-
-    // Crear formas iniciales
-    for (let i = 0; i < 4; i++) {
-      setTimeout(createShape, i * 3000);
-    }
-
-    // Crear nuevas formas periódicamente
-    setInterval(createShape, 6000);
-
-    console.log('🔷 Formas geométricas inicializadas');
-  }
-
-  private initializeButtonEffects(): void {
-    // Añadir efectos a botones
-    const buttons = document.querySelectorAll('.btn, .btn-cv-contact, .project-links .btn');
-    
-    buttons.forEach(button => {
-      button.classList.add('btn-follow', 'btn-wave');
-    });
-
-    console.log('🎯 Efectos de botones inicializados');
-  }
-
-  private initializeScrollReveal(): void {
-    const fadeInSections = document.querySelectorAll('.fade-in-section');
-    
-    if (fadeInSections.length === 0) {
-      console.log('ℹ️ No se encontraron elementos .fade-in-section');
-      return;
-    }
-
-    console.log(`🎬 Inicializando scroll reveal para ${fadeInSections.length} elementos`);
-
-    const observerOptions: IntersectionObserverInit = {
-      root: null,
-      threshold: 0.1,
-      rootMargin: '-50px 0px'
-    };
-
-    const fadeInObserver = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          console.log('✨ Elemento entró en vista:', entry.target);
-        }
-      });
-    }, observerOptions);
-
-    fadeInSections.forEach(section => {
-      fadeInObserver.observe(section);
-    });
-
-    console.log('✅ Scroll reveal inicializado correctamente');
-  }
-
   private initializeCVButtonChase(): void {
     if (!this.cvButton) {
       console.warn('⚠️ Botón CV no encontrado');
@@ -624,23 +487,36 @@ class PortfolioApp {
     }, 2000);
   }
 
-  private initializeDecorativeShapesScroll(): void {
-    const cornerL = document.querySelector('.corner-L');
-    const cornerDots = document.querySelector('.corner-dots');
-    if (!cornerL && !cornerDots) return;
+  private initializeScrollReveal(): void {
+    const fadeInSections = document.querySelectorAll('.fade-in-section');
+    
+    if (fadeInSections.length === 0) {
+      console.log('ℹ️ No se encontraron elementos .fade-in-section');
+      return;
+    }
 
-    const onScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      if (scrollY > 60) {
-        cornerL?.classList.add('scrolled');
-        cornerDots?.classList.add('scrolled');
-      } else {
-        cornerL?.classList.remove('scrolled');
-        cornerDots?.classList.remove('scrolled');
-      }
+    console.log(`🎬 Inicializando scroll reveal para ${fadeInSections.length} elementos`);
+
+    const observerOptions: IntersectionObserverInit = {
+      root: null,
+      threshold: 0.1,
+      rootMargin: '-50px 0px'
     };
-    window.addEventListener('scroll', onScroll);
-    onScroll(); // inicializa estado
+
+    const fadeInObserver = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          console.log('✨ Elemento entró en vista:', entry.target);
+        }
+      });
+    }, observerOptions);
+
+    fadeInSections.forEach(section => {
+      fadeInObserver.observe(section);
+    });
+
+    console.log('✅ Scroll reveal inicializado correctamente');
   }
 }
 
