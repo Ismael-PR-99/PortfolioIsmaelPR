@@ -188,67 +188,81 @@ main {
 .hamburger-menu .line {
     width: 100%;
     height: 3px;
-    background-color: var(--primary); /* Dark color for visibility on green background */
+    background-color: var(--primary); /* Color base oscuro */
     border-radius: 2px;
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     transform-origin: center;
 }
 
-/* Estado activo - Cruz verde con animación dinámica */
+/* Estado activo - Cruz SIEMPRE verde */
 .hamburger-menu.is-active .line {
     background-color: var(--lime-green) !important; /* Cruz SIEMPRE verde */
-    box-shadow: 0 0 8px rgba(162,224,72,0.8) !important;
+    box-shadow: 0 0 8px rgba(162,224,72,0.8) !important; /* Resplandor verde cuando está activo */
 }
 
-/* Comportamiento específico para ESCRITORIO */
+/* Animaciones específicas para cada línea cuando está activo */
+.hamburger-menu.is-active #line1 {
+    transform: rotate(45deg) translateY(10px);
+}
+
+.hamburger-menu.is-active #line2 {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger-menu.is-active #line3 {
+    transform: rotate(-45deg) translateY(-10px);
+}
+
+/* Comportamiento específico para ESCRITORIO - solo cuando NO está activo */
 @media (min-width: 769px) {
-    .hamburger-menu.on-green-bg .line {
+    .hamburger-menu:not(.is-active).on-green-bg .line {
         background-color: var(--primary) !important; /* Negro sobre verde */
         box-shadow: none !important;
     }
-    .hamburger-menu.on-light-bg .line {
+    .hamburger-menu:not(.is-active).on-light-bg .line {
         background-color: var(--primary) !important; /* Negro sobre claro */
         box-shadow: none !important;
     }
-    .hamburger-menu.on-dark-bg .line {
+    .hamburger-menu:not(.is-active).on-dark-bg .line {
         background-color: var(--lime-green) !important; /* Verde sobre oscuro */
         box-shadow: none !important;
     }
-    .hamburger-menu.on-green-bg:hover .line {
+    .hamburger-menu:not(.is-active).on-green-bg:hover .line {
         background-color: #000 !important;
         transform: scale(1.05);
     }
-    .hamburger-menu.on-light-bg:hover .line {
+    .hamburger-menu:not(.is-active).on-light-bg:hover .line {
         background-color: #000 !important;
         transform: scale(1.05);
     }
-    .hamburger-menu.on-dark-bg:hover .line {
+    .hamburger-menu:not(.is-active).on-dark-bg:hover .line {
         background-color: #b8f05c !important;
         transform: scale(1.05);
     }
 }
 
-/* Mejoras específicas para hamburger menu en móvil */
+/* Mejoras específicas para hamburger menu en móvil - solo cuando NO está activo */
 @media (max-width: 768px) {
-    .hamburger-menu.on-green-bg .line {
+    .hamburger-menu:not(.is-active).on-green-bg .line {
         background-color: var(--lime-green) !important; /* Verde lime sobre fondo verde */
         box-shadow: 0 0 4px rgba(162,224,72,0.6) !important;
     }
-    .hamburger-menu.on-light-bg .line {
+    .hamburger-menu:not(.is-active).on-light-bg .line {
         background-color: #1a1a1a !important; /* Negro sólido sobre fondo claro */
         box-shadow: 0 0 4px rgba(0,0,0,0.3) !important;
     }
-    .hamburger-menu.on-dark-bg .line {
+    .hamburger-menu:not(.is-active).on-dark-bg .line {
         background-color: #a2e048 !important; /* Verde lima sobre fondo oscuro */
         box-shadow: 0 0 4px rgba(162,224,72,0.6) !important;
     }
-    .hamburger-menu.on-green-bg:hover .line {
+    .hamburger-menu:not(.is-active).on-green-bg:hover .line {
         background-color: #b8f05c !important;
     }
-    .hamburger-menu.on-light-bg:hover .line {
+    .hamburger-menu:not(.is-active).on-light-bg:hover .line {
         background-color: #000 !important;
     }
-    .hamburger-menu.on-dark-bg:hover .line {
+    .hamburger-menu:not(.is-active).on-dark-bg:hover .line {
         background-color: #b8f05c !important;
     }
 }

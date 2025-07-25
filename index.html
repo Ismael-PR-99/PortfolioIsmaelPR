@@ -11,10 +11,10 @@
     <link rel="icon" type="image/png" href="./images/PiñaFavicon.png">
 </head>
 <body>
-    <button class="hamburger-menu" id="hamburger-menu" aria-label="Abrir menú">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
+    <button class="hamburger-menu" id="menuToggle" aria-label="Abrir menú">
+        <span id="line1" class="line transition-all duration-300"></span>
+        <span id="line2" class="line transition-all duration-300"></span>
+        <span id="line3" class="line transition-all duration-300"></span>
     </button>
 
     <nav id="nav-panel">
@@ -194,7 +194,7 @@
         
         // Esperar un poco para que el módulo TypeScript tenga oportunidad de cargar
         setTimeout(function() {
-            const hamburger = document.getElementById('hamburger-menu');
+            const hamburger = document.getElementById('menuToggle');
             const navPanel = document.getElementById('nav-panel');
             
             if (!hamburger || !navPanel) {
@@ -281,7 +281,7 @@
     
     // Función para cambiar el color del hamburger según la sección
     function initializeHamburgerColorChange() {
-        const hamburger = document.getElementById('hamburger-menu');
+        const hamburger = document.getElementById('menuToggle');
         if (!hamburger) return;
         
         const sections = [

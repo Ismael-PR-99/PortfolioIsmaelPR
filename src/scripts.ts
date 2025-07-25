@@ -75,7 +75,7 @@ class PortfolioApp {
 
   constructor() {
     this.state = new AppState();
-    this.hamburger = document.getElementById('hamburger-menu') as HamburgerElement;
+    this.hamburger = document.getElementById('menuToggle') as HamburgerElement;
     this.navPanel = document.getElementById('nav-panel') as NavPanelElement;
 
     this.cvButton = document.querySelector('.btn-cv-contact') as CVButtonElement;
