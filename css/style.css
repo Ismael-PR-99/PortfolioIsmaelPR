@@ -309,6 +309,11 @@ main {
     overflow: hidden; /* Hide overflowing blobs */
 }
 
+#experience.section-block {
+    min-height: auto;
+    padding: 4rem 2rem;
+}
+
 .section-title {
     text-align: center;
     font-size: 2.8rem; /* Adjusted size */
@@ -332,8 +337,8 @@ main {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 2.5rem !important;
-    min-height: 600px;
+    margin-bottom: 0 !important;
+    min-height: auto;
     display: flex;
     flex-direction: column;
 }
