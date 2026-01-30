@@ -19,8 +19,7 @@ const CONFIG = {
   ANIMATION_DURATION: 300,
   CHASE_ESCAPE_DISTANCE: 150,
   CHASE_MAX_SPEED: 8,
-  PARTICLE_COUNT: 15,
-
+  PARTICLE_COUNT: 15
 } as const;
 
 // Estado global de la aplicación
@@ -30,8 +29,6 @@ class AppState {
     isMobile: false,
     currentClass: SectionClass.ON_GREEN_BG
   };
-
-
 
   private _chaseConfig: ChaseConfig = {
     isChasing: false,
@@ -47,8 +44,6 @@ class AppState {
   set hamburgerConfig(config: Partial<HamburgerConfig>) {
     this._hamburgerConfig = { ...this._hamburgerConfig, ...config };
   }
-
-
 
   get chaseConfig(): ChaseConfig {
     return { ...this._chaseConfig };
@@ -71,7 +66,6 @@ class PortfolioApp {
 
   private cvButton: CVButtonElement;
   private animationId: number | null = null;
-  // private mouseMoveTimeout: number | null = null; // Para implementación futura
 
   constructor() {
     this.state = new AppState();
@@ -334,12 +328,6 @@ class PortfolioApp {
       return;
     }
 
-    // Variables para el efecto de persecución (implementación futura)
-    // let mouseX = 0;
-    // let mouseY = 0;
-    // let buttonX = 0;
-    // let buttonY = 0;
-
     const chaseObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -353,17 +341,6 @@ class PortfolioApp {
     }, { threshold: 0.3 });
 
     chaseObserver.observe(contactSection);
-
-    // Mouse tracking con throttling (implementación futura)
-    // document.addEventListener('mousemove', (e: MouseEvent) => {
-    //   mouseX = e.clientX;
-    //   mouseY = e.clientY;
-    //   
-    //   if (this.mouseMoveTimeout) return;
-    //   this.mouseMoveTimeout = window.setTimeout(() => {
-    //     this.mouseMoveTimeout = null;
-    //   }, CONFIG.CURSOR_THROTTLE);
-    // }, { passive: true });
 
     // Efecto de clic
     this.cvButton.addEventListener('click', (e: MouseEvent) => {

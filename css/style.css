@@ -21,61 +21,15 @@
 body {
   font-family: 'Inter', sans-serif;
   background-color: #fff !important;
-  color: var(--text-dark); /* Color oscuro por defecto para fondo blanco */
+  color: var(--text-dark);
   overflow-x: hidden;
   border-bottom: none !important;
   position: relative;
   z-index: 1;
 }
 
-/* CURSOR NATIVO - MÁXIMA PRIORIDAD */
-/* Reglas con alta especificidad para asegurar que el cursor se muestre siempre */
-html, body {
-  cursor: auto !important;
-}
-
-/* Elementos interactivos con cursor pointer */
-a, button, input, textarea, select, .btn, .hamburger-menu,
-#nav-panel a, .hero-social-links a, .footer-social-links a,
-.project-links a, .btn-cv-contact, .profile-link-container {
+a, button, input, textarea, select {
   cursor: pointer !important;
-}
-
-/* Asegurar que no haya cursor: none en ningún lugar */
-* {
-  cursor: auto !important;
-}
-
-/* Excepción para elementos interactivos */
-a, button, input, textarea, select, .btn, .hamburger-menu,
-#nav-panel a, .hero-social-links a, .footer-social-links a,
-.project-links a, .btn-cv-contact, .profile-link-container {
-  cursor: pointer !important;
-}
-
-/* Reglas específicas para móvil y escritorio */
-@media (max-width: 768px) {
-  html, body, * {
-    cursor: auto !important;
-  }
-  
-  a, button, input, textarea, select, .btn, .hamburger-menu,
-  .main-nav a, .hero-social-links a, .footer-social-links a,
-  .project-links a, .btn-cv-contact, .profile-link-container {
-    cursor: pointer !important;
-  }
-}
-
-@media (min-width: 769px) {
-  html, body, * {
-    cursor: auto !important;
-  }
-  
-  a, button, input, textarea, select, .btn, .hamburger-menu,
-  .main-nav a, .hero-social-links a, .footer-social-links a,
-  .project-links a, .btn-cv-contact, .profile-link-container {
-    cursor: pointer !important;
-  }
 }
 
 /*
@@ -1785,66 +1739,3 @@ html {
 
 /* Eliminar formas geométricas flotantes animadas */
 .geometric-shapes, .shape { display: none !important; }
-
-/* ===== REGLAS FINALES DE CURSOR - MÁXIMA PRIORIDAD ===== */
-/* Estas reglas deben estar al final para tener la máxima especificidad */
-
-/* Forzar cursor nativo en todos los elementos */
-html, body, div, section, main, header, footer, p, h1, h2, h3, h4, h5, h6, span, img {
-  cursor: auto !important;
-}
-
-/* Forzar cursor pointer en elementos interactivos */
-a, button, input, textarea, select, .btn, .hamburger-menu,
-#nav-panel a, .hero-social-links a, .footer-social-links a,
-.project-links a, .btn-cv-contact, .profile-link-container,
-.cv-link, .btn-primary, .btn-secondary {
-  cursor: pointer !important;
-}
-
-/* Reglas específicas para dispositivos táctiles */
-@media (hover: none) and (pointer: coarse) {
-  html, body, * {
-    cursor: auto !important;
-  }
-  
-  a, button, input, textarea, select, .btn, .hamburger-menu,
-  #nav-panel a, .hero-social-links a, .footer-social-links a,
-  .project-links a, .btn-cv-contact, .profile-link-container {
-    cursor: pointer !important;
-  }
-}
-
-/* Reglas específicas para dispositivos con mouse */
-@media (hover: hover) and (pointer: fine) {
-  html, body, * {
-    cursor: auto !important;
-  }
-  
-  a, button, input, textarea, select, .btn, .hamburger-menu,
-  #nav-panel a, .hero-social-links a, .footer-social-links a,
-  .project-links a, .btn-cv-contact, .profile-link-container {
-    cursor: pointer !important;
-  }
-}
-
-/* Asegurar que no haya cursor: none en ningún lugar */
-body.custom-cursor-active,
-body.custom-cursor-active *,
-.custom-cursor,
-.custom-cursor * {
-  cursor: auto !important;
-}
-
-/* Excepción para elementos interactivos incluso con cursor personalizado */
-body.custom-cursor-active a,
-body.custom-cursor-active button,
-body.custom-cursor-active input,
-body.custom-cursor-active textarea,
-body.custom-cursor-active select,
-body.custom-cursor-active .btn,
-body.custom-cursor-active .hamburger-menu {
-  cursor: pointer !important;
-}
-
-
