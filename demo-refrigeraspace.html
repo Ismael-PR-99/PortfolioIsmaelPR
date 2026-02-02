@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo - RefrigeraSpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --secondary: #a2e048;
+      --text-light: #ffffff;
+      --text-dark: #1a1a1a;
+      --bg-light: #f7f7f7;
+      --highlight: #93C572;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: var(--bg-light);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      gap: 1.5rem;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--secondary);
+      color: var(--primary);
+      padding: 0.75rem 1.5rem;
+      border: 2px solid var(--secondary);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      gap: 0.5rem;
+    }
+
+    .back-btn:hover {
+      background-color: var(--highlight);
+      border-color: var(--highlight);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(162, 224, 72, 0.3);
+    }
+
+    .video-wrapper {
+      width: 100%;
+      max-width: 960px;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border: 2px solid #e0e0e0;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #444;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      .back-btn {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+      }
+      .title {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-btn">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </svg>
+    Volver
+  </a>
+
+  <div class="container">
+    <h1 class="title">Demostración de RefrigeraSpace</h1>
+    <p class="subtitle">Vídeo de demostración de la app: cálculo de frigorías, catálogo de equipos y panel de administración.</p>
+
+    <div class="video-wrapper">
+      <video controls preload="metadata">
+        <source src="./demostracion_refrigera_Space.mp4" type="video/mp4" />
+        Tu navegador no soporta video HTML5.
+      </video>
+    </div>
+  </div>
+</body>
+</html>

@@ -73,6 +73,7 @@ class PortfolioApp {
     });
   }
 
+
   private returnButtonToOriginalPosition(): void {
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
