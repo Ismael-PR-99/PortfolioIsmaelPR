@@ -180,16 +180,22 @@
   /* Responsive */
   @media (max-width: 992px) {
     .hero-content {
-      gap: var(--sp-8);
+      gap: var(--sp-6);
       padding: var(--sp-12) var(--sp-6);
     }
 
     .hero-text h1 {
-      font-size: 3.5rem;
+      font-size: 2.8rem;
+      white-space: normal;
     }
 
     .hero-image img {
-      width: 180px;
+      width: 160px;
+      height: 160px;
+    }
+
+    .profile-arrow {
+      display: none;
     }
   }
 
