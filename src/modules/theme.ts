@@ -14,7 +14,7 @@ function getSystemTheme(): Theme {
 }
 
 export function initTheme(): void {
-  const theme = getStoredTheme() ?? getSystemTheme();
+  const theme = getStoredTheme() ?? 'light';
   applyTheme(theme);
 
   document.getElementById('theme-toggle')?.addEventListener('click', () => {

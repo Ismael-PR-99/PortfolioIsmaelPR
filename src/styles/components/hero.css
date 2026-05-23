@@ -85,11 +85,6 @@
   .highlight {
     color: var(--clr-accent);
     font-weight: 700;
-    /* No background — used only on dark surfaces where accent (#a2e048 on #1a1a1a) = 11.5:1 contrast */
-    text-decoration: underline;
-    text-decoration-color: currentColor;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 3px;
   }
 
   /* Social links */
@@ -159,6 +154,9 @@
   .hero-image img {
     display: block;
     width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: top center;
     border-radius: 50%;
     box-shadow: var(--shadow-md);
     transition: transform var(--transition-slow);

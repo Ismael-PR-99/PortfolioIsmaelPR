@@ -60,6 +60,8 @@ refs/
 *.mov
 *.avi
 *.mkv
+# Exception: demo video (59 MB, under GitHub 100 MB hard limit)
+!public/demostracion_refrigera_Space.mp4
 
 # Stash artifacts
 .git-tmp-*
