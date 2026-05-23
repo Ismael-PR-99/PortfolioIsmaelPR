@@ -55,7 +55,7 @@
     fill: currentColor;
   }
 
-  .contact-social-btn[aria-label="Instagram"] svg {
+  .contact-social-btn .instagram-icon {
     fill: none;
     stroke: currentColor;
   }
