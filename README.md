@@ -1,150 +1,104 @@
-# Portfolio Ismael Piña Ramos - TypeScript
+# Ismael Piña Ramos — Portfolio
 
-Portfolio personal desarrollado con TypeScript, HTML5 y CSS3.
+[![Deploy to GitHub Pages](https://github.com/Ismael-PR-99/PortfolioIsmaelPR/actions/workflows/deploy.yml/badge.svg)](https://github.com/Ismael-PR-99/PortfolioIsmaelPR/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 
-## 🚀 Características
-
-- **TypeScript**: Código tipado y seguro
-- **Arquitectura modular**: Código organizado en clases y interfaces
-- **Responsive**: Diseño adaptativo para móvil y escritorio
-- **Efectos interactivos**: Cursor personalizado, animaciones y efectos visuales
-- **Navegación suave**: Scroll suave entre secciones
-- **Menú hamburguesa**: Navegación móvil optimizada
-
-## 📁 Estructura del Proyecto
-
-```
-PortfolioIsmaelPR/
-├── src/
-│   ├── types.ts          # Interfaces y tipos TypeScript
-│   ├── scripts.ts        # Script principal (completo)
-│   └── scripts-simple.ts # Script simplificado
-├── dist/                 # Archivos compilados (generado)
-├── css/
-│   └── style.css         # Estilos CSS
-├── images/               # Imágenes del portfolio
-├── tsconfig.json         # Configuración TypeScript
-├── package.json          # Dependencias y scripts
-└── index.html           # Página principal
-```
-
-## 🛠️ Instalación y Uso
-
-### Prerrequisitos
-- Node.js >= 18.0.0
-- npm o yarn
-
-### Instalación
-```bash
-# Instalar dependencias
-npm install
-
-# Compilar TypeScript
-npm run build
-
-# Desarrollo con watch mode
-npm run build:watch
-
-# Verificar tipos
-npm run type-check
-```
-
-### Scripts Disponibles
-
-- `npm run build`: Compila TypeScript a JavaScript
-- `npm run build:watch`: Compila en modo watch
-- `npm run dev`: Compila y ejecuta servidor de desarrollo
-- `npm run clean`: Limpia archivos compilados
-- `npm run type-check`: Verifica tipos sin compilar
-
-## 🔧 Configuración TypeScript
-
-El proyecto usa una configuración TypeScript estricta con:
-
-- **Target**: ES2020
-- **Strict mode**: Habilitado
-- **Source maps**: Generados para debugging
-- **Declarations**: Archivos .d.ts generados
-- **OutDir**: `./dist`
-- **RootDir**: `./src`
-
-## 📝 Principales Mejoras Implementadas
-
-### 1. **Migración a TypeScript**
-- ✅ Código JavaScript convertido a TypeScript
-- ✅ Tipado estricto en todas las funciones
-- ✅ Interfaces y tipos definidos
-- ✅ Enums para constantes
-
-### 2. **Arquitectura Mejorada**
-- ✅ Clases organizadas (`PortfolioApp`, `SimplePortfolioApp`)
-- ✅ Estado centralizado (`AppState`)
-- ✅ Configuración global (`CONFIG`)
-- ✅ Separación de responsabilidades
-
-### 3. **Corrección de Errores**
-- ✅ Eliminación de variables globales no declaradas
-- ✅ Manejo correcto de tipos null/undefined
-- ✅ Event listeners tipados correctamente
-- ✅ Eliminación de código duplicado
-
-### 4. **Buenas Prácticas**
-- ✅ Uso de `const` para configuraciones
-- ✅ Métodos privados/públicos bien definidos
-- ✅ Manejo de errores mejorado
-- ✅ Logging estructurado
-
-## 🎯 Funcionalidades Principales
-
-### Menú Hamburguesa
-- Navegación responsive
-- Cambio dinámico de colores según sección
-- Animaciones suaves
-- Cierre con Escape y clic fuera
-
-### Scroll Suave
-- Navegación entre secciones
-- Offset automático para header
-- Diferentes comportamientos móvil/escritorio
-
-### Cursor Personalizado
-- Solo activo en escritorio
-- Efectos hover en elementos interactivos
-- Responsive handling
-
-### Efectos Visuales
-- Partículas de éxito
-- Animaciones de botones
-- Efectos de persecución (versión completa)
-
-## 🔄 Migración desde JavaScript
-
-### Archivos Migrados
-- `src/scripts.ts` (antes `js/scripts.js`)
-- `src/scripts-simple.ts` (antes `js/scripts-simple.js`)
-- Nuevo: `src/types.ts` (interfaces y tipos)
-
-### Cambios Principales
-1. **Tipado**: Todas las variables y funciones tienen tipos
-2. **Clases**: Código organizado en clases TypeScript
-3. **Interfaces**: Contratos claros para objetos
-4. **Enums**: Constantes tipadas
-5. **Configuración**: Valores centralizados y tipados
-
-## 🚨 Notas Importantes
-
-- El código fuente ahora está en `src/`
-- El HTML apunta a `dist/scripts.js` (compilado)
-- Para desarrollo, usar `npm run build:watch`
-- Verificar tipos antes de commit: `npm run type-check`
-
-## 📞 Soporte
-
-Para cualquier problema o mejora, revisar:
-1. Logs de consola para errores
-2. Verificación de tipos: `npm run type-check`
-3. Compilación: `npm run build`
+**Live:** [ismael-pr-99.github.io/PortfolioIsmaelPR](https://ismael-pr-99.github.io/PortfolioIsmaelPR/)
 
 ---
 
-**Desarrollado con ❤️ por Ismael Piña Ramos** 
+## Stack
+
+| Capa | Tecnología |
+|------|-----------|
+| Build | Vite 5 + TypeScript 5 strict |
+| Styles | CSS `@layer` — tokens → base → layout → components |
+| i18n | ES/EN vanilla (sin librerías), `localStorage` + `navigator.language` fallback |
+| Formulario | [Web3Forms](https://web3forms.com/) |
+| CI/CD | GitHub Actions → `npm ci` → `tsc` → `eslint` → `vite build` → Pages |
+| Performance | AVIF+WebP+PNG `<picture>`, SVG favicon, `preload` hero, Lighthouse CI budget |
+| SEO | Open Graph, Twitter Card, JSON-LD `Person`, sitemap.xml, robots.txt |
+| A11y | WCAG 2.2 AA — foco visible, ARIA correctos, skip-link, `prefers-reduced-motion` |
+
+## Estructura
+
+```
+src/
+├── main.ts                  # Entry point
+├── site.config.ts           # BASE_URL y SITE_URL (cambiar para dominio propio)
+├── modules/
+│   ├── menu.ts              # Hamburguesa + nav responsivo
+│   ├── scroll.ts            # Smooth scroll + scroll-reveal
+│   ├── theme.ts             # Light/dark + prefers-color-scheme
+│   ├── i18n.ts              # Toggle ES/EN
+│   ├── effects.ts           # CV button effect
+│   └── contact.ts           # Web3Forms
+├── i18n/
+│   ├── es.ts
+│   ├── en.ts
+│   └── index.ts
+├── styles/
+│   ├── tokens.css           # Design tokens (paleta, espaciado, tipografía)
+│   ├── base.css             # Reset moderno + focus visible
+│   ├── layout.css           # Grid + contenedores
+│   ├── utilities.css
+│   └── components/          # button, card, nav, hero, project-card, contact, footer
+└── lib/
+    └── logger.ts            # Log solo en DEV
+
+public/
+├── favicon.svg
+├── og.png                   # 1200×630 Open Graph image
+├── robots.txt
+├── sitemap.xml
+└── images/                  # AVIF + WebP originales
+```
+
+## Correr en local
+
+```bash
+git clone https://github.com/Ismael-PR-99/PortfolioIsmaelPR.git
+cd PortfolioIsmaelPR
+npm install
+npm run dev        # http://localhost:5173/PortfolioIsmaelPR/
+```
+
+### Otros scripts
+
+```bash
+npm run build          # Compila + optimiza imágenes → dist/
+npm run preview        # Preview del build en local
+npm run typecheck      # tsc --noEmit (0 errores strict)
+npm run lint           # ESLint @typescript-eslint/recommended-strict
+npm run lint:fix       # Autofix
+npm run format         # Prettier
+```
+
+## Migrar a dominio propio
+
+Editar dos líneas en `src/site.config.ts`:
+
+```ts
+export const BASE_URL = '/';           // era '/PortfolioIsmaelPR/'
+export const SITE_URL = 'https://tudominio.com';
+```
+
+Y actualizar `base` en `vite.config.js` a `'/'`.
+
+## CI/CD
+
+Cada push a `main` ejecuta:
+
+1. `tsc --noEmit` — falla si hay error de tipos
+2. `eslint src/` — falla si hay `console.log` en producción u otro warning
+3. `vite build` — genera `dist/`
+4. Deploy a GitHub Pages
+5. Lighthouse CI audit contra `.github/lighthouse-budget.json` (LCP < 2s, JS < 30 KB, CSS < 25 KB)
+
+## Contacto
+
+- **Email:** ismael199904@gmail.com
+- **LinkedIn:** [ismael-piña-ramos](https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/)
+- **GitHub:** [@Ismael-PR-99](https://github.com/Ismael-PR-99)
