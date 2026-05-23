@@ -46,4 +46,43 @@ export function initMenu(): void {
     },
     { passive: true }
   );
+
+  initActiveSectionTracking(links);
+}
+
+function initActiveSectionTracking(linksContainer: HTMLElement): void {
+  const sections = document.querySelectorAll<HTMLElement>('section[id]');
+  const navLinks = linksContainer.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+
+  if (!sections.length || !navLinks.length) return;
+
+  const setActive = (id: string) => {
+    navLinks.forEach((link) => {
+      if (link.getAttribute('href') === `#${id}`) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
+
+  // Default active on load
+  setActive('hero');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    {
+      // Trigger zone: strip just below nav, top 30% of viewport
+      rootMargin: '-64px 0px -70% 0px',
+      threshold: 0,
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
 }

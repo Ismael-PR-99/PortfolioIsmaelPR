@@ -80,17 +80,27 @@
     margin-top: var(--sp-2);
   }
 
+  /* Always in DOM so aria-live="polite" can detect text changes reliably */
   .form-status {
-    margin-top: var(--sp-3);
-    padding: var(--sp-3) var(--sp-4);
-    border-radius: var(--radius-md);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
     font-size: var(--text-sm);
     font-weight: 600;
-    display: none;
+    border-radius: var(--radius-md);
+    transition: max-height var(--transition-base), opacity var(--transition-base),
+      margin-top var(--transition-base), padding var(--transition-base);
+  }
+
+  .form-status.success,
+  .form-status.error {
+    max-height: 120px;
+    opacity: 1;
+    margin-top: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
   }
 
   .form-status.success {
-    display: block;
     background: rgba(162, 224, 72, 0.15);
     color: #4a7c20;
     border: 1px solid rgba(162, 224, 72, 0.4);
@@ -101,7 +111,6 @@
   }
 
   .form-status.error {
-    display: block;
     background: rgba(220, 53, 69, 0.1);
     color: #dc3545;
     border: 1px solid rgba(220, 53, 69, 0.3);

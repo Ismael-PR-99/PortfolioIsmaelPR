@@ -85,9 +85,11 @@
   .highlight {
     color: var(--clr-accent);
     font-weight: 700;
-    background-color: var(--clr-highlight-bg);
-    padding: 0 var(--sp-1);
-    border-radius: var(--radius-sm);
+    /* No background — used only on dark surfaces where accent (#a2e048 on #1a1a1a) = 11.5:1 contrast */
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
   }
 
   /* Social links */

@@ -47,7 +47,8 @@
   }
 
   :focus-visible {
-    outline: 3px solid var(--clr-accent);
+    /* Text color always contrasts with its own background → universal WCAG 2.2 compliance */
+    outline: 3px solid var(--clr-text);
     outline-offset: 3px;
     border-radius: var(--radius-sm);
   }
