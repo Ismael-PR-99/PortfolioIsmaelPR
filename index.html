@@ -4,11 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Ismael Piña Ramos | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style.css?v=5.2">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="./images/PiñaFavicon.png">
 </head>
@@ -66,17 +64,17 @@
                 <h2 class="section-title">Experiencia y Formación</h2>
                 <div class="experience-grid">
                     <div class="card">
-                        <h3 class="font-bold">Competencias claves</h3>
+                        <h3>Competencias claves</h3>
                         <div class="experience-item">
-                            <h4 class="font-bold">Aptitudes Técnicas</h4>
-                            <p><span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Laravel</span> · <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Spring Boot</span> · Python · Django</p>
-                            <p><span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">JavaScript</span> · <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">React</span> · Blade · <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Tailwind</span></p>
-                            <p><span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">MySQL</span> · <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">PostgreSQL</span></p>
+                            <h4>Aptitudes Técnicas</h4>
+                            <p><span class="tech-badge">Laravel</span> · <span class="tech-badge">Spring Boot</span> · Python · Django</p>
+                            <p><span class="tech-badge">JavaScript</span> · <span class="tech-badge">React</span> · Blade · <span class="tech-badge">Tailwind</span></p>
+                            <p><span class="tech-badge">MySQL</span> · <span class="tech-badge">PostgreSQL</span></p>
                             <p>APIs REST · Scraping · Git · GitHub</p>
-                            <p>Automatización · <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Java</span> · React Native</p>
+                            <p>Automatización · <span class="tech-badge">Java</span> · React Native</p>
                         </div>
                         <div class="experience-item">
-                            <h4 class="font-bold">Aptitudes Personales</h4>
+                            <h4>Aptitudes Personales</h4>
                             <p>Resolutivo y orientado a resultados</p>
                             <p>Trabajo en equipo y metodologías ágiles</p>
                             <p>Rápida adaptación a nuevas tecnologías</p>
@@ -84,22 +82,22 @@
                         </div>
                     </div>
                     <div class="card">
-                        <h3 class="font-bold">Experiencia</h3>
+                        <h3>Experiencia</h3>
                         <div class="experience-item">
-                            <h4 class="font-bold">Prácticas Grado Superior DAW</h4>
+                            <h4>Prácticas Grado Superior DAW</h4>
                             <p class="meta">Cesur Sevilla · 2023-2025</p>
                             <p>Desarrollo de aplicaciones web con tecnologías como <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Java</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">PHP</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">JavaScript</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Spring Boot</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Laravel</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Tailwind CSS</span> y Breeze. Participación en proyectos reales, trabajando tanto en frontend como en backend, y adquiriendo experiencia en el desarrollo de soluciones modernas y escalables.</p>
                         </div>
                     </div>
                     <div class="card">
-                        <h3 class="font-bold">Educación</h3>
+                        <h3>Educación</h3>
                         <div class="experience-item">
-                            <h4 class="font-bold">Grado Superior DAW</h4>
+                            <h4>Grado Superior DAW</h4>
                             <p class="meta">Cesur Sevilla · 2023-2025</p>
                             <p>Desarrollo de aplicaciones web con <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Java</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">PHP</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">JavaScript</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Spring Boot</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Laravel</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Tailwind CSS</span>, Breeze.</p>
                         </div>
                         <div class="experience-item">
-                            <h4 class="font-bold">Curso Core Network (IFCD0112)</h4>
+                            <h4>Curso Core Network (IFCD0112)</h4>
                             <p class="meta">IFC · En curso</p>
                             <p>Formación en programación orientada a objetos y bases de datos relacionales.</p>
                         </div>
@@ -120,12 +118,34 @@
                         <h3>RefrigeraSpace</h3>
                         <p>Aplicación web en <span class="highlight">Laravel 12</span> para cálculo de frigorías y selección de equipos de aire acondicionado. Incluye <strong>scraping automático, generación de PDF y panel de administración.</strong></p>
                         <div class="project-tech">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" alt="Laravel" title="Laravel"/>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" title="PHP"/>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" title="MySQL"/>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" title="Tailwind CSS"/>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" title="JavaScript"/>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" title="Node.js"/>
+                            <!-- Laravel -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 52" aria-label="Laravel" role="img" title="Laravel">
+                                <path fill="#FF2D20" d="M49.626 11.564a.809.809 0 0 1 .028.209v10.972a.8.8 0 0 1-.4.694l-9.209 5.302V39.25c0 .286-.152.55-.4.694L20.42 51.01a.823.823 0 0 1-.093.041c-.028.01-.057.013-.086.02-.063.012-.122.016-.185.013-.033-.004-.063-.006-.094-.011-.042-.01-.083-.021-.123-.039L.77 39.944A.8.8 0 0 1 .37 39.25V7.519c0-.072.01-.142.028-.209.01-.039.026-.076.043-.112.018-.04.037-.077.06-.111a.818.818 0 0 1 .077-.103c.027-.029.056-.056.087-.08a.82.82 0 0 1 .1-.068L9.97.789A.798.798 0 0 1 10.769.789l9.18 5.3a.803.803 0 0 1 .103.068c.031.024.06.051.086.08a.773.773 0 0 1 .078.103c.023.034.042.071.06.111.018.036.032.073.042.112.019.067.027.137.027.209v10.218l8.008-4.617V11.564c0-.072.01-.142.028-.209.01-.039.026-.076.044-.112.018-.04.037-.077.06-.111a.765.765 0 0 1 .077-.103c.028-.029.056-.056.087-.08a.82.82 0 0 1 .1-.068l9.204-5.308a.797.797 0 0 1 .796 0l9.204 5.308c.036.02.07.044.1.068.031.024.06.051.088.08a.836.836 0 0 1 .077.103c.023.034.042.071.06.111.018.036.032.073.042.112z"/>
+                            </svg>
+                            <!-- PHP -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" aria-label="PHP" role="img" title="PHP">
+                                <ellipse cx="64" cy="64" rx="62" ry="32" fill="#8892bf"/>
+                                <text x="64" y="72" font-family="Arial" font-weight="bold" font-size="32" fill="white" text-anchor="middle">PHP</text>
+                            </svg>
+                            <!-- MySQL -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" aria-label="MySQL" role="img" title="MySQL">
+                                <path fill="#00618A" d="M116.948 97.807c-6.863-.187-12.104.452-16.585 2.341-1.273.537-3.305.552-3.513 2.147.7.733.809 1.829 1.365 2.731 1.07 1.73 2.876 4.052 4.488 5.268 1.762 1.33 3.577 2.751 5.465 3.902 3.358 2.047 7.107 3.217 10.34 5.268 1.906 1.21 3.799 2.733 5.658 4.097.92.675 1.537 1.724 2.732 2.147v-.194c-.628-.8-.79-1.898-1.366-2.733l-2.537-2.537c-2.48-3.292-5.629-6.184-8.976-8.585-2.669-1.928-8.239-4.301-9.292-7.515l-.195-.195c1.801-.201 3.909-.847 5.658-1.366 2.832-.762 5.368-.572 8.292-1.365l3.903-1.171v-.731c-1.455-1.494-2.494-3.477-4.097-4.878-4.176-3.549-8.747-7.075-13.538-10.073-2.623-1.625-5.864-2.68-8.683-4.097-1.031-.52-2.783-.786-3.317-1.755 1.52-2.094 1.616-5.35 2.537-7.952 1.252-3.565 1.11-7.574.195-10.952-.491-1.77-1.622-4.644-3.123-5.463-1.497-.816-4.1-.243-5.658.195-1.77.491-3.317 1.244-4.877 2.145-4.33 2.534-7.977 6.484-10.366 11.124-.672 1.287-1.22 2.644-1.951 3.902a60.056 60.056 0 0 1-3.342-2.342c-1.95-1.517-5.014-3.022-7.756-3.122h-3.122c-1.105.293-2.278.566-3.318.975-4.51 1.807-7.147 5.635-9.658 10.073-.891 1.566-1.548 3.236-2.439 4.878l-3.317 6.244-3.317 5.267-1.952 3.122c-1.197 1.9-2.384 3.806-3.61 5.658-1.074 1.617-2.278 3.149-3.514 4.657l-4.683 5.854c-.836.893-1.796 1.712-2.634 2.634-.826.91-1.604 1.867-2.439 2.731-1.31 1.343-2.83 2.484-4.098 3.903-.438.483-.87.967-1.268 1.454-.328.404-.686.787-1.073 1.146L7.7 97.81c-.336-.34-.648-.71-.927-1.098-.318-.426-.633-.852-.951-1.268-.33-.434-.64-.885-.975-1.316a44.95 44.95 0 0 1-.975-1.366c-.319-.479-.623-.968-.927-1.463L2.97 90.03a52.12 52.12 0 0 1-.78-1.414c-.247-.483-.492-.965-.732-1.456a46.498 46.498 0 0 1-.683-1.512c-.217-.517-.423-1.044-.634-1.563a43.95 43.95 0 0 1-.537-1.61c-.167-.545-.33-1.09-.487-1.636a43.18 43.18 0 0 1-.39-1.657c-.124-.553-.242-1.11-.343-1.67a44.62 44.62 0 0 1-.23-1.757c-.065-.59-.121-1.182-.17-1.774a45.72 45.72 0 0 1-.097-1.804c-.02-.6-.027-1.2-.025-1.8.007-.594.027-1.19.062-1.782a45.25 45.25 0 0 1 .147-1.803 44.72 44.72 0 0 1 .243-1.8c.106-.598.222-1.193.35-1.783a43.98 43.98 0 0 1 .441-1.756c.158-.582.325-1.16.503-1.732.184-.582.378-1.157.582-1.726.209-.572.428-1.139.66-1.697.237-.567.481-1.13.735-1.685a44.8 44.8 0 0 1 .82-1.643c.296-.543.6-1.079.912-1.608.316-.532.64-1.06.972-1.58.33-.516.67-1.028 1.016-1.53.352-.508.71-1.008 1.077-1.497.373-.494.754-.98 1.146-1.455.391-.472.79-.935 1.2-1.389.407-.448.82-.89 1.243-1.32a45.12 45.12 0 0 1 1.29-1.243c.44-.408.887-.806 1.341-1.195.454-.387.916-.762 1.387-1.122.47-.358.946-.706 1.43-1.041.483-.33.972-.653 1.47-.962.497-.305 1-.6 1.512-.882.51-.278 1.025-.546 1.547-.801.518-.252 1.043-.493 1.573-.722.528-.23 1.059-.448 1.596-.655a44.97 44.97 0 0 1 1.62-.587c.547-.18 1.098-.35 1.65-.507.551-.155 1.105-.298 1.66-.43.555-.13 1.113-.246 1.673-.352.56-.105 1.124-.197 1.688-.277.566-.08 1.133-.148 1.703-.205.57-.056 1.143-.101 1.715-.134a45.32 45.32 0 0 1 1.727-.077c.581-.014 1.16-.016 1.741-.006a45.96 45.96 0 0 1 1.75.053c.582.03 1.162.072 1.74.126.578.053 1.153.117 1.725.194.573.077 1.142.165 1.71.264.566.098 1.131.207 1.692.327.562.12 1.12.249 1.676.39.553.14 1.103.29 1.648.45.546.162 1.085.332 1.62.514.535.181 1.064.37 1.59.57.523.2 1.04.408 1.553.625.511.217 1.015.44 1.516.672.497.232.988.47 1.475.717.483.244.959.496 1.43.754.467.257.927.52 1.383.79.453.27.9.546 1.34.829.438.282.869.57 1.295.864.423.293.84.592 1.25.897.412.305.815.617 1.213.935.396.317.785.64 1.169.967.38.325.755.655 1.124.99.368.335.729.676 1.084 1.02.356.346.705.698 1.048 1.053.343.356.68.717 1.01 1.082.33.366.654.736.97 1.11.317.376.627.757.929 1.14.303.384.599.772.887 1.165.287.394.567.79.84 1.19.274.4.539.803.797 1.21.259.408.51.82.753 1.234.244.415.481.833.709 1.255.23.423.452.848.665 1.278.215.43.42.864.618 1.3.199.437.39.876.572 1.32.183.44.358.884.524 1.33.167.447.326.897.476 1.349.15.453.293.907.425 1.365.134.457.26.916.378 1.378.118.462.228.927.328 1.394.1.467.193.936.277 1.408.085.47.16.944.228 1.419.067.473.126.948.177 1.425.05.477.093.955.128 1.434.034.48.06.96.079 1.44.019.48.03.96.033 1.44.004.48-.002.962-.012 1.44-.01.48-.029.96-.054 1.437-.025.48-.057.958-.095 1.435-.037.477-.082.952-.133 1.427-.05.475-.109.948-.172 1.42-.063.472-.134.942-.21 1.41-.077.467-.161.933-.25 1.397-.09.463-.185.924-.286 1.383-.101.46-.207.917-.32 1.374-.112.457-.23.912-.354 1.364-.122.452-.252.9-.386 1.348-.135.448-.276.893-.421 1.336-.146.444-.3.885-.458 1.324-.158.44-.32.876-.49 1.31-.17.436-.344.87-.525 1.3-.18.43-.365.858-.555 1.284-.19.426-.385.85-.584 1.27-.199.42-.403.838-.612 1.254-.209.415-.421.828-.638 1.238-.218.41-.441.817-.668 1.22-.228.405-.46.807-.697 1.207-.237.4-.48.797-.726 1.191-.248.395-.5.788-.756 1.178-.256.39-.516.778-.78 1.163-.265.386-.533.77-.805 1.151-.272.38-.549.757-.83 1.132-.282.374-.566.745-.856 1.113-.29.369-.583.733-.88 1.095-.298.362-.6.722-.906 1.079-.308.356-.618.71-.932 1.06-.315.35-.634.697-.956 1.04-.323.344-.65.684-.98 1.02-.33.337-.665.67-1.003.999-.338.33-.68.655-1.024.977-.346.321-.695.64-1.048.955-.352.314-.708.624-1.067.93-.359.307-.72.61-1.086.909-.366.3-.735.595-1.107.886-.373.291-.748.578-1.127.862-.38.283-.761.563-1.145.839-.384.276-.772.547-1.162.815-.39.268-.784.531-1.18.79-.397.26-.797.515-1.2.767-.402.252-.807.5-1.215.745-.408.244-.818.485-1.231.72-.413.238-.83.471-1.248.7-.42.23-.842.455-1.265.677-.425.22-.852.438-1.28.651-.43.215-.86.427-1.293.634-.432.208-.867.411-1.304.61-.437.2-.877.395-1.317.586-.44.19-.883.378-1.326.562-.443.184-.889.364-1.337.54-.449.178-.9.352-1.352.52-.451.17-.906.334-1.36.496-.455.162-.912.32-1.37.474-.458.154-.917.303-1.378.448-.46.145-.922.285-1.385.422-.463.136-.929.268-1.395.396-.467.128-.935.253-1.404.373-.47.12-.941.237-1.413.35-.472.113-.944.222-1.418.328-.474.107-.95.21-1.426.31-.477.1-.954.196-1.432.289-.478.093-.957.18-1.437.265-.48.085-.96.166-1.44.243-.481.078-.963.152-1.446.223-.482.07-.965.136-1.45.2-.484.062-.97.12-1.455.176-.486.055-.972.107-1.46.155-.487.049-.974.094-1.462.135-.489.042-.978.08-1.468.114-.49.034-.98.065-1.471.092-.49.027-.982.05-1.474.07-.49.02-.982.035-1.474.048-.492.013-.984.021-1.477.026-.493.005-.985.007-1.478.004-.493-.002-.986-.008-1.478-.017-.493-.01-.985-.023-1.478-.038-.492-.016-.984-.034-1.476-.055-.491-.021-.982-.045-1.473-.07a95.4 95.4 0 0 1-1.468-.088 92.72 92.72 0 0 1-1.463-.107c-.487-.04-.974-.082-1.46-.126-.485-.044-.97-.09-1.454-.138-.484-.05-.966-.1-1.449-.153-.482-.054-.963-.11-1.444-.168-.48-.059-.96-.12-1.44-.183a84.3 84.3 0 0 1-1.432-.198c-.477-.069-.952-.14-1.428-.213a81.51 81.51 0 0 1-1.42-.228 78.84 78.84 0 0 1-1.414-.244"/>
+                            </svg>
+                            <!-- Tailwind CSS -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" aria-label="Tailwind CSS" role="img" title="Tailwind CSS">
+                                <path fill="#38bdf8" d="M64.004 25.602c-17.067 0-27.734 8.53-32 25.597 6.398-8.531 13.867-11.73 22.398-9.597 4.871 1.214 8.352 4.746 12.207 8.66C72.883 56.629 80.145 64 96.004 64c17.066 0 27.73-8.531 32-25.602-6.399 8.536-13.867 11.735-22.399 9.602-4.87-1.215-8.347-4.746-12.207-8.66-6.27-6.367-13.527-13.738-29.394-13.738zM32.004 64c-17.066 0-27.734 8.531-32 25.602C6.402 81.066 13.87 77.867 22.402 80c4.871 1.215 8.352 4.746 12.207 8.66 6.274 6.367 13.536 13.738 29.395 13.738 17.066 0 27.734-8.53 32-25.597-6.399 8.531-13.867 11.73-22.399 9.597-4.87-1.214-8.347-4.745-12.207-8.66C55.128 71.371 47.868 64 32.004 64z"/>
+                            </svg>
+                            <!-- JavaScript -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" aria-label="JavaScript" role="img" title="JavaScript">
+                                <rect width="128" height="128" fill="#F0DB4F"/>
+                                <text x="8" y="120" font-family="Arial" font-weight="bold" font-size="90" fill="#323330">JS</text>
+                            </svg>
+                            <!-- Node.js -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" aria-label="Node.js" role="img" title="Node.js">
+                                <path fill="#83CD29" d="M64 0L10.4 32v64L64 128l53.6-32V32L64 0z"/>
+                                <path fill="#fff" d="M64 112L22.4 88V40L64 16l41.6 24v48L64 112z"/>
+                                <text x="64" y="75" font-family="Arial" font-weight="bold" font-size="28" fill="#333" text-anchor="middle">NODE</text>
+                            </svg>
                         </div>
                         <div class="project-links">
                             <a href="demo-refrigeraspace.html" class="btn btn-primary">

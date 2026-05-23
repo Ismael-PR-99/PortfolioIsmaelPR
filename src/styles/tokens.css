@@ -1,0 +1,89 @@
+@layer tokens {
+  :root {
+    /* Brand colors */
+    --clr-accent: #a2e048;
+    --clr-accent-hover: #8bc34a;
+    --clr-brand-dark: #1a1a1a;
+
+    /* Surface colors — light mode */
+    --clr-bg: #ffffff;
+    --clr-surface: #f5f6fa;
+    --clr-card: #ffffff;
+    --clr-projects-bg: #1a1a1a;
+    --clr-projects-card: #2a2a2a;
+
+    /* Text — light mode */
+    --clr-text: #1a1a1a;
+    --clr-text-muted: #555555;
+    --clr-text-light: #ffffff;
+    --clr-text-on-dark: rgba(255, 255, 255, 0.85);
+
+    /* Misc */
+    --clr-highlight-bg: #e8f5e9;
+    --clr-blob: #fed8b1;
+    --clr-border: rgba(0, 0, 0, 0.1);
+    --clr-border-dark: #444444;
+
+    /* Spacing (4px base) */
+    --sp-1: 0.25rem;
+    --sp-2: 0.5rem;
+    --sp-3: 0.75rem;
+    --sp-4: 1rem;
+    --sp-6: 1.5rem;
+    --sp-8: 2rem;
+    --sp-10: 2.5rem;
+    --sp-12: 3rem;
+    --sp-16: 4rem;
+    --sp-24: 6rem;
+
+    /* Typography */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 2rem;
+    --text-4xl: 2.8rem;
+    --text-5xl: 4.2rem;
+
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10);
+    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.15);
+    --shadow-accent: 0 4px 20px rgba(162, 224, 72, 0.25);
+
+    /* Z-index */
+    --z-base: 1;
+    --z-nav: 100;
+    --z-overlay: 200;
+    --z-toast: 300;
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+  }
+
+  [data-theme="dark"] {
+    --clr-bg: #111112;
+    --clr-surface: #1a1a2e;
+    --clr-card: #1e1e30;
+    --clr-text: #e8e8e8;
+    --clr-text-muted: #aaaaaa;
+    --clr-highlight-bg: rgba(162, 224, 72, 0.12);
+    --clr-border: rgba(255, 255, 255, 0.1);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+}

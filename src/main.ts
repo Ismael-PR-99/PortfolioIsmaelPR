@@ -1,3 +1,4 @@
+import './styles/main.css';
 import { initMenu } from './modules/menu';
 import { initTheme } from './modules/theme';
 import { initI18n } from './modules/i18n';
