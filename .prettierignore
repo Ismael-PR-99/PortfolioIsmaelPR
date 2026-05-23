@@ -1,0 +1,6 @@
+dist/
+node_modules/
+*.pdf
+*.png
+*.jpg
+*.svg

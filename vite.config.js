@@ -9,7 +9,7 @@ export default defineConfig({
     emptyOutDir: true,
     assetsDir: 'assets',
     rollupOptions: {
-      input: 'index.html',
+      input: { main: 'index.html' },
       output: {
         manualChunks: undefined, // Evitar chunks separados para un portfolio simple
         assetFileNames: (assetInfo) => {

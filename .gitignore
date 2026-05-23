@@ -63,3 +63,6 @@ refs/
 
 # Stash artifacts
 .git-tmp-*
+
+# Legacy JS directory (superseded by src/)
+js/
