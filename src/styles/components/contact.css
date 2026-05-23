@@ -28,108 +28,41 @@
     margin-bottom: var(--sp-6);
   }
 
-  /* Contact form */
-  #contact-form {
-    width: 100%;
-    max-width: 540px;
-    margin: var(--sp-8) auto 0;
+  .contact-social-links {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--sp-4);
+    margin-bottom: var(--sp-8);
   }
 
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-1);
-    text-align: left;
-  }
-
-  .form-group label {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--clr-text-muted);
-  }
-
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: var(--sp-3) var(--sp-4);
-    background: var(--clr-card);
-    border: 1px solid var(--clr-border);
-    border-radius: var(--radius-md);
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
-    color: var(--clr-text);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-    resize: vertical;
-  }
-
-  .form-group input:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: var(--clr-accent);
-    box-shadow: 0 0 0 3px rgba(162, 224, 72, 0.2);
-  }
-
-  .form-group textarea {
-    min-height: 140px;
-  }
-
-  .form-submit {
-    margin-top: var(--sp-2);
-  }
-
-  /* Always in DOM so aria-live="polite" can detect text changes reliably */
-  .form-status {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    font-size: var(--text-sm);
-    font-weight: 600;
-    border-radius: var(--radius-md);
-    transition: max-height var(--transition-base), opacity var(--transition-base),
-      margin-top var(--transition-base), padding var(--transition-base);
-  }
-
-  .form-status.success,
-  .form-status.error {
-    max-height: 120px;
-    opacity: 1;
-    margin-top: var(--sp-3);
-    padding: var(--sp-3) var(--sp-4);
-  }
-
-  .form-status.success {
-    background: rgba(162, 224, 72, 0.15);
-    color: #4a7c20;
-    border: 1px solid rgba(162, 224, 72, 0.4);
-  }
-
-  [data-theme='dark'] .form-status.success {
-    color: var(--clr-accent);
-  }
-
-  .form-status.error {
-    background: rgba(220, 53, 69, 0.1);
-    color: #dc3545;
-    border: 1px solid rgba(220, 53, 69, 0.3);
-  }
-
-  .contact-divider {
-    display: flex;
+  .contact-social-btn {
+    display: inline-flex;
     align-items: center;
-    gap: var(--sp-4);
-    color: var(--clr-text-muted);
-    font-size: var(--text-sm);
-    margin: var(--sp-4) 0;
+    gap: var(--sp-2);
+    padding: var(--sp-3) var(--sp-6);
+    border: 2px solid var(--clr-accent);
+    border-radius: var(--radius-md);
+    color: var(--clr-accent);
+    font-weight: 600;
+    font-size: var(--text-base);
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
   }
 
-  .contact-divider::before,
-  .contact-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--clr-border);
+  .contact-social-btn svg {
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  .contact-social-btn[aria-label="Instagram"] svg {
+    fill: none;
+    stroke: currentColor;
+  }
+
+  .contact-social-btn:hover {
+    background-color: var(--clr-accent);
+    color: var(--clr-brand-dark);
+    transform: translateY(-2px);
   }
 }

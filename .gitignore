@@ -60,8 +60,11 @@ refs/
 *.mov
 *.avi
 *.mkv
-# Exception: demo video (59 MB, under GitHub 100 MB hard limit)
-!public/demostracion_refrigera_Space.mp4
+
+# Generated image assets (built by optimize-images.mjs from images/*.png)
+public/images/*.png
+public/images/*.webp
+public/images/*.avif
 
 # Stash artifacts
 .git-tmp-*

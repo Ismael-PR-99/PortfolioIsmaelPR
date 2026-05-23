@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { mkdirSync, existsSync } from 'fs';
+import { mkdirSync, existsSync, copyFileSync } from 'fs';
 
 const IMAGES = [
   { src: 'images/IsmaelFoto.png', name: 'IsmaelFoto' },
@@ -15,8 +15,9 @@ for (const { src, name } of IMAGES) {
     continue;
   }
 
+  copyFileSync(src, `${outDir}/${name}.png`);
   await sharp(src).webp({ quality: 82 }).toFile(`${outDir}/${name}.webp`);
   await sharp(src).avif({ quality: 55 }).toFile(`${outDir}/${name}.avif`);
 
-  console.log(`✓ ${name}: WebP + AVIF → ${outDir}/`);
+  console.log(`✓ ${name}: PNG + WebP + AVIF → ${outDir}/`);
 }
