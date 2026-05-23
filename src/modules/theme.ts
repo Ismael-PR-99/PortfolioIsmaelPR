@@ -9,10 +9,6 @@ function getStoredTheme(): Theme | null {
   return stored === 'light' || stored === 'dark' ? stored : null;
 }
 
-function getSystemTheme(): Theme {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
 export function initTheme(): void {
   const theme = getStoredTheme() ?? 'light';
   applyTheme(theme);

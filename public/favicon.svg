@@ -1,4 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="#1a1a1a"/>
-  <text x="5" y="23" font-family="system-ui,sans-serif" font-size="17" font-weight="800" fill="#a2e048">IP</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="#1a1a1a"/>
+  <!-- Pineapple body -->
+  <ellipse cx="16" cy="20" rx="7" ry="9" fill="#a2e048"/>
+  <!-- Pineapple body shading lines -->
+  <line x1="13" y1="13" x2="11" y2="29" stroke="#1a1a1a" stroke-width="1" opacity="0.25"/>
+  <line x1="16" y1="12" x2="16" y2="29" stroke="#1a1a1a" stroke-width="1" opacity="0.25"/>
+  <line x1="19" y1="13" x2="21" y2="29" stroke="#1a1a1a" stroke-width="1" opacity="0.25"/>
+  <line x1="9" y1="17" x2="23" y2="17" stroke="#1a1a1a" stroke-width="1" opacity="0.25"/>
+  <line x1="9" y1="21" x2="23" y2="21" stroke="#1a1a1a" stroke-width="1" opacity="0.25"/>
+  <line x1="10" y1="25" x2="22" y2="25" stroke="#1a1a1a" stroke-width="1" opacity="0.25"/>
+  <!-- Pineapple leaves -->
+  <path d="M16 12 C14 8 10 6 12 3 C13 7 15 9 16 12Z" fill="#5a8a1a"/>
+  <path d="M16 12 C18 8 22 6 20 3 C19 7 17 9 16 12Z" fill="#5a8a1a"/>
+  <path d="M16 12 C16 7 13 4 16 2 C19 4 16 7 16 12Z" fill="#7ab82a"/>
 </svg>
