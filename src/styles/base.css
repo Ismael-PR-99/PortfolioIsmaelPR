@@ -19,6 +19,7 @@
     color: var(--clr-text);
     overflow-x: hidden;
     line-height: 1.6;
+    padding-top: 64px;
     transition: background-color var(--transition-base), color var(--transition-base);
   }
 

@@ -4,6 +4,7 @@ import { initTheme } from './modules/theme';
 import { initI18n } from './modules/i18n';
 import { initScrollReveal, initSmoothScroll } from './modules/scroll';
 import { initCVButtonEffects } from './modules/effects';
+import { initContactForm } from './modules/contact';
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -12,4 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initScrollReveal();
   initCVButtonEffects();
+  initContactForm();
 });

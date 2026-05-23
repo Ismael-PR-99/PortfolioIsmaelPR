@@ -11,6 +11,26 @@
     <link rel="icon" type="image/png" href="./images/PiñaFavicon.png">
 </head>
 <body>
+    <a class="skip-link" href="#hero">Saltar al contenido</a>
+
+    <nav id="main-nav" aria-label="Navegación principal">
+        <a href="#hero" class="nav-logo">Ismael Piña</a>
+        <ul id="nav-links" class="nav-links" role="list">
+            <li><a href="#hero">Inicio</a></li>
+            <li><a href="#experience">Experiencia</a></li>
+            <li><a href="#projects">Proyectos</a></li>
+            <li><a href="#contact">Contacto</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button id="theme-toggle" aria-label="Cambiar tema">☀︎</button>
+        </div>
+        <button id="menu-toggle" class="nav-hamburger" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
     <main>
         <!-- Hero Section -->
         <section id="hero" class="section-block hero">
@@ -86,7 +106,7 @@
                         <div class="experience-item">
                             <h4>Prácticas Grado Superior DAW</h4>
                             <p class="meta">Cesur Sevilla · 2023-2025</p>
-                            <p>Desarrollo de aplicaciones web con tecnologías como <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Java</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">PHP</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">JavaScript</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Spring Boot</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Laravel</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Tailwind CSS</span> y Breeze. Participación en proyectos reales, trabajando tanto en frontend como en backend, y adquiriendo experiencia en el desarrollo de soluciones modernas y escalables.</p>
+                            <p>Desarrollo de aplicaciones web con tecnologías como <span class="tech-badge">Java</span>, <span class="tech-badge">PHP</span>, <span class="tech-badge">JavaScript</span>, <span class="tech-badge">Spring Boot</span>, <span class="tech-badge">Laravel</span>, <span class="tech-badge">Tailwind CSS</span> y Breeze. Participación en proyectos reales, trabajando tanto en frontend como en backend, y adquiriendo experiencia en el desarrollo de soluciones modernas y escalables.</p>
                         </div>
                     </div>
                     <div class="card">
@@ -94,7 +114,7 @@
                         <div class="experience-item">
                             <h4>Grado Superior DAW</h4>
                             <p class="meta">Cesur Sevilla · 2023-2025</p>
-                            <p>Desarrollo de aplicaciones web con <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Java</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">PHP</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">JavaScript</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Spring Boot</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Laravel</span>, <span class="font-semibold bg-emerald-100/60 px-1 rounded-sm">Tailwind CSS</span>, Breeze.</p>
+                            <p>Desarrollo de aplicaciones web con <span class="tech-badge">Java</span>, <span class="tech-badge">PHP</span>, <span class="tech-badge">JavaScript</span>, <span class="tech-badge">Spring Boot</span>, <span class="tech-badge">Laravel</span>, <span class="tech-badge">Tailwind CSS</span>, Breeze.</p>
                         </div>
                         <div class="experience-item">
                             <h4>Curso Core Network (IFCD0112)</h4>
@@ -168,16 +188,42 @@
 
         <!-- Contact Section -->
         <section id="contact" class="section-block alt fade-in-section">
-             <div class="decor-blob blob3"></div>
+            <div class="decor-blob blob3"></div>
             <div class="container center-content">
                 <h2 class="section-title">Ponte en Contacto</h2>
                 <p>Siempre estoy abierto a conectar. ¡Hablemos!</p>
 
                 <a href="./CV_Piña_Ramos_Ismael.pdf" target="_blank" class="btn-cv-contact">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 10px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span style="font-weight: 800; font-size: 2rem; vertical-align: middle;">Ver mi CV</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Ver mi CV</span>
                 </a>
 
+                <div class="contact-divider">o envíame un mensaje</div>
+
+                <form id="contact-form" novalidate>
+                    <!-- Replace YOUR_ACCESS_KEY with your Web3Forms key from web3forms.com -->
+                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY">
+                    <input type="hidden" name="subject" value="Nuevo mensaje desde portfolio">
+                    <input type="checkbox" name="botcheck" style="display:none">
+
+                    <div class="form-group">
+                        <label for="cf-name">Nombre</label>
+                        <input id="cf-name" type="text" name="name" placeholder="Tu nombre" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-email">Email</label>
+                        <input id="cf-email" type="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-message">Mensaje</label>
+                        <textarea id="cf-message" name="message" placeholder="Cuéntame en qué puedo ayudarte…" required></textarea>
+                    </div>
+
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-primary" style="width:100%">Enviar mensaje</button>
+                    </div>
+                    <div id="form-status" class="form-status" role="alert" aria-live="polite"></div>
+                </form>
             </div>
         </section>
 
