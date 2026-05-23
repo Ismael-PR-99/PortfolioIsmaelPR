@@ -36,5 +36,9 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@11.1.0",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "sharp"]
   }
 }
