@@ -39,4 +39,27 @@ coverage/
 
 # Temporary folders
 tmp/
-temp/ 
+temp/
+
+# CSS backups
+*-backup-*.css
+
+# Git internals (accidentally committed)
+HEAD
+FETCH_HEAD
+config
+description
+packed-refs
+hooks/
+info/
+objects/
+refs/
+
+# Large media (use external hosting)
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Stash artifacts
+.git-tmp-*
