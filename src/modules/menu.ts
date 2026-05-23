@@ -1,3 +1,5 @@
+import { t } from '../i18n/index';
+
 export function initMenu(): void {
   const nav = document.getElementById('main-nav');
   const toggle = document.getElementById('menu-toggle');
@@ -8,13 +10,13 @@ export function initMenu(): void {
   const open = () => {
     nav.classList.add('nav-open');
     toggle.setAttribute('aria-expanded', 'true');
-    toggle.setAttribute('aria-label', 'Cerrar menú');
+    toggle.setAttribute('aria-label', t('nav.closeMenu'));
   };
 
   const close = () => {
     nav.classList.remove('nav-open');
     toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Abrir menú');
+    toggle.setAttribute('aria-label', t('nav.openMenu'));
   };
 
   toggle.addEventListener('click', () => {

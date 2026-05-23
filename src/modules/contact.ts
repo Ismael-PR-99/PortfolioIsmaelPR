@@ -1,3 +1,5 @@
+import { t } from '../i18n/index';
+
 export function initContactForm(): void {
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (!form) return;
@@ -11,7 +13,7 @@ export function initContactForm(): void {
 
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Enviando…';
+      submitBtn.textContent = t('form.sending');
     }
 
     fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
@@ -19,21 +21,21 @@ export function initContactForm(): void {
       .then(({ success }) => {
         if (!success) throw new Error('submit failed');
         if (statusEl) {
-          statusEl.textContent = '¡Mensaje enviado! Me pondré en contacto pronto.';
+          statusEl.textContent = t('form.success');
           statusEl.className = 'form-status success';
         }
         form.reset();
       })
       .catch(() => {
         if (statusEl) {
-          statusEl.textContent = 'Error al enviar. Inténtalo de nuevo o escríbeme por LinkedIn.';
+          statusEl.textContent = t('form.error');
           statusEl.className = 'form-status error';
         }
       })
       .finally(() => {
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Enviar mensaje';
+          submitBtn.textContent = t('form.submit');
         }
       });
   });

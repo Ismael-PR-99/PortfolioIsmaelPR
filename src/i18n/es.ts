@@ -1,0 +1,65 @@
+export const es: Record<string, string> = {
+  'meta.title': 'Ismael Piña Ramos | Portfolio',
+
+  'nav.home': 'Inicio',
+  'nav.experience': 'Experiencia',
+  'nav.projects': 'Proyectos',
+  'nav.contact': 'Contacto',
+  'nav.themeToggle': 'Cambiar tema',
+  'nav.openMenu': 'Abrir menú',
+  'nav.closeMenu': 'Cerrar menú',
+  'nav.switchLang': 'Switch to English',
+
+  'hero.role': 'Desarrollador Web Full Stack',
+  'hero.description':
+    'Desarrollador Web Full Stack con dominio de <span class="highlight">Java, PHP, Python</span> y <span class="highlight">JavaScript</span>. Experiencia en frameworks como <span class="highlight">Laravel, Django, Spring Boot</span> y <span class="highlight">React</span>. Desarrollo de proyectos con <span class="highlight">scraping, generación de PDF y envío automático</span>. Manejo completo del ciclo web, con <span class="highlight">backend estructurado</span> y <span class="highlight">frontend funcional</span>. Experiencia en bases de datos <span class="highlight">MySQL</span> y <span class="highlight">PostgreSQL</span>. Conocimientos en desarrollo multiplataforma con <span class="highlight">Java</span> y <span class="highlight">React Native</span>. Perfil resolutivo, práctico y orientado a resultados; actualmente cursando <span class="highlight">IFCD0112</span> y en búsqueda activa de prácticas profesionales.',
+  'hero.clickHint': '← Pincha',
+  'hero.ariaLinkedin': 'LinkedIn',
+  'hero.ariaGithub': 'GitHub',
+  'hero.ariaInstagram': 'Instagram',
+
+  'section.experience': 'Experiencia y Formación',
+  'exp.keySkills': 'Competencias claves',
+  'exp.technicalSkills': 'Aptitudes Técnicas',
+  'exp.personalSkills': 'Aptitudes Personales',
+  'exp.personal.1': 'Resolutivo y orientado a resultados',
+  'exp.personal.2': 'Trabajo en equipo y metodologías ágiles',
+  'exp.personal.3': 'Rápida adaptación a nuevas tecnologías',
+  'exp.personal.4': 'Responsable, organizado y autónomo',
+  'exp.workTitle': 'Experiencia',
+  'exp.practices.title': 'Prácticas Grado Superior DAW',
+  'exp.practices.meta': 'Cesur Sevilla · 2023-2025',
+  'exp.practices.desc':
+    'Desarrollo de aplicaciones web con tecnologías como <span class="tech-badge">Java</span>, <span class="tech-badge">PHP</span>, <span class="tech-badge">JavaScript</span>, <span class="tech-badge">Spring Boot</span>, <span class="tech-badge">Laravel</span>, <span class="tech-badge">Tailwind CSS</span> y Breeze. Participación en proyectos reales, trabajando tanto en frontend como en backend, y adquiriendo experiencia en el desarrollo de soluciones modernas y escalables.',
+  'exp.educationTitle': 'Educación',
+  'exp.edu.daw.title': 'Grado Superior DAW',
+  'exp.edu.daw.meta': 'Cesur Sevilla · 2023-2025',
+  'exp.edu.daw.desc':
+    'Desarrollo de aplicaciones web con <span class="tech-badge">Java</span>, <span class="tech-badge">PHP</span>, <span class="tech-badge">JavaScript</span>, <span class="tech-badge">Spring Boot</span>, <span class="tech-badge">Laravel</span>, <span class="tech-badge">Tailwind CSS</span>, Breeze.',
+  'exp.edu.ifcd.title': 'Curso Core Network (IFCD0112)',
+  'exp.edu.ifcd.meta': 'IFC · En curso',
+  'exp.edu.ifcd.desc': 'Formación en programación orientada a objetos y bases de datos relacionales.',
+
+  'section.projects': 'Proyecto Destacado',
+  'project.refrigeraspace.desc':
+    'Aplicación web en <span class="highlight">Laravel 12</span> para cálculo de frigorías y selección de equipos de aire acondicionado. Incluye <strong>scraping automático, generación de PDF y panel de administración.</strong>',
+  'project.viewApp': 'Ver App',
+  'project.viewGithub': 'GitHub',
+
+  'section.contact': 'Ponte en Contacto',
+  'contact.subtitle': 'Siempre estoy abierto a conectar. ¡Hablemos!',
+  'contact.cvBtn': 'Ver mi CV',
+  'contact.divider': 'o envíame un mensaje',
+  'form.name': 'Nombre',
+  'form.email': 'Email',
+  'form.message': 'Mensaje',
+  'form.namePlaceholder': 'Tu nombre',
+  'form.emailPlaceholder': 'tu@email.com',
+  'form.messagePlaceholder': 'Cuéntame en qué puedo ayudarte…',
+  'form.submit': 'Enviar mensaje',
+  'form.sending': 'Enviando…',
+  'form.success': '¡Mensaje enviado! Me pondré en contacto pronto.',
+  'form.error': 'Error al enviar. Inténtalo de nuevo o escríbeme por LinkedIn.',
+
+  'footer.copyright': '© 2025 Ismael Piña Ramos',
+};

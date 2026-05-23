@@ -20,7 +20,8 @@
   }
 
   /* Theme toggle button (Fase 4 adds it to nav) */
-  #theme-toggle {
+  #theme-toggle,
+  #lang-toggle {
     background: none;
     border: 1px solid currentColor;
     color: inherit;
@@ -31,7 +32,8 @@
     transition: opacity var(--transition-fast);
   }
 
-  #theme-toggle:hover {
+  #theme-toggle:hover,
+  #lang-toggle:hover {
     opacity: 0.75;
   }
 
