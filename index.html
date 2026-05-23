@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="./images/PiñaFavicon.png">
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg">
+    <link rel="preload" as="image" href="%BASE_URL%images/IsmaelFoto.webp" type="image/webp" fetchpriority="high">
 
     <!-- SEO primary -->
     <meta name="description" content="Portfolio de Ismael Piña Ramos, Desarrollador Web Full Stack con experiencia en Laravel, Java, PHP, Python y JavaScript. En búsqueda activa de prácticas profesionales.">
@@ -117,7 +118,11 @@
                 </div> <!-- .hero-text -->
                 <div class="hero-image">
                     <a href="https://www.linkedin.com/in/ismael-pi%C3%B1a-ramos-1b6b121b4/" target="_blank" rel="noopener noreferrer" class="profile-link-container" aria-label="Ver perfil de LinkedIn de Ismael Piña Ramos">
-                        <img src="./images/IsmaelFoto.png" alt="">
+                        <picture>
+                            <source type="image/avif" srcset="%BASE_URL%images/IsmaelFoto.avif">
+                            <source type="image/webp" srcset="%BASE_URL%images/IsmaelFoto.webp">
+                            <img src="./images/IsmaelFoto.png" alt="Foto de perfil de Ismael Piña Ramos" width="423" height="589" fetchpriority="high" loading="eager">
+                        </picture>
                     </a>
                     <div class="profile-arrow" data-i18n="hero.clickHint" aria-hidden="true">← Pincha</div>
                 </div>
@@ -180,7 +185,11 @@
                 <h2 id="projects-heading" class="section-title project-title" data-i18n="section.projects">Proyecto Destacado</h2>
                 <div class="project-featured-card">
                     <div class="project-image-container">
-                        <img src="./images/RefrigeraSpace.png" alt="Vista previa de RefrigeraSpace">
+                        <picture>
+                            <source type="image/avif" srcset="%BASE_URL%images/RefrigeraSpace.avif">
+                            <source type="image/webp" srcset="%BASE_URL%images/RefrigeraSpace.webp">
+                            <img src="./images/RefrigeraSpace.png" alt="Vista previa de RefrigeraSpace" width="1308" height="867" loading="lazy">
+                        </picture>
                     </div>
                     <div class="project-details">
                         <h3>RefrigeraSpace</h3>
