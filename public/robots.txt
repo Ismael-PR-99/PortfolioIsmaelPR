@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ismael-pr-99.github.io/PortfolioIsmaelPR/sitemap.xml
