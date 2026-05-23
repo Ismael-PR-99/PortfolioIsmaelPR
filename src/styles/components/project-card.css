@@ -1,7 +1,7 @@
 @layer components {
   .project-featured-card {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--sp-12);
     background-color: var(--clr-projects-card);
     padding: var(--sp-12);

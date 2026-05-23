@@ -52,12 +52,6 @@
 
   .contact-social-btn svg {
     flex-shrink: 0;
-    fill: currentColor;
-  }
-
-  .contact-social-btn .instagram-icon {
-    fill: none;
-    stroke: currentColor;
   }
 
   .contact-social-btn:hover {
