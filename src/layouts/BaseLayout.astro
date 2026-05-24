@@ -23,7 +23,7 @@ const defaultDesc =
 const resolvedTitle = title ?? defaultTitle;
 const resolvedDesc = description ?? defaultDesc;
 
-const canonical = `${SITE_URL}${BASE_URL}${Astro.url.pathname}`;
+const canonical = `${SITE_URL}${Astro.url.pathname}`;
 // OG image: use profile photo until a proper 1200x630 design is created (Phase 11)
 const ogImage = `${SITE_URL}${BASE_URL}/images/IsmaelFoto.png`;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
