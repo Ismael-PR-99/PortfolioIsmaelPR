@@ -1,13 +1,18 @@
 ---
 import { SOCIALS, PROFILE } from '@config/site';
+import { type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
 
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
   <div class="container footer-inner">
     <p class="footer-copy">
-      © {year} {PROFILE.name}. Hecho con
+      © {year} {PROFILE.name}. {t('footer.built')}
       <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="footer-link">
         Astro
       </a>

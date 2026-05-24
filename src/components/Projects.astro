@@ -1,6 +1,12 @@
 ---
 import projects from '@data/projects.json';
 import { BASE_URL } from '@config/site';
+import { type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 
 interface Project {
   id: string;
@@ -23,10 +29,10 @@ const typedProjects = projects as Project[];
 <section id="projects" class="projects-section">
   <div class="container">
     <div class="section-header" data-reveal>
-      <span class="section-label">Proyectos</span>
-      <h2 class="section-title">Lo que he construido</h2>
+      <span class="section-label">{t('projects.label')}</span>
+      <h2 class="section-title">{t('projects.title')}</h2>
       <p class="section-subtitle">
-        Proyectos reales desarrollados durante mi formación. Código propio, desplegado en producción.
+        {t('projects.subtitle')}
       </p>
     </div>
 
@@ -64,14 +70,14 @@ const typedProjects = projects as Project[];
                       <polyline points="15 3 21 3 21 9"/>
                       <line x1="10" y1="14" x2="21" y2="3"/>
                     </svg>
-                    Ver app
+                    {t('projects.cta.app')}
                   </span>
                 </div>
               </a>
               {project.status === 'live' && (
                 <span class="status-badge">
                   <span class="status-dot" aria-hidden="true" />
-                  En producción
+                  {t('projects.live')}
                 </span>
               )}
             </div>
@@ -105,7 +111,7 @@ const typedProjects = projects as Project[];
                     <polyline points="15 3 21 3 21 9"/>
                     <line x1="10" y1="14" x2="21" y2="3"/>
                   </svg>
-                  Ver app
+                  {t('projects.cta.app')}
                 </a>
                 <a
                   href={project.githubUrl}

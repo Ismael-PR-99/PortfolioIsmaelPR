@@ -1,44 +1,57 @@
 ---
 import '../styles/global.css';
 import { SITE_URL, BASE_URL, PROFILE } from '@config/site';
+import { type Lang, getAlternateLang, getAlternatePath } from '@i18n/utils';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import Particles from '@components/Particles.astro';
 
 interface Props {
+  lang?: Lang;
   title?: string;
   description?: string;
 }
 
-const {
-  title = `${PROFILE.name} — Full Stack Developer`,
-  description = 'Desarrollador Web Full Stack especializado en Java, PHP, Python y JavaScript. Disponible para prácticas en Sevilla.',
-} = Astro.props;
+const { lang = 'es', title, description } = Astro.props;
+
+const defaultTitle = `${PROFILE.name} — Full Stack Developer`;
+const defaultDesc =
+  lang === 'es'
+    ? 'Desarrollador Web Full Stack especializado en Java, PHP, Python y JavaScript. Disponible para prácticas en Sevilla.'
+    : 'Full Stack Web Developer specialized in Java, PHP, Python and JavaScript. Open to internships in Seville, Spain.';
+
+const resolvedTitle = title ?? defaultTitle;
+const resolvedDesc = description ?? defaultDesc;
 
 const canonical = `${SITE_URL}${BASE_URL}${Astro.url.pathname}`;
 const ogImage = `${SITE_URL}${BASE_URL}/og.png`;
+const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+const alternateLang = getAlternateLang(lang);
+const alternatePath = getAlternatePath(lang);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    <meta name="description" content={resolvedDesc} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang={alternateLang} href={`${SITE_URL}${alternatePath}`} />
 
     <!-- OG -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={resolvedTitle} />
+    <meta property="og:description" content={resolvedDesc} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={ogLocale} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={resolvedTitle} />
+    <meta name="twitter:description" content={resolvedDesc} />
     <meta name="twitter:image" content={ogImage} />
 
     <!-- Favicon -->
@@ -52,15 +65,17 @@ const ogImage = `${SITE_URL}${BASE_URL}/og.png`;
       rel="stylesheet"
     />
 
-    <title>{title}</title>
+    <title>{resolvedTitle}</title>
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+    <a href="#main-content" class="skip-link">
+      {lang === 'es' ? 'Saltar al contenido' : 'Skip to content'}
+    </a>
     <Particles />
-    <Nav />
+    <Nav lang={lang} />
     <main id="main-content">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>

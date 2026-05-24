@@ -1,5 +1,11 @@
 ---
 import { stack } from '@data/stack';
+import { type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 
 // Category SVG icons (inline, no CDN)
 const icons: Record<string, string> = {
@@ -30,11 +36,9 @@ const icons: Record<string, string> = {
 <section id="stack" class="stack-section">
   <div class="container">
     <div class="section-header" data-reveal>
-      <span class="section-label">Tecnologías</span>
-      <h2 class="section-title">Mi stack técnico</h2>
-      <p class="section-subtitle">
-        Herramientas y frameworks con los que trabajo en proyectos reales.
-      </p>
+      <span class="section-label">{t('stack.label')}</span>
+      <h2 class="section-title">{t('stack.title')}</h2>
+      <p class="section-subtitle">{t('stack.subtitle')}</p>
     </div>
 
     <div class="stack-grid">
@@ -48,12 +52,12 @@ const icons: Record<string, string> = {
             <div class="card-header">
               <span class="card-icon" set:html={icons[category.icon]} />
               <div>
-                <h3 class="card-title">{category.title}</h3>
-                <p class="card-desc">{category.description}</p>
+                <h3 class="card-title">{t(`stack.${category.id}.title` as any)}</h3>
+                <p class="card-desc">{t(`stack.${category.id}.desc` as any)}</p>
               </div>
             </div>
 
-            <ul class="tech-list" aria-label={`Tecnologías de ${category.title}`}>
+            <ul class="tech-list" aria-label={`${t('stack.label')}: ${t(`stack.${category.id}.title` as any)}`}>
               {category.techs.map((tech) => (
                 <li>
                   <span class={`tech-chip ${tech.level === 'primary' ? 'chip-primary' : 'chip-secondary'}`}>

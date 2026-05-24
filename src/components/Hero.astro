@@ -1,12 +1,16 @@
 ---
 import { BASE_URL, PROFILE, SOCIALS } from '@config/site';
+import { type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 
 const photo = `${BASE_URL}/images/IsmaelFoto.png`;
 
-const chips = ['Sevilla, España', 'Junior', 'Full Stack'];
-
-const bio =
-  'Desarrollo aplicaciones web full stack con Java, PHP, Python y JavaScript. Manejo Laravel, Spring Boot, Django y React desde el backend hasta el frontend. Busco prácticas donde seguir creciendo y aportar desde el primer día.';
+const chips = [t('hero.chip.location'), t('hero.chip.level'), t('hero.chip.type')];
+const bio = t('hero.bio');
 
 // Tech icons for orbital — SVG paths only, no external CDN
 const orbitalTech = [
@@ -43,15 +47,15 @@ const orbitalTech = [
     <div class="hero-content" data-animate="hero-left">
       <span class="availability-badge">
         <span class="badge-dot" aria-hidden="true"></span>
-        Disponible para prácticas
+        {t('hero.badge')}
       </span>
 
       <h1 class="hero-name">
-        <span class="hero-greeting">Hola, soy</span>
+        <span class="hero-greeting">{t('hero.greeting')}</span>
         {PROFILE.name}
       </h1>
 
-      <p class="hero-role">Desarrollador Web <span class="role-accent">Full Stack</span></p>
+      <p class="hero-role">{t('hero.role').split('Full Stack')[0]}<span class="role-accent">Full Stack</span>{t('hero.role').split('Full Stack')[1]}</p>
 
       <p class="hero-bio">{bio}</p>
 
@@ -68,7 +72,7 @@ const orbitalTech = [
 
       <div class="hero-ctas">
         <a href="#projects" class="btn btn-primary">
-          Ver proyectos
+          {t('hero.cta.projects')}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="m6 9 6 6 6-6"/>
           </svg>
@@ -78,14 +82,14 @@ const orbitalTech = [
           target="_blank"
           rel="noopener noreferrer"
           class="btn btn-secondary"
-          aria-label="Descargar CV (abre en nueva pestaña)"
+          aria-label={`${t('hero.cta.cv')} (${lang === 'es' ? 'abre en nueva pestaña' : 'opens in new tab'})`}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          Descargar CV
+          {t('hero.cta.cv')}
         </a>
       </div>
     </div>

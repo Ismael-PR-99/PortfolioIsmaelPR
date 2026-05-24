@@ -1,27 +1,47 @@
 ---
 import { timeline } from '@data/timeline';
+import { type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
 
 const filters = [
-  { id: 'all', label: 'Todo' },
-  { id: 'experience', label: 'Experiencia' },
-  { id: 'education', label: 'Educación' },
+  { id: 'all', label: t('timeline.filter.all') },
+  { id: 'experience', label: t('timeline.filter.experience') },
+  { id: 'education', label: t('timeline.filter.education') },
 ] as const;
 
 const badgeColors: Record<string, string> = {
   Formación: 'badge-education',
   Certificación: 'badge-cert',
   Prácticas: 'badge-experience',
+  Education: 'badge-education',
+  Certificate: 'badge-cert',
+  Internship: 'badge-experience',
 };
+
+// Map badge keys by lang
+function getBadgeLabel(badge: string, l: Lang): string {
+  if (l === 'en') {
+    const map: Record<string, string> = {
+      Formación: t('timeline.badge.education'),
+      Certificación: t('timeline.badge.cert'),
+      Prácticas: t('timeline.badge.experience'),
+    };
+    return map[badge] ?? badge;
+  }
+  return badge;
+}
 ---
 
 <section id="timeline" class="timeline-section">
   <div class="container">
     <div class="section-header" data-reveal>
-      <span class="section-label">Trayectoria</span>
-      <h2 class="section-title">Mi camino hasta aquí</h2>
-      <p class="section-subtitle">
-        Formación y experiencia que me han dado las bases para trabajar en proyectos reales.
-      </p>
+      <span class="section-label">{t('timeline.label')}</span>
+      <h2 class="section-title">{t('timeline.title')}</h2>
+      <p class="section-subtitle">{t('timeline.subtitle')}</p>
     </div>
 
     <!-- Filter tabs -->
@@ -62,11 +82,11 @@ const badgeColors: Record<string, string> = {
               <div class="timeline-card-header">
                 <div class="timeline-meta">
                   <span class={`timeline-badge ${badgeColors[item.badge] ?? ''}`}>
-                    {item.badge}
+                    {getBadgeLabel(item.badge, lang)}
                   </span>
                   <time class="timeline-date">
                     {item.dateStart} — {item.dateEnd}
-                    {item.current && <span class="current-tag">En curso</span>}
+                    {item.current && <span class="current-tag">{t('timeline.current')}</span>}
                   </time>
                 </div>
                 <p class="timeline-location">
