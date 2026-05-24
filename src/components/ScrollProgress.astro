@@ -1,0 +1,47 @@
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<script>
+  const bar = document.getElementById('scroll-progress') as HTMLElement | null;
+  if (!bar) throw new Error('scroll-progress element not found');
+
+  let ticking = false;
+
+  function updateProgress(): void {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar!.style.width = `${progress}%`;
+    ticking = false;
+  }
+
+  function onScroll(): void {
+    if (!ticking) {
+      requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  updateProgress();
+</script>
+
+<style>
+  #scroll-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--color-accent);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  @media (max-width: 768px) {
+    #scroll-progress {
+      height: 3px;
+    }
+  }
+</style>
