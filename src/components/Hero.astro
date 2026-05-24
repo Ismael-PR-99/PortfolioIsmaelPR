@@ -1,0 +1,506 @@
+---
+import { BASE_URL, PROFILE, SOCIALS } from '@config/site';
+
+const photo = `${BASE_URL}/images/IsmaelFoto.png`;
+
+const chips = ['Sevilla, España', 'Junior', 'Full Stack'];
+
+const bio =
+  'Desarrollo aplicaciones web full stack con Java, PHP, Python y JavaScript. Manejo Laravel, Spring Boot, Django y React desde el backend hasta el frontend. Busco prácticas donde seguir creciendo y aportar desde el primer día.';
+
+// Tech icons for orbital — SVG paths only, no external CDN
+const orbitalTech = [
+  {
+    label: 'Laravel',
+    color: '#FF2D20',
+    path: 'M23.08 5.25L19.07.13a.32.32 0 0 0-.27-.13H13.3a.32.32 0 0 0-.26.5l1.9 2.8-5.1 3.56L5.98.5A.32.32 0 0 0 5.72.37H.32A.32.32 0 0 0 .05.87l7.63 11.25a.32.32 0 0 0 .27.14h5.5a.32.32 0 0 0 .26-.5l-1.9-2.8 5.1-3.56 3.88 5.73a.32.32 0 0 0 .26.13h4.63a.32.32 0 0 0 .26-.5z',
+    viewBox: '0 0 24 13',
+  },
+  {
+    label: 'React',
+    color: '#61DAFB',
+    path: 'M12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6.95-1.5c0-.86-.59-1.68-1.6-2.33.23-1.06.17-2-.17-2.7-.35-.7-1-.97-1.67-.97-.58 0-1.27.22-1.97.6a9.7 9.7 0 0 0-1.54-.13 9.7 9.7 0 0 0-1.54.13c-.7-.38-1.39-.6-1.97-.6-.67 0-1.32.27-1.67.97-.34.7-.4 1.64-.17 2.7C7.59 10.32 7 11.14 7 12s.59 1.68 1.6 2.33c-.23 1.06-.17 2 .17 2.7.35.7 1 .97 1.67.97.58 0 1.27-.22 1.97-.6.5.08 1.01.13 1.54.13s1.04-.05 1.54-.13c.7.38 1.39.6 1.97.6.67 0 1.32-.27 1.67-.97.34-.7.4-1.64.17-2.7 1.01-.65 1.6-1.47 1.6-2.33zm-4.43-4.48c.6.34 1.2.83 1.74 1.43-.54-.1-1.1-.15-1.67-.15-.57 0-1.13.05-1.67.15.54-.6 1.14-1.09 1.74-1.43h-.14zm-5.04 0c.6.34 1.2.83 1.74 1.43-.54-.1-1.1-.15-1.67-.15-.57 0-1.13.05-1.67.15.54-.6 1.14-1.09 1.74-1.43H9.48zm-1.95 3.43c-.48.28-.84.57-1.1.85.26.28.62.57 1.1.85-.05-.28-.08-.57-.08-.85s.03-.57.08-.85zm9.94 0c.05.28.08.57.08.85s-.03.57-.08.85c.48-.28.84-.57 1.1-.85-.26-.28-.62-.57-1.1-.85z',
+    viewBox: '0 0 24 24',
+  },
+  {
+    label: 'Python',
+    color: '#3776AB',
+    path: 'M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969c0 6.18 3.403 5.959 3.403 5.959h2.03v-2.866s-.109-3.402 3.35-3.402h5.765s3.24.052 3.24-3.13V3.19S18.28 0 11.914 0zm-3.2 1.848a1.043 1.043 0 1 1 0 2.087 1.043 1.043 0 0 1 0-2.087zM12.086 24c6.096 0 5.716-2.656 5.716-2.656l-.007-2.752H12v-.826h8.12S24 18.21 24 12.031c0-6.18-3.403-5.959-3.403-5.959h-2.03v2.866s.109 3.402-3.35 3.402H9.452s-3.24-.052-3.24 3.13v5.34S5.72 24 12.086 24zm3.2-1.848a1.043 1.043 0 1 1 0-2.087 1.043 1.043 0 0 1 0 2.087z',
+    viewBox: '0 0 24 24',
+  },
+  {
+    label: 'Java',
+    color: '#007396',
+    path: 'M8.851 18.56s-.917.534.653.714c1.902.218 2.874.187 4.969-.211 0 0 .552.346 1.321.646-4.699 2.013-10.633-.118-6.943-1.149M8.276 15.933s-1.028.761.542.924c2.032.209 3.636.227 6.413-.308 0 0 .384.389.987.602-5.679 1.661-12.007.13-7.942-1.218M13.116 11.475c1.158 1.333-.304 2.533-.304 2.533s2.939-1.518 1.589-3.418c-1.261-1.772-2.228-2.652 3.007-5.688 0 .001-8.216 2.051-4.292 6.573M19.33 20.504s.679.559-.747.991c-2.712.822-11.288 1.069-13.669.033-.856-.373.75-.89 1.254-.998.527-.114.828-.093.828-.093-.953-.671-6.156 1.317-2.643 1.887 9.58 1.553 17.462-.7 14.977-1.82M9.292 13.21s-4.362 1.036-1.544 1.412c1.189.159 3.561.123 5.77-.062 1.806-.152 3.618-.475 3.618-.475s-.637.272-1.098.587c-4.429 1.165-12.986.623-10.522-.568 2.082-1.006 3.776-.894 3.776-.894M17.116 17.584c4.503-2.34 2.421-4.589.968-4.285-.355.074-.515.138-.515.138s.132-.207.385-.297c2.875-1.011 5.086 2.981-.928 4.562 0 .001.07-.062.09-.118M14.401 0s2.494 2.494-2.365 6.33c-3.896 3.077-.888 4.832-.001 6.836-2.274-2.053-3.943-3.858-2.824-5.539 1.644-2.469 6.197-3.665 5.19-7.627M9.734 23.924c4.322.277 10.959-.153 11.116-2.198 0 0-.302.775-3.572 1.391-3.688.694-8.239.613-10.937.168 0 .001.553.457 3.393.639',
+    viewBox: '0 0 24 24',
+  },
+];
+---
+
+<section id="hero" class="hero-section">
+  <div class="container hero-grid">
+    <!-- Left: Text content -->
+    <div class="hero-content" data-animate="hero-left">
+      <span class="availability-badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Disponible para prácticas
+      </span>
+
+      <h1 class="hero-name">
+        <span class="hero-greeting">Hola, soy</span>
+        {PROFILE.name}
+      </h1>
+
+      <p class="hero-role">Desarrollador Web <span class="role-accent">Full Stack</span></p>
+
+      <p class="hero-bio">{bio}</p>
+
+      <ul class="hero-chips" aria-label="Perfil profesional">
+        {
+          chips.map((chip) => (
+            <li class="chip">
+              <span class="chip-dot" aria-hidden="true">·</span>
+              {chip}
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-primary">
+          Ver proyectos
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </a>
+        <a
+          href={SOCIALS.cv}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-secondary"
+          aria-label="Descargar CV (abre en nueva pestaña)"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Descargar CV
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: Photo with orbital -->
+    <div class="hero-visual" data-animate="hero-right" aria-hidden="true">
+      <div class="orbital-wrapper">
+        <!-- Outer decorative ring -->
+        <div class="orbital-ring ring-outer"></div>
+        <!-- Inner dashed ring that rotates -->
+        <div class="orbital-ring ring-spin">
+          <!-- Tech icons orbiting -->
+          {
+            orbitalTech.map((tech, i) => (
+              <div
+                class="orbital-icon"
+                style={`--angle: ${i * (360 / orbitalTech.length)}deg`}
+                title={tech.label}
+              >
+                <div class="orbital-icon-inner">
+                  <svg
+                    viewBox={tech.viewBox}
+                    width="18"
+                    height="18"
+                    fill={tech.color}
+                    aria-label={tech.label}
+                  >
+                    <path d={tech.path} />
+                  </svg>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <!-- Photo -->
+        <div class="photo-wrapper">
+          <img
+            src={photo}
+            alt="Foto de Ismael Piña Ramos"
+            width="280"
+            height="280"
+            loading="eager"
+            decoding="async"
+            class="hero-photo"
+          />
+          <div class="photo-glow" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator" aria-hidden="true">
+    <span></span>
+  </div>
+</section>
+
+<script>
+  import { animate, stagger } from 'motion';
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    // Staggered entrance
+    animate(
+      '[data-animate="hero-left"] > *',
+      { opacity: [0, 1], transform: ['translateY(24px)', 'translateY(0)'] },
+      { duration: 0.6, delay: stagger(0.1), easing: 'ease-out' }
+    );
+
+    animate(
+      '[data-animate="hero-right"]',
+      { opacity: [0, 1], transform: ['translateY(16px) scale(0.97)', 'translateY(0) scale(1)'] },
+      { duration: 0.7, delay: 0.3, easing: 'ease-out' }
+    );
+  } else {
+    // Skip animation, just make visible
+    document.querySelectorAll('[data-animate]').forEach((el) => {
+      (el as HTMLElement).style.opacity = '1';
+    });
+  }
+</script>
+
+<style>
+  .hero-section {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 6rem 4rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+  }
+
+  /* ---- Left column ---- */
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  [data-animate="hero-left"] > *,
+  [data-animate="hero-right"] {
+    opacity: 0;
+  }
+
+  .availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    width: fit-content;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .hero-greeting {
+    display: block;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    letter-spacing: 0;
+    margin-bottom: 0.2rem;
+  }
+
+  .hero-role {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: -0.01em;
+  }
+
+  .role-accent {
+    color: var(--color-accent);
+  }
+
+  .hero-bio {
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 50ch;
+  }
+
+  /* Chips */
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .chip-dot {
+    color: var(--color-accent);
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* CTAs */
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: #000;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 24px var(--color-accent), 0 4px 12px rgba(0,0,0,0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    box-shadow: 0 0 12px rgba(163, 230, 53, 0.1);
+  }
+
+  /* ---- Right column: orbital ---- */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .orbital-wrapper {
+    position: relative;
+    width: clamp(260px, 35vw, 380px);
+    height: clamp(260px, 35vw, 380px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .orbital-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+  }
+
+  .ring-outer {
+    border: 1px solid var(--color-border-accent);
+  }
+
+  .ring-spin {
+    border: 1px dashed rgba(163, 230, 53, 0.2);
+    animation: spin-ring 18s linear infinite;
+  }
+
+  @keyframes spin-ring {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Each icon sits on the ring circumference */
+  .orbital-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 36px;
+    height: 36px;
+    margin: -18px;
+    transform:
+      rotate(var(--angle))
+      translateX(calc(clamp(130px, 17.5vw, 190px)))
+      rotate(calc(var(--angle) * -1));
+    animation: counter-spin 18s linear infinite;
+  }
+
+  @keyframes counter-spin {
+    to { transform:
+      rotate(calc(var(--angle) + 360deg))
+      translateX(calc(clamp(130px, 17.5vw, 190px)))
+      rotate(calc((var(--angle) + 360deg) * -1));
+    }
+  }
+
+  .orbital-icon-inner {
+    width: 36px;
+    height: 36px;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 200ms ease, border-color 200ms ease;
+  }
+
+  .orbital-icon-inner:hover {
+    border-color: var(--color-accent);
+    transform: scale(1.15);
+  }
+
+  /* Photo */
+  .photo-wrapper {
+    position: relative;
+    z-index: 2;
+    width: clamp(160px, 20vw, 220px);
+    height: clamp(160px, 20vw, 220px);
+  }
+
+  .hero-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--color-border-accent);
+    display: block;
+  }
+
+  .photo-glow {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(163, 230, 53, 0.12) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .scroll-indicator span {
+    display: block;
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .scroll-indicator span::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 8px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    animation: scroll-dot 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scroll-dot {
+    0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    100% { transform: translateX(-50%) translateY(14px); opacity: 0; }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding-block: 5rem 3rem;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+      order: -1;
+    }
+
+    .orbital-wrapper {
+      width: 240px;
+      height: 240px;
+    }
+
+    .photo-wrapper {
+      width: 140px;
+      height: 140px;
+    }
+
+    .hero-bio {
+      max-width: 100%;
+    }
+
+    .hero-name {
+      font-size: clamp(1.9rem, 8vw, 2.5rem);
+    }
+  }
+</style>
