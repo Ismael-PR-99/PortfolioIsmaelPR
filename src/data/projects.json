@@ -1,0 +1,16 @@
+[
+  {
+    "id": "refrigeraspace",
+    "number": "01",
+    "category": "Aplicación Web",
+    "title": "RefrigeraSpace",
+    "description": "Aplicación web para el cálculo de frigorías y selección de equipos de aire acondicionado. Incluye scraping automático de catálogos, generación de PDF personalizada, panel de administración completo y sistema de usuarios con roles.",
+    "longDescription": "Desarrollada con Laravel 12 como proyecto final del Grado Superior DAW. El sistema calcula automáticamente las necesidades de climatización de un espacio según sus dimensiones y orientación, cruza los resultados con un catálogo obtenido mediante scraping y recomienda el equipo más adecuado. Los presupuestos se exportan a PDF directamente desde el navegador.",
+    "image": "/images/RefrigeraSpace.png",
+    "tags": ["Laravel", "PHP", "MySQL", "Tailwind", "JavaScript", "Node.js"],
+    "liveUrl": "https://refrigeraspace.onrender.com/",
+    "githubUrl": "https://github.com/Ismael-PR-99/RefrigeraSpace",
+    "featured": true,
+    "status": "live"
+  }
+]

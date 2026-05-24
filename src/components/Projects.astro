@@ -1,0 +1,448 @@
+---
+import projects from '@data/projects.json';
+import { BASE_URL } from '@config/site';
+import { type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
+
+interface Project {
+  id: string;
+  number: string;
+  category: string;
+  title: string;
+  description: string;
+  longDescription: string;
+  image: string;
+  tags: string[];
+  liveUrl: string;
+  githubUrl: string;
+  featured: boolean;
+  status: string;
+}
+
+const typedProjects = projects as Project[];
+---
+
+<section id="projects" class="projects-section">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-label">{t('projects.label')}</span>
+      <h2 class="section-title">{t('projects.title')}</h2>
+      <p class="section-subtitle">
+        {t('projects.subtitle')}
+      </p>
+    </div>
+
+    <div class="projects-list">
+      {
+        typedProjects.map((project, i) => (
+          <article
+            class={`project-card ${i % 2 === 1 ? 'reversed' : ''}`}
+            data-reveal
+            style={`--delay: ${i * 100}ms`}
+          >
+            <!-- Image side -->
+            <div class="project-image-wrap">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-image-link"
+                aria-label={lang === 'es' ? `Ver ${project.title} en producción` : `View ${project.title} live`}
+                tabindex="-1"
+              >
+                <img
+                  src={`${BASE_URL}${project.image}`}
+                  alt={`Captura de pantalla de ${project.title}`}
+                  width="620"
+                  height="380"
+                  loading="lazy"
+                  decoding="async"
+                  class="project-img"
+                />
+                <div class="project-img-overlay" aria-hidden="true">
+                  <span class="overlay-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                      <polyline points="15 3 21 3 21 9"/>
+                      <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    {t('projects.cta.app')}
+                  </span>
+                </div>
+              </a>
+              {project.status === 'live' && (
+                <span class="status-badge">
+                  <span class="status-dot" aria-hidden="true" />
+                  {t('projects.live')}
+                </span>
+              )}
+            </div>
+
+            <!-- Content side -->
+            <div class="project-content">
+              <div class="project-meta">
+                <span class="project-number">{project.number}</span>
+                <span class="project-category">{project.category}</span>
+              </div>
+
+              <h3 class="project-title">{project.title}</h3>
+
+              <p class="project-desc">{project.longDescription}</p>
+
+              <ul class="project-tags" aria-label={lang === 'es' ? 'Tecnologías usadas' : 'Technologies used'}>
+                {project.tags.map((tag) => (
+                  <li class="project-tag">{tag}</li>
+                ))}
+              </ul>
+
+              <div class="project-ctas">
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-primary"
+                  aria-label={lang === 'es' ? `Ver ${project.title} en producción (abre en nueva pestaña)` : `View ${project.title} live (opens in new tab)`}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                  {t('projects.cta.app')}
+                </a>
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-ghost"
+                  aria-label={`Código fuente de ${project.title} en GitHub`}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const delay = parseInt(el.style.getPropertyValue('--delay') || '0');
+            setTimeout(() => el.classList.add('visible'), delay);
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('#projects [data-reveal]').forEach((el) => observer.observe(el));
+  } else {
+    document.querySelectorAll('#projects [data-reveal]').forEach((el) => el.classList.add('visible'));
+  }
+</script>
+
+<style>
+  .projects-section {
+    padding-block: var(--section-padding);
+  }
+
+  /* Section header */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    max-width: 48ch;
+    margin-inline: auto;
+    line-height: 1.6;
+  }
+
+  /* Reveal */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  [data-reveal].visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* Projects list */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  /* Project card */
+  .project-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .project-card.reversed {
+    direction: rtl;
+  }
+
+  .project-card.reversed > * {
+    direction: ltr;
+  }
+
+  /* Image */
+  .project-image-wrap {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+  }
+
+  .project-image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 400ms ease, filter 400ms ease;
+    filter: brightness(0.9);
+  }
+
+  .project-image-wrap:hover .project-img {
+    transform: scale(1.03);
+    filter: brightness(1);
+  }
+
+  .project-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 300ms ease;
+    border-radius: var(--radius-xl);
+  }
+
+  .project-image-wrap:hover .project-img-overlay {
+    opacity: 1;
+  }
+
+  .overlay-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+  }
+
+  .status-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(163, 230, 53, 0.3);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Content */
+  .project-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .project-number {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--color-border);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    user-select: none;
+  }
+
+  .project-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    line-height: 1.1;
+  }
+
+  .project-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+  }
+
+  .project-tag {
+    padding: 0.25rem 0.65rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  /* CTAs */
+  .project-ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.65rem 1.3rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, color 150ms ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: #000;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 20px rgba(163, 230, 53, 0.4), 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .project-card {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .project-card.reversed {
+      direction: ltr;
+    }
+
+    .project-number {
+      font-size: 2.5rem;
+    }
+
+    .projects-list {
+      gap: 3.5rem;
+    }
+  }
+</style>
