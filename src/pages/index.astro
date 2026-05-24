@@ -4,6 +4,7 @@ import Hero from '@components/Hero.astro';
 import Stack from '@components/Stack.astro';
 import Timeline from '@components/Timeline.astro';
 import Projects from '@components/Projects.astro';
+import Contact from '@components/Contact.astro';
 ---
 
 <BaseLayout title="Ismael Piña Ramos — Full Stack Developer">
@@ -15,19 +16,5 @@ import Projects from '@components/Projects.astro';
 
   <Projects />
 
-  <section id="contact" style="min-height: 50vh; display: flex; align-items: center; justify-content: center;">
-    <p class="placeholder-text">Contacto — Fase 7</p>
-  </section>
+  <Contact />
 </BaseLayout>
-
-<style>
-  .placeholder-text {
-    color: var(--color-text-muted);
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 600;
-    border: 1px dashed var(--color-border);
-    padding: 2rem 3rem;
-    border-radius: var(--radius-lg);
-  }
-</style>
