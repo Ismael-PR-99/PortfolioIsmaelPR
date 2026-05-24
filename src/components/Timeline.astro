@@ -1,0 +1,468 @@
+---
+import { timeline } from '@data/timeline';
+
+const filters = [
+  { id: 'all', label: 'Todo' },
+  { id: 'experience', label: 'Experiencia' },
+  { id: 'education', label: 'Educación' },
+] as const;
+
+const badgeColors: Record<string, string> = {
+  Formación: 'badge-education',
+  Certificación: 'badge-cert',
+  Prácticas: 'badge-experience',
+};
+---
+
+<section id="timeline" class="timeline-section">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-label">Trayectoria</span>
+      <h2 class="section-title">Mi camino hasta aquí</h2>
+      <p class="section-subtitle">
+        Formación y experiencia que me han dado las bases para trabajar en proyectos reales.
+      </p>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="filter-tabs" role="tablist" aria-label="Filtrar trayectoria" data-reveal>
+      {
+        filters.map((filter, i) => (
+          <button
+            role="tab"
+            class={`filter-btn ${i === 0 ? 'active' : ''}`}
+            data-filter={filter.id}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-controls="timeline-list"
+          >
+            {filter.label}
+          </button>
+        ))
+      }
+      <span class="tab-indicator" aria-hidden="true"></span>
+    </div>
+
+    <!-- Timeline list -->
+    <div id="timeline-list" class="timeline-list" role="tabpanel">
+      <div class="timeline-line" aria-hidden="true"></div>
+
+      {
+        timeline.map((item, i) => (
+          <article
+            class="timeline-item"
+            data-type={item.type}
+            data-reveal
+            style={`--delay: ${i * 100}ms`}
+          >
+            <div class="timeline-dot" aria-hidden="true">
+              {item.current && <span class="dot-pulse" />}
+            </div>
+
+            <div class="timeline-card">
+              <div class="timeline-card-header">
+                <div class="timeline-meta">
+                  <span class={`timeline-badge ${badgeColors[item.badge] ?? ''}`}>
+                    {item.badge}
+                  </span>
+                  <time class="timeline-date">
+                    {item.dateStart} — {item.dateEnd}
+                    {item.current && <span class="current-tag">En curso</span>}
+                  </time>
+                </div>
+                <p class="timeline-location">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M20 10c0 6-8 13-8 13s-8-7-8-13a8 8 0 0 1 16 0Z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  {item.location}
+                </p>
+              </div>
+
+              <h3 class="timeline-title">{item.title}</h3>
+              <p class="timeline-institution">{item.institution}</p>
+              <p class="timeline-desc">{item.description}</p>
+
+              {item.tags && item.tags.length > 0 && (
+                <ul class="timeline-tags" aria-label="Tecnologías">
+                  {item.tags.map((tag) => (
+                    <li class="timeline-tag">{tag}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  // Filter logic
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const items = document.querySelectorAll<HTMLElement>('.timeline-item');
+  const indicator = document.querySelector<HTMLElement>('.tab-indicator');
+
+  function moveIndicator(btn: HTMLButtonElement) {
+    if (!indicator) return;
+    indicator.style.left = `${btn.offsetLeft}px`;
+    indicator.style.width = `${btn.offsetWidth}px`;
+  }
+
+  function applyFilter(filter: string) {
+    items.forEach((item) => {
+      const type = item.dataset.type ?? '';
+      const show = filter === 'all' || type === filter;
+      if (show) {
+        item.removeAttribute('hidden');
+        item.style.display = '';
+      } else {
+        item.setAttribute('hidden', '');
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Init indicator position on first active button
+  const firstActive = document.querySelector<HTMLButtonElement>('.filter-btn.active');
+  if (firstActive) moveIndicator(firstActive);
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      moveIndicator(btn);
+      applyFilter(btn.dataset.filter ?? 'all');
+    });
+  });
+
+  // Scroll-reveal (shared observer pattern)
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const delay = parseInt(el.style.getPropertyValue('--delay') || '0');
+            setTimeout(() => el.classList.add('visible'), delay);
+            revealObserver.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('#timeline [data-reveal]').forEach((el) => revealObserver.observe(el));
+  } else {
+    document.querySelectorAll('#timeline [data-reveal]').forEach((el) => el.classList.add('visible'));
+  }
+</script>
+
+<style>
+  .timeline-section {
+    padding-block: var(--section-padding);
+  }
+
+  /* Section header (reuse pattern) */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    max-width: 48ch;
+    margin-inline: auto;
+    line-height: 1.6;
+  }
+
+  /* Filter tabs */
+  .filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    width: fit-content;
+    margin-inline: auto;
+    margin-bottom: 3.5rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 4px;
+  }
+
+  .filter-btn {
+    position: relative;
+    z-index: 1;
+    background: none;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: color 200ms ease;
+    white-space: nowrap;
+  }
+
+  .filter-btn.active,
+  .filter-btn:hover {
+    color: var(--color-text);
+  }
+
+  .tab-indicator {
+    position: absolute;
+    top: 4px;
+    height: calc(100% - 8px);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: left 250ms ease, width 250ms ease;
+    pointer-events: none;
+  }
+
+  /* Timeline list */
+  .timeline-list {
+    position: relative;
+    max-width: 720px;
+    margin-inline: auto;
+    padding-left: 2rem;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-border) 8%,
+      var(--color-border) 92%,
+      transparent
+    );
+  }
+
+  /* Timeline item */
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2.5rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Reveal */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+
+  [data-reveal].visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* Dot */
+  .timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    margin-left: -6px;
+    background: var(--color-bg-elevated);
+    border: 2px solid var(--color-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dot-pulse {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--color-accent);
+    opacity: 0.4;
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.6; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* Card */
+  .timeline-card {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: border-color 250ms ease, box-shadow 250ms ease;
+  }
+
+  .timeline-card:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: 0 0 20px rgba(163, 230, 53, 0.06), var(--shadow-card);
+  }
+
+  .timeline-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .timeline-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  /* Badges */
+  .timeline-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .badge-education {
+    background: rgba(96, 165, 250, 0.12);
+    color: #60a5fa;
+    border: 1px solid rgba(96, 165, 250, 0.25);
+  }
+
+  .badge-cert {
+    background: rgba(192, 132, 252, 0.12);
+    color: #c084fc;
+    border: 1px solid rgba(192, 132, 252, 0.25);
+  }
+
+  .badge-experience {
+    background: rgba(163, 230, 53, 0.1);
+    color: var(--color-accent);
+    border: 1px solid rgba(163, 230, 53, 0.25);
+  }
+
+  .timeline-date {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .current-tag {
+    background: rgba(163, 230, 53, 0.1);
+    color: var(--color-accent);
+    border: 1px solid rgba(163, 230, 53, 0.2);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .timeline-location {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .timeline-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .timeline-institution {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .timeline-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin-top: 0.25rem;
+  }
+
+  .timeline-tag {
+    padding: 0.2rem 0.55rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 600px) {
+    .timeline-list {
+      padding-left: 1.5rem;
+    }
+
+    .timeline-card-header {
+      flex-direction: column;
+    }
+  }
+</style>
