@@ -45,7 +45,7 @@ function getBadgeLabel(badge: string, l: Lang): string {
     </div>
 
     <!-- Filter tabs -->
-    <div class="filter-tabs" role="tablist" aria-label="Filtrar trayectoria" data-reveal>
+    <div class="filter-tabs" role="tablist" aria-label={lang === 'es' ? 'Filtrar trayectoria' : 'Filter journey'} data-reveal>
       {
         filters.map((filter, i) => (
           <button
@@ -54,6 +54,7 @@ function getBadgeLabel(badge: string, l: Lang): string {
             data-filter={filter.id}
             aria-selected={i === 0 ? 'true' : 'false'}
             aria-controls="timeline-list"
+            tabindex={i === 0 ? 0 : -1}
           >
             {filter.label}
           </button>
@@ -103,7 +104,7 @@ function getBadgeLabel(badge: string, l: Lang): string {
               <p class="timeline-desc">{item.description}</p>
 
               {item.tags && item.tags.length > 0 && (
-                <ul class="timeline-tags" aria-label="Tecnologías">
+                <ul class="timeline-tags" aria-label={lang === 'es' ? 'Tecnologías' : 'Technologies'}>
                   {item.tags.map((tag) => (
                     <li class="timeline-tag">{tag}</li>
                   ))}
@@ -147,16 +148,39 @@ function getBadgeLabel(badge: string, l: Lang): string {
   const firstActive = document.querySelector<HTMLButtonElement>('.filter-btn.active');
   if (firstActive) moveIndicator(firstActive);
 
+  function activateTab(btn: HTMLButtonElement) {
+    filterBtns.forEach((b) => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+      b.setAttribute('tabindex', '-1');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    btn.setAttribute('tabindex', '0');
+    btn.focus();
+    moveIndicator(btn);
+    applyFilter(btn.dataset.filter ?? 'all');
+  }
+
   filterBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach((b) => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      moveIndicator(btn);
-      applyFilter(btn.dataset.filter ?? 'all');
+    btn.addEventListener('click', () => activateTab(btn));
+
+    btn.addEventListener('keydown', (e) => {
+      const btns = Array.from(filterBtns);
+      const idx = btns.indexOf(btn);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        activateTab(btns[(idx + 1) % btns.length]);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        activateTab(btns[(idx - 1 + btns.length) % btns.length]);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        activateTab(btns[0]);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        activateTab(btns[btns.length - 1]);
+      }
     });
   });
 
