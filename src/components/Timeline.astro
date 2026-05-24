@@ -86,7 +86,11 @@ function getBadgeLabel(badge: string, l: Lang): string {
                     {getBadgeLabel(item.badge, lang)}
                   </span>
                   <time class="timeline-date">
-                    {item.dateStart} — {item.dateEnd}
+                    {lang === 'en' && item.dateStartEn ? item.dateStartEn : item.dateStart}
+                    {' — '}
+                    {item.dateEnd
+                      ? (lang === 'en' && item.dateEndEn ? item.dateEndEn : item.dateEnd)
+                      : t('timeline.present')}
                     {item.current && <span class="current-tag">{t('timeline.current')}</span>}
                   </time>
                 </div>
