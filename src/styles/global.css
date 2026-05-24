@@ -106,3 +106,15 @@ body {
   margin-inline: auto;
   padding-inline: clamp(1rem, 5vw, 2rem);
 }
+
+/* All page sections sit above the particle canvas */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--section-padding);
+}

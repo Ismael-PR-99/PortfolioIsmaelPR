@@ -3,9 +3,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Ismael Piña Ramos — Full Stack Developer">
-  <main id="main-content">
-    <p style="color: white; text-align: center; padding: 4rem;">
-      Portfolio v2 — en construcción 🚧
-    </p>
-  </main>
+  <section id="hero" style="min-height: 100dvh; display: flex; align-items: center; justify-content: center;">
+    <p class="placeholder-text">Hero — Fase 3</p>
+  </section>
+
+  <section id="stack" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+    <p class="placeholder-text">Stack — Fase 4</p>
+  </section>
+
+  <section id="timeline" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+    <p class="placeholder-text">Trayectoria — Fase 5</p>
+  </section>
+
+  <section id="projects" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+    <p class="placeholder-text">Proyectos — Fase 6</p>
+  </section>
+
+  <section id="contact" style="min-height: 50vh; display: flex; align-items: center; justify-content: center;">
+    <p class="placeholder-text">Contacto — Fase 7</p>
+  </section>
 </BaseLayout>
+
+<style>
+  .placeholder-text {
+    color: var(--color-text-muted);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 1px dashed var(--color-border);
+    padding: 2rem 3rem;
+    border-radius: var(--radius-lg);
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+// Lazy-loaded constellation background — client:idle
+---
+
+<div id="tsparticles" aria-hidden="true"></div>
+
+<script>
+  import { tsParticles } from '@tsparticles/engine';
+  import { loadSlim } from '@tsparticles/slim';
+
+  async function initParticles() {
+    await loadSlim(tsParticles);
+    await tsParticles.load({
+      id: 'tsparticles',
+      options: {
+        fpsLimit: 60,
+        background: { color: { value: 'transparent' } },
+        particles: {
+          number: { value: 60, density: { enable: true, width: 1920 } },
+          color: { value: '#a3e635' },
+          opacity: { value: { min: 0.1, max: 0.4 } },
+          size: { value: { min: 0.5, max: 1.5 } },
+          links: {
+            enable: true,
+            color: '#a3e635',
+            opacity: 0.12,
+            distance: 150,
+            width: 1,
+          },
+          move: {
+            enable: true,
+            speed: 0.4,
+            direction: 'none',
+            outModes: 'bounce',
+          },
+        },
+        detectRetina: true,
+        interactivity: {
+          events: {
+            onHover: { enable: true, mode: 'grab' },
+          },
+          modes: {
+            grab: { distance: 120, links: { opacity: 0.25 } },
+          },
+        },
+      },
+    });
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(initParticles);
+    } else {
+      setTimeout(initParticles, 200);
+    }
+  }
+</script>
+
+<style>
+  #tsparticles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+</style>
