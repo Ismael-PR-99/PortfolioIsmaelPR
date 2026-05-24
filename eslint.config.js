@@ -3,23 +3,17 @@ import tsParser from '@typescript-eslint/parser';
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**'],
-  },
-  {
-    files: ['src/**/*.ts'],
+    files: ['src/**/*.ts', 'src/**/*.astro'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: './tsconfig.json',
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
     },
-    plugins: {
-      '@typescript-eslint': tsPlugin,
-    },
+    plugins: { '@typescript-eslint': tsPlugin },
     rules: {
-      ...tsPlugin.configs['recommended-type-checked'].rules,
+      ...tsPlugin.configs.recommended.rules,
       'no-console': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

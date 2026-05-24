@@ -1,44 +1,31 @@
 {
   "name": "portfolio-ismael-pr",
-  "version": "1.0.0",
   "type": "module",
-  "description": "Portfolio personal de Ismael Piña Ramos con TypeScript (fuente en src)",
-  "main": "dist/scripts.js",
+  "version": "2.0.0",
   "scripts": {
-    "dev": "vite",
-    "optimize-images": "node scripts/optimize-images.mjs",
-    "build": "node scripts/optimize-images.mjs && vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix",
-    "format": "prettier --write src/",
-    "clean": "rimraf dist"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint src --ext .ts,.astro",
+    "typecheck": "tsc --noEmit"
   },
-  "keywords": [
-    "portfolio",
-    "typescript",
-    "web-development",
-    "frontend"
-  ],
-  "author": "Ismael Piña Ramos",
-  "license": "MIT",
+  "dependencies": {
+    "astro": "^5.8.0",
+    "tailwindcss": "^4.1.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "motion": "^11.15.0",
+    "@tsparticles/slim": "^3.7.1",
+    "@tsparticles/engine": "^3.7.1"
+  },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.59.4",
-    "@typescript-eslint/parser": "^8.59.4",
-    "eslint": "^10.4.0",
-    "eslint-plugin-no-unsanitized": "^4.1.5",
-    "prettier": "^3.8.3",
-    "rimraf": "^5.0.0",
-    "sharp": "^0.34.5",
-    "typescript": "^5.3.0",
-    "vite": "^5.2.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "packageManager": "pnpm@11.1.0",
-  "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp"]
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-astro": "^0.14.0"
   }
 }
