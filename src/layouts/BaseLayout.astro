@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE_URL, BASE_URL, PROFILE } from '@config/site';
+import { SITE_URL, BASE_URL, PROFILE, SOCIALS } from '@config/site';
 import { type Lang, getAlternateLang, getAlternatePath } from '@i18n/utils';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
@@ -24,10 +24,38 @@ const resolvedTitle = title ?? defaultTitle;
 const resolvedDesc = description ?? defaultDesc;
 
 const canonical = `${SITE_URL}${BASE_URL}${Astro.url.pathname}`;
-const ogImage = `${SITE_URL}${BASE_URL}/og.png`;
+// OG image: use profile photo until a proper 1200x630 design is created (Phase 11)
+const ogImage = `${SITE_URL}${BASE_URL}/images/IsmaelFoto.png`;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
 const alternateLang = getAlternateLang(lang);
 const alternatePath = getAlternatePath(lang);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: PROFILE.name,
+  url: `${SITE_URL}${BASE_URL}/`,
+  image: ogImage,
+  jobTitle: lang === 'es' ? 'Desarrollador Web Full Stack' : 'Full Stack Web Developer',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Sevilla',
+    addressCountry: 'ES',
+  },
+  alumniOf: [
+    {
+      '@type': 'EducationalOrganization',
+      name: 'Cesur Sevilla',
+      description: 'Técnico Superior en Desarrollo de Aplicaciones Web (DAW)',
+    },
+  ],
+  knowsAbout: [
+    'Java', 'PHP', 'Python', 'JavaScript', 'TypeScript',
+    'Laravel', 'Spring Boot', 'Django', 'React',
+    'MySQL', 'PostgreSQL', 'REST API', 'Git',
+  ],
+  sameAs: [SOCIALS.github, SOCIALS.linkedin, SOCIALS.instagram],
+};
 ---
 
 <!doctype html>
@@ -39,6 +67,7 @@ const alternatePath = getAlternatePath(lang);
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang} href={canonical} />
     <link rel="alternate" hreflang={alternateLang} href={`${SITE_URL}${alternatePath}`} />
+    <link rel="alternate" hreflang="x-default" href={`${SITE_URL}${BASE_URL}/`} />
 
     <!-- OG -->
     <meta property="og:type" content="website" />
@@ -46,13 +75,16 @@ const alternatePath = getAlternatePath(lang);
     <meta property="og:title" content={resolvedTitle} />
     <meta property="og:description" content={resolvedDesc} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={`Foto de ${PROFILE.name}`} />
     <meta property="og:locale" content={ogLocale} />
+    <meta property="og:site_name" content={PROFILE.name} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={resolvedTitle} />
     <meta name="twitter:description" content={resolvedDesc} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={`Foto de ${PROFILE.name}`} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={`${BASE_URL}/favicon.svg`} />
@@ -64,6 +96,9 @@ const alternatePath = getAlternatePath(lang);
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <title>{resolvedTitle}</title>
   </head>

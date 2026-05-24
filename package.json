@@ -12,20 +12,21 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "astro": "^5.8.0",
-    "tailwindcss": "^4.1.0",
+    "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.1.0",
-    "motion": "^11.15.0",
+    "@tsparticles/engine": "^3.7.1",
     "@tsparticles/slim": "^3.7.1",
-    "@tsparticles/engine": "^3.7.1"
+    "astro": "^5.8.0",
+    "motion": "^11.15.0",
+    "tailwindcss": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "typescript": "^5.7.0",
-    "eslint": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
     "prettier": "^3.0.0",
-    "prettier-plugin-astro": "^0.14.0"
+    "prettier-plugin-astro": "^0.14.0",
+    "typescript": "^5.7.0"
   }
 }
