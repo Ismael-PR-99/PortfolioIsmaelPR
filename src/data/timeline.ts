@@ -22,7 +22,7 @@ export const timeline: TimelineItem[] = [
     type: 'experience',
     badge: 'Prácticas',
     dateStart: 'Mar 2026',
-    dateEnd: 'May 2026',
+    dateEnd: '',
     title: 'Desarrollador en prácticas',
     institution: 'Kentia',
     location: 'Sevilla, España',
