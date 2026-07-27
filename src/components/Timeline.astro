@@ -17,9 +17,11 @@ const badgeColors: Record<string, string> = {
   Formación: 'badge-education',
   Certificación: 'badge-cert',
   Prácticas: 'badge-experience',
+  Empleo: 'badge-experience',
   Education: 'badge-education',
   Certificate: 'badge-cert',
   Internship: 'badge-experience',
+  Job: 'badge-experience',
 };
 
 // Map badge keys by lang
@@ -29,6 +31,7 @@ function getBadgeLabel(badge: string, l: Lang): string {
       Formación: t('timeline.badge.education'),
       Certificación: t('timeline.badge.cert'),
       Prácticas: t('timeline.badge.experience'),
+      Empleo: t('timeline.badge.job'),
     };
     return map[badge] ?? badge;
   }

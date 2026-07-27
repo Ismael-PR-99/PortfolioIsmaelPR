@@ -55,6 +55,7 @@ export const ui = {
     'timeline.badge.education': 'Formación',
     'timeline.badge.cert': 'Certificación',
     'timeline.badge.experience': 'Prácticas',
+    'timeline.badge.job': 'Empleo',
 
     // Projects
     'projects.label': 'Proyectos',
@@ -128,6 +129,7 @@ export const ui = {
     'timeline.badge.education': 'Education',
     'timeline.badge.cert': 'Certificate',
     'timeline.badge.experience': 'Internship',
+    'timeline.badge.job': 'Employed',
 
     // Projects
     'projects.label': 'Projects',
