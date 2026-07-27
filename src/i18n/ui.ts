@@ -17,11 +17,11 @@ export const ui = {
     'nav.menu.close': 'Cerrar menú',
 
     // Hero
-    'hero.badge': 'Disponible para prácticas',
+    'hero.badge': 'Abierto a nuevas oportunidades',
     'hero.greeting': 'Hola, soy',
     'hero.role': 'Desarrollador Web Full Stack',
     'hero.bio':
-      'Desarrollo aplicaciones web full stack con Java, PHP, Python y JavaScript. Manejo Laravel, Spring Boot, Django y React desde el backend hasta el frontend. Busco prácticas donde seguir creciendo y aportar desde el primer día.',
+      'Desarrollo aplicaciones web full stack con Java, PHP, Python y JavaScript. Manejo Laravel, Spring Boot, Django y React desde el backend hasta el frontend. Busco nuevas oportunidades donde seguir creciendo y aportar desde el primer día.',
     'hero.chip.location': 'Sevilla, España',
     'hero.chip.level': 'Junior',
     'hero.chip.type': 'Full Stack',
@@ -70,7 +70,7 @@ export const ui = {
     'contact.label': 'Contacto',
     'contact.title': 'Conectemos',
     'contact.subtitle':
-      'Estoy abierto a oportunidades de prácticas y puestos junior.\nSi tienes un proyecto o una oferta, hablemos.',
+      'Estoy abierto a nuevas oportunidades laborales.\nSi tienes un proyecto o una oferta, hablemos.',
     'contact.linkedin.desc': 'Perfil profesional',
     'contact.github.desc': 'Código y proyectos',
     'contact.instagram.desc': 'Día a día',
@@ -92,11 +92,11 @@ export const ui = {
     'nav.menu.close': 'Close menu',
 
     // Hero
-    'hero.badge': 'Open to internships',
+    'hero.badge': 'Open to new opportunities',
     'hero.greeting': 'Hi, I\'m',
     'hero.role': 'Full Stack Web Developer',
     'hero.bio':
-      'I build full stack web apps with Java, PHP, Python and JavaScript. I work with Laravel, Spring Boot, Django and React across the whole stack. Looking for an internship where I can keep growing and contribute from day one.',
+      'I build full stack web apps with Java, PHP, Python and JavaScript. I work with Laravel, Spring Boot, Django and React across the whole stack. Looking for new opportunities where I can keep growing and contribute from day one.',
     'hero.chip.location': 'Seville, Spain',
     'hero.chip.level': 'Junior',
     'hero.chip.type': 'Full Stack',
@@ -144,7 +144,7 @@ export const ui = {
     'contact.label': 'Contact',
     'contact.title': 'Let\'s connect',
     'contact.subtitle':
-      'I\'m open to internship opportunities and junior positions.\nIf you have a project or an offer, let\'s talk.',
+      'I\'m open to new job opportunities.\nIf you have a project or an offer, let\'s talk.',
     'contact.linkedin.desc': 'Professional profile',
     'contact.github.desc': 'Code and projects',
     'contact.instagram.desc': 'Day to day',
