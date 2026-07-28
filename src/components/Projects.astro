@@ -45,7 +45,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     <div class="projects-list">
       {
         typedProjects.map((project, i) => (
-          <article class="project" data-reveal style={`--delay: ${i * 90}ms`}>
+          <article class="project" data-spotlight data-reveal style={`--delay: ${i * 90}ms`}>
             <!-- Visual -->
             <a
               href={project.liveUrl}
@@ -156,6 +156,39 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
   </div>
 </section>
 
+<script>
+  // Pointer-tracked tilt. Rotation is written straight to CSS custom
+  // properties so the compositor does the work and there is no rAF loop.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const fine = window.matchMedia('(pointer: fine)');
+
+  if (!reduced.matches && fine.matches) {
+    const MAX = 6; // degrees
+
+    document.querySelectorAll<HTMLElement>('.project-visual').forEach((card) => {
+      card.addEventListener(
+        'pointermove',
+        (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+
+          card.classList.add('is-tilting');
+          card.style.setProperty('--ry', `${px * MAX * 2}deg`);
+          card.style.setProperty('--rx', `${-py * MAX * 2}deg`);
+        },
+        { passive: true }
+      );
+
+      card.addEventListener('pointerleave', () => {
+        card.classList.remove('is-tilting');
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+</script>
+
 <style>
   .project {
     display: grid;
@@ -173,6 +206,9 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
   .project-visual {
     position: relative;
     display: block;
+    transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform-style: preserve-3d;
+    will-change: transform;
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--color-border-strong);
@@ -185,6 +221,21 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
   .project-visual:hover {
     border-color: var(--color-border-accent);
     box-shadow: 0 0 40px #a3e63514, var(--shadow-card);
+  }
+
+  /* The tilt itself is instant (driven per-pointermove); only the settle
+     back to flat is eased, so releasing the card feels sprung. */
+  .project-visual:not(.is-tilting) {
+    transition:
+      transform 500ms var(--ease-out-soft),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-visual {
+      transform: none;
+    }
   }
 
   .project-img {
