@@ -73,6 +73,7 @@ function badgeLabel(badge: string, l: Lang): string {
         timeline.map((item, i) => (
           <li
             class="entry"
+            data-spotlight
             data-type={item.type}
             data-reveal
             style={`--delay: ${i * 70}ms`}
