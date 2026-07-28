@@ -1,0 +1,382 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import { BASE_URL, SOCIALS } from '@config/site';
+import { type Lang } from '@i18n/ui';
+import { useTranslations } from '@i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
+
+// Read the folder at build time. Dropping files in is the whole workflow —
+// no imports to edit, no data file to keep in sync.
+const DIR = path.join(process.cwd(), 'public', 'images', 'carrete');
+const EXT = /\.(jpe?g|png|webp|avif)$/i;
+
+const files = fs.existsSync(DIR)
+  ? fs.readdirSync(DIR).filter((f) => EXT.test(f)).sort()
+  : [];
+
+// "03-sevilla-atardecer.jpg" -> "Sevilla atardecer"
+function describe(file: string): string {
+  const stem = file.replace(EXT, '').replace(/^\d+[-_\s]*/, '');
+  const words = stem.replace(/[-_]+/g, ' ').trim();
+  return words ? words.charAt(0).toUpperCase() + words.slice(1) : 'Foto';
+}
+
+const photos = files.map((file) => ({
+  src: `${BASE_URL}/images/carrete/${file}`,
+  alt: describe(file),
+}));
+---
+
+{
+  photos.length > 0 && (
+    <section id="reel" class="reel-section">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <div>
+            <p class="section-eyebrow">
+              <span class="section-index">04</span>
+              <span class="section-label">{t('reel.label')}</span>
+            </p>
+            <h2 class="section-title">{t('reel.title')}</h2>
+          </div>
+          <p class="section-subtitle">{t('reel.subtitle')}</p>
+        </header>
+      </div>
+
+      <div class="reel" data-reveal>
+        {/*
+          A scroll-snap container is natively scrollable, swipeable and
+          keyboard-navigable with no JavaScript at all. The script only adds
+          click-drag on desktop and the arrow buttons, so this still works
+          fully if the script never runs.
+        */}
+        <ul
+          class="reel-track"
+          tabindex="0"
+          role="region"
+          aria-label={t('reel.title')}
+        >
+          {photos.map((photo, i) => (
+            <li class="reel-item">
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading={i < 2 ? 'eager' : 'lazy'}
+                decoding="async"
+                draggable="false"
+              />
+            </li>
+          ))}
+        </ul>
+
+        <div class="reel-fade reel-fade-start" aria-hidden="true" />
+        <div class="reel-fade reel-fade-end" aria-hidden="true" />
+      </div>
+
+      <div class="container reel-foot">
+        <div class="reel-controls">
+          <button type="button" class="reel-btn" data-reel-prev aria-label={t('reel.prev')}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button type="button" class="reel-btn" data-reel-next aria-label={t('reel.next')}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <span class="reel-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M8 7 4 12l4 5M16 7l4 5-4 5" />
+            </svg>
+            {t('reel.hint')}
+          </span>
+
+          <span class="reel-progress" aria-hidden="true">
+            <span class="reel-progress-bar" />
+          </span>
+        </div>
+
+        <a
+          href={SOCIALS.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="reel-ig"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+          </svg>
+          {t('reel.instagram')}
+        </a>
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const track = document.querySelector<HTMLElement>('.reel-track');
+
+  if (track) {
+    const bar = document.querySelector<HTMLElement>('.reel-progress-bar');
+    const maxScroll = () => track.scrollWidth - track.clientWidth;
+
+    // ---- Progress bar ----
+    function updateProgress() {
+      if (!bar) return;
+      const max = maxScroll();
+      bar.style.transform = `scaleX(${max > 0 ? track!.scrollLeft / max : 1})`;
+    }
+
+    track.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress, { passive: true });
+    updateProgress();
+
+    // ---- Arrow buttons: advance by one card ----
+    const step = () => {
+      const first = track.querySelector<HTMLElement>('.reel-item');
+      return first ? first.offsetWidth + 16 : track.clientWidth * 0.8;
+    };
+
+    document.querySelector('[data-reel-prev]')?.addEventListener('click', () => {
+      track.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+
+    document.querySelector('[data-reel-next]')?.addEventListener('click', () => {
+      track.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+
+    // ---- Click-drag on desktop ----
+    // Touch already works natively, so this is pointer-fine only.
+    if (window.matchMedia('(pointer: fine)').matches) {
+      let down = false;
+      let startX = 0;
+      let startScroll = 0;
+      let moved = 0;
+
+      track.addEventListener('pointerdown', (e) => {
+        down = true;
+        moved = 0;
+        startX = e.clientX;
+        startScroll = track.scrollLeft;
+        track.classList.add('is-dragging');
+      });
+
+      track.addEventListener('pointermove', (e) => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        moved = Math.abs(dx);
+        // Snapping fights the drag, so it is suspended via .is-dragging
+        track.scrollLeft = startScroll - dx;
+      });
+
+      const release = () => {
+        if (!down) return;
+        down = false;
+        track.classList.remove('is-dragging');
+      };
+
+      track.addEventListener('pointerup', release);
+      track.addEventListener('pointercancel', release);
+      track.addEventListener('pointerleave', release);
+
+      // A drag that ends on a link must not also count as a click
+      track.addEventListener(
+        'click',
+        (e) => {
+          if (moved > 6) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        },
+        true
+      );
+    }
+  }
+</script>
+
+<style>
+  .reel {
+    position: relative;
+    margin-top: 0.5rem;
+  }
+
+  .reel-track {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: clamp(1rem, 5vw, 2rem);
+    padding-inline: clamp(1rem, 5vw, 2rem);
+    padding-block: 0.5rem 1.25rem;
+    cursor: grab;
+    /* Firefox / standards */
+    scrollbar-width: none;
+  }
+
+  .reel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reel-track:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: var(--radius-md);
+  }
+
+  .reel-track.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+    user-select: none;
+  }
+
+  .reel-item {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: clamp(200px, 26vw, 310px);
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    transition:
+      border-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .reel-item:hover {
+    border-color: var(--color-border-accent);
+    transform: translateY(-4px);
+  }
+
+  .reel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+  }
+
+  /* Edges melt into the page so the strip reads as continuing off-screen */
+  .reel-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: clamp(2rem, 6vw, 5rem);
+    pointer-events: none;
+  }
+
+  .reel-fade-start {
+    left: 0;
+    background: linear-gradient(to right, var(--color-bg), transparent);
+  }
+
+  .reel-fade-end {
+    right: 0;
+    background: linear-gradient(to left, var(--color-bg), transparent);
+  }
+
+  /* ---- Foot ---- */
+  .reel-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .reel-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .reel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border-strong);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+      border-color var(--transition-fast),
+      color var(--transition-fast),
+      background var(--transition-fast);
+  }
+
+  .reel-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: #a3e6350d;
+  }
+
+  .reel-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: 0.4rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .reel-progress {
+    display: block;
+    width: clamp(60px, 12vw, 120px);
+    height: 2px;
+    margin-left: 0.6rem;
+    background: var(--color-border);
+    overflow: hidden;
+  }
+
+  .reel-progress-bar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--color-accent);
+    transform-origin: left center;
+    transform: scaleX(0);
+  }
+
+  .reel-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .reel-ig:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 640px) {
+    .reel-item {
+      width: clamp(170px, 55vw, 230px);
+    }
+
+    .reel-hint {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reel-item:hover {
+      transform: none;
+    }
+  }
+</style>

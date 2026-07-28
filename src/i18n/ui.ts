@@ -74,6 +74,15 @@ export const ui = {
     'projects.spec.context': 'Contexto',
     'projects.more': 'Más repositorios en GitHub',
 
+    // Reel
+    'reel.label': 'Fuera del código',
+    'reel.title': 'Cuando cierro el portátil',
+    'reel.subtitle': 'Sevilla, viajes y el día a día. Arrastra para verlas.',
+    'reel.hint': 'Arrastra',
+    'reel.prev': 'Foto anterior',
+    'reel.next': 'Foto siguiente',
+    'reel.instagram': 'Ver más en Instagram',
+
     // Contact
     'contact.label': 'Contacto',
     'contact.title': 'Conectemos',
@@ -155,6 +164,15 @@ export const ui = {
     'projects.spec.stack': 'Stack',
     'projects.spec.context': 'Context',
     'projects.more': 'More repositories on GitHub',
+
+    // Reel
+    'reel.label': 'Outside the code',
+    'reel.title': 'When the laptop closes',
+    'reel.subtitle': 'Seville, travel and everyday life. Drag to browse.',
+    'reel.hint': 'Drag',
+    'reel.prev': 'Previous photo',
+    'reel.next': 'Next photo',
+    'reel.instagram': 'See more on Instagram',
 
     // Contact
     'contact.label': 'Contact',
