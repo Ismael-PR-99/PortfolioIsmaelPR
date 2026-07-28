@@ -253,9 +253,12 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 21 / 9;
+    /* A ratio alone runs away at full-bleed widths — 21/9 across 1400px is
+       a 600px slab. Clamp the band instead so it stays a banner at any width. */
+    height: clamp(180px, 34vh, 360px);
     object-fit: cover;
-    object-position: top center;
+    /* Skip past the app's own header so the band shows real UI, not chrome */
+    object-position: center 38%;
     /* RefrigeraSpace has a light UI. Full-bleed and untreated it becomes a
        white slab that blows out the page, so it rests dimmed and only comes
        up to full brightness under the pointer. */
@@ -470,7 +473,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
 
   @media (max-width: 860px) {
     .case-img {
-      aspect-ratio: 16 / 10;
+      height: clamp(160px, 26vh, 240px);
     }
 
     .case-specs {
