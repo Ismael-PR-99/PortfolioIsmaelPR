@@ -14,6 +14,15 @@ const [roleBefore, roleAfter] = t('hero.role').split('Full Stack');
 
 // Marks used in the portrait frame — the stack he actually ships with.
 const frameTech = ['Java', 'Laravel', 'React', 'Python', 'PostgreSQL'];
+
+// Split the name at build time so each letter can carry its own animation
+// delay. Done here rather than in a client script so the markup ships whole
+// and the entrance stays pure CSS.
+const nameLetters = [...PROFILE.name].map((char, i) => ({
+  char,
+  isSpace: char === ' ',
+  i,
+}));
 ---
 
 <section id="hero" class="hero-section">
@@ -27,7 +36,21 @@ const frameTech = ['Java', 'Laravel', 'React', 'Python', 'PostgreSQL'];
 
       <h1 class="hero-name" style="--i: 1">
         <span class="hero-greeting">{t('hero.greeting')}</span>
-        {PROFILE.name}
+        <span class="name-letters" aria-label={PROFILE.name}>
+          {
+            nameLetters.map(({ char, isSpace, i }) =>
+              isSpace ? (
+                <span class="letter-space" aria-hidden="true">
+                  {' '}
+                </span>
+              ) : (
+                <span class="letter" style={`--l: ${i}`} aria-hidden="true">
+                  {char}
+                </span>
+              )
+            )
+          }
+        </span>
       </h1>
 
       <p class="hero-role" style="--i: 2">
@@ -125,6 +148,66 @@ const frameTech = ['Java', 'Laravel', 'React', 'Python', 'PostgreSQL'];
   .hero-visual {
     animation: hero-rise 0.7s var(--ease-out-soft) both;
     animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  /* The h1 itself doesn't rise — its letters do, one at a time */
+  .hero-name {
+    animation: none;
+  }
+
+  .hero-greeting {
+    animation: hero-rise 0.7s var(--ease-out-soft) 90ms both;
+  }
+
+  .name-letters {
+    display: inline-block;
+    position: relative;
+  }
+
+  .letter {
+    display: inline-block;
+    animation: letter-in 0.7s var(--ease-out-soft) both;
+    animation-delay: calc(220ms + var(--l) * 38ms);
+  }
+
+  .letter-space {
+    display: inline-block;
+    width: 0.28em;
+  }
+
+  @keyframes letter-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.55em) rotate(6deg);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: blur(0);
+    }
+  }
+
+  /* A single light sweep across the name once the letters have landed */
+  .name-letters::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      100deg,
+      transparent 35%,
+      #ffffff40 50%,
+      transparent 65%
+    );
+    background-size: 250% 100%;
+    mix-blend-mode: overlay;
+    animation: name-shine 1.5s ease-out 1.5s 1 both;
+  }
+
+  @keyframes name-shine {
+    from { background-position: 180% 0; opacity: 1; }
+    to   { background-position: -80% 0; opacity: 0; }
   }
 
   .hero-section {
