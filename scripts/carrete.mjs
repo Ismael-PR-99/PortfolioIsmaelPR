@@ -28,8 +28,12 @@ const OUT = path.join(ROOT, 'public', 'images', 'carrete');
 const MAX_EDGE = 1400;
 const QUALITY = 82;
 const IMAGE_RE = /\.(jpe?g|png|webp|heic)$/i;
-// El export trae miniaturas y avatares que no queremos en el carrete
-const SKIP_RE = /thumbnail|profile_?pic|avatar|_thumb/i;
+
+// El export de Meta incluye fotos de conversaciones privadas junto a las
+// publicaciones. Nunca deben acabar en una web pública, así que se excluyen
+// carpetas enteras además de miniaturas y avatares.
+const SKIP_RE =
+  /[\\/](messages|inbox|threads|archived_threads|message_requests)[\\/]|thumbnail|profile_?pic|avatar|_thumb/i;
 
 function parseArgs(argv) {
   const args = { source: null, limit: 12, dry: false };

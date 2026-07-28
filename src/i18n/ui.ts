@@ -82,6 +82,7 @@ export const ui = {
     'reel.prev': 'Foto anterior',
     'reel.next': 'Foto siguiente',
     'reel.instagram': 'Ver más en Instagram',
+    'reel.like': 'Me gusta',
 
     // Contact
     'contact.label': 'Contacto',
@@ -173,6 +174,7 @@ export const ui = {
     'reel.prev': 'Previous photo',
     'reel.next': 'Next photo',
     'reel.instagram': 'See more on Instagram',
+    'reel.like': 'Like',
 
     // Contact
     'contact.label': 'Contact',
