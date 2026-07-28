@@ -68,6 +68,11 @@ export const ui = {
     'projects.live': 'En producción',
     'projects.cta.app': 'Ver app',
     'projects.cta.github': 'GitHub',
+    'projects.spec.role': 'Rol',
+    'projects.spec.year': 'Año',
+    'projects.spec.stack': 'Stack',
+    'projects.spec.context': 'Contexto',
+    'projects.more': 'Más repositorios en GitHub',
 
     // Contact
     'contact.label': 'Contacto',
@@ -145,6 +150,11 @@ export const ui = {
     'projects.live': 'Live',
     'projects.cta.app': 'View app',
     'projects.cta.github': 'GitHub',
+    'projects.spec.role': 'Role',
+    'projects.spec.year': 'Year',
+    'projects.spec.stack': 'Stack',
+    'projects.spec.context': 'Context',
+    'projects.more': 'More repositories on GitHub',
 
     // Contact
     'contact.label': 'Contact',
