@@ -154,7 +154,7 @@ const navLinks = [
   }
 
   .nav-header.scrolled {
-    background-color: rgba(10, 10, 10, 0.85);
+    background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 1px 0 var(--color-border);
@@ -185,6 +185,12 @@ const navLinks = [
     border-radius: 50%;
     background: var(--color-accent);
     margin-bottom: 8px;
+    animation: pulse-dot 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.75); }
   }
 
   .nav-links {

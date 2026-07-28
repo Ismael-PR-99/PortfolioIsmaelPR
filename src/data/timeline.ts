@@ -20,15 +20,15 @@ export const timeline: TimelineItem[] = [
   {
     id: 'kentia',
     type: 'experience',
-    badge: 'Prácticas',
+    badge: 'Empleo',
     dateStart: 'Mar 2026',
     dateEnd: '',
-    title: 'Desarrollador en prácticas',
-    institution: 'Kentia',
+    title: 'Desarrollador Full Stack',
+    institution: 'Kentia engineering',
     location: 'Sevilla, España',
     description:
-      'Prácticas profesionales como parte de la certificación IFCD0112. Desarrollo de aplicaciones web con React, JavaScript y TypeScript, participando en proyectos reales en equipo junto a profesionales del sector.',
-    tags: ['React', 'JavaScript', 'TypeScript', 'PHP', 'Laravel', 'Git'],
+      'Diseñé y desarrollé HERKO Calibration Manager, aplicación de escritorio (Tauri + React + FastAPI) para gestión de calibraciones de ECUs automotrices. Parsers propios para formatos A2L, DCM y S37, flujo de aprobación de work packages con 8 roles diferenciados, trazabilidad completa vía audit log y migración de MongoDB a PostgreSQL. Actualmente ampliando funciones hacia análisis de ciberseguridad: revisión de vulnerabilidades en dependencias, buenas prácticas OWASP y primeros pasos con herramientas de análisis estático de código (SAST).',
+    tags: ['React', 'Tauri', 'FastAPI', 'PostgreSQL', 'Docker', 'Ciberseguridad'],
     current: true,
   },
   {
