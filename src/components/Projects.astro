@@ -1,6 +1,6 @@
 ---
 import projects from '@data/projects.json';
-import { BASE_URL } from '@config/site';
+import { BASE_URL, SOCIALS } from '@config/site';
 import { type Lang } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 
@@ -24,78 +24,78 @@ interface Project {
 }
 
 const typedProjects = projects as Project[];
+
+// Strip the extension so <picture> can offer avif/webp/png of the same asset.
+const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`;
 ---
 
 <section id="projects" class="projects-section">
   <div class="container">
-    <div class="section-header" data-reveal>
-      <span class="section-label">{t('projects.label')}</span>
-      <h2 class="section-title">{t('projects.title')}</h2>
-      <p class="section-subtitle">
-        {t('projects.subtitle')}
-      </p>
-    </div>
+    <header class="section-head" data-reveal>
+      <div>
+        <p class="section-eyebrow">
+          <span class="section-index">03</span>
+          <span class="section-label">{t('projects.label')}</span>
+        </p>
+        <h2 class="section-title">{t('projects.title')}</h2>
+      </div>
+      <p class="section-subtitle">{t('projects.subtitle')}</p>
+    </header>
 
     <div class="projects-list">
       {
         typedProjects.map((project, i) => (
-          <article
-            class={`project-card ${i % 2 === 1 ? 'reversed' : ''}`}
-            data-reveal
-            style={`--delay: ${i * 100}ms`}
-          >
-            <!-- Image side -->
-            <div class="project-image-wrap">
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="project-image-link"
-                aria-label={lang === 'es' ? `Ver ${project.title} en producción` : `View ${project.title} live`}
-                tabindex="-1"
-              >
+          <article class="project" data-reveal style={`--delay: ${i * 90}ms`}>
+            <!-- Visual -->
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-visual"
+              aria-label={
+                lang === 'es'
+                  ? `Ver ${project.title} en producción (abre en nueva pestaña)`
+                  : `View ${project.title} live (opens in new tab)`
+              }
+            >
+              <picture>
+                <source srcset={`${imageBase(project.image)}.avif`} type="image/avif" />
+                <source srcset={`${imageBase(project.image)}.webp`} type="image/webp" />
                 <img
                   src={`${BASE_URL}${project.image}`}
-                  alt={`Captura de pantalla de ${project.title}`}
-                  width="620"
-                  height="380"
+                  alt={`Captura de ${project.title}`}
+                  width="900"
+                  height="560"
                   loading="lazy"
                   decoding="async"
                   class="project-img"
                 />
-                <div class="project-img-overlay" aria-hidden="true">
-                  <span class="overlay-label">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                      <polyline points="15 3 21 3 21 9"/>
-                      <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    {t('projects.cta.app')}
-                  </span>
-                </div>
-              </a>
+              </picture>
+
               {project.status === 'live' && (
                 <span class="status-badge">
                   <span class="status-dot" aria-hidden="true" />
                   {t('projects.live')}
                 </span>
               )}
-            </div>
+            </a>
 
-            <!-- Content side -->
-            <div class="project-content">
-              <div class="project-meta">
+            <!-- Content -->
+            <div class="project-body">
+              <p class="project-meta">
                 <span class="project-number">{project.number}</span>
                 <span class="project-category">{project.category}</span>
-              </div>
+              </p>
 
               <h3 class="project-title">{project.title}</h3>
-
               <p class="project-desc">{project.longDescription}</p>
 
-              <ul class="project-tags" aria-label={lang === 'es' ? 'Tecnologías usadas' : 'Technologies used'}>
+              <ul
+                class="project-tags"
+                aria-label={lang === 'es' ? 'Tecnologías usadas' : 'Technologies used'}
+              >
                 {project.tags.map((tag) => (
-                  <li class="project-tag">{tag}</li>
+                  <li>{tag}</li>
                 ))}
               </ul>
 
@@ -105,12 +105,16 @@ const typedProjects = projects as Project[];
                   target="_blank"
                   rel="noopener noreferrer"
                   class="btn btn-primary"
-                  aria-label={lang === 'es' ? `Ver ${project.title} en producción (abre en nueva pestaña)` : `View ${project.title} live (opens in new tab)`}
+                  aria-label={
+                    lang === 'es'
+                      ? `Ver ${project.title} en producción (abre en nueva pestaña)`
+                      : `View ${project.title} live (opens in new tab)`
+                  }
                 >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                    <polyline points="15 3 21 3 21 9"/>
-                    <line x1="10" y1="14" x2="21" y2="3"/>
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
                   {t('projects.cta.app')}
                 </a>
@@ -122,7 +126,7 @@ const typedProjects = projects as Project[];
                   aria-label={`Código fuente de ${project.title} en GitHub`}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
                   </svg>
                   GitHub
                 </a>
@@ -132,328 +136,196 @@ const typedProjects = projects as Project[];
         ))
       }
     </div>
+
+    <!-- More work lives on GitHub -->
+    <a
+      href={SOCIALS.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="more-link"
+      data-reveal
+    >
+      <span>
+        {lang === 'es' ? 'Más repositorios en GitHub' : 'More repositories on GitHub'}
+      </span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="5" y1="12" x2="19" y2="12" />
+        <polyline points="12 5 19 12 12 19" />
+      </svg>
+    </a>
   </div>
 </section>
 
-<script>
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!prefersReduced) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const delay = parseInt(el.style.getPropertyValue('--delay') || '0');
-            setTimeout(() => el.classList.add('visible'), delay);
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll('#projects [data-reveal]').forEach((el) => observer.observe(el));
-  } else {
-    document.querySelectorAll('#projects [data-reveal]').forEach((el) => el.classList.add('visible'));
-  }
-</script>
-
 <style>
-  .projects-section {
-    padding-block: var(--section-padding);
-  }
-
-  /* Section header */
-  .section-header {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-
-  .section-label {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.75rem;
-    background: linear-gradient(135deg, var(--color-text) 40%, var(--color-accent) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .section-subtitle {
-    font-size: 1rem;
-    color: var(--color-text-muted);
-    max-width: 48ch;
-    margin-inline: auto;
-    line-height: 1.6;
-  }
-
-  /* Reveal */
-  [data-reveal] {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
-  }
-
-  [data-reveal].visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    [data-reveal] { opacity: 1; transform: none; transition: none; }
-  }
-
-  /* Projects list */
-  .projects-list {
-    display: flex;
-    flex-direction: column;
-    gap: 5rem;
-  }
-
-  /* Project card */
-  .project-card {
+  .project {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.25rem);
     align-items: center;
+    padding-block: clamp(1.5rem, 3vw, 2.5rem);
   }
 
-  .project-card.reversed {
-    direction: rtl;
+  .project + .project {
+    border-top: 1px solid var(--color-border);
   }
 
-  .project-card.reversed > * {
-    direction: ltr;
-  }
-
-  /* Image */
-  .project-image-wrap {
+  /* ---- Visual ---- */
+  .project-visual {
     position: relative;
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    aspect-ratio: 16 / 10;
-    border: 1px solid var(--color-border);
-    transition: border-color 400ms ease, box-shadow 400ms ease, transform 400ms ease;
-  }
-
-  .project-image-wrap:hover {
-    border-color: var(--color-border-accent);
-    box-shadow: 0 0 32px rgba(163, 230, 53, 0.15), var(--shadow-card);
-    transform: translateY(-4px);
-  }
-
-  .project-image-link {
     display: block;
-    width: 100%;
-    height: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-bg-elevated);
+    transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .project-visual:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: 0 0 40px #a3e63514, var(--shadow-card);
   }
 
   .project-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     display: block;
-    transition: transform 400ms ease, filter 400ms ease;
-    filter: brightness(0.9);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top center;
+    transition: scale var(--transition-slow);
   }
 
-  .project-image-wrap:hover .project-img {
-    transform: scale(1.03);
-    filter: brightness(1);
-  }
-
-  .project-img-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 300ms ease;
-    border-radius: var(--radius-xl);
-  }
-
-  .project-image-wrap:hover .project-img-overlay {
-    opacity: 1;
-  }
-
-  .overlay-label {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: var(--color-accent);
-    font-weight: 700;
-    font-size: 0.95rem;
-    font-family: var(--font-display);
-    letter-spacing: 0.02em;
+  .project-visual:hover .project-img {
+    scale: 1.02;
   }
 
   .status-badge {
     position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
-    display: flex;
+    top: 0.85rem;
+    left: 0.85rem;
+    display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(163, 230, 53, 0.3);
+    padding: 0.3rem 0.65rem;
     border-radius: 999px;
-    padding: 0.25rem 0.7rem;
-    font-size: 0.72rem;
-    font-weight: 600;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
     color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-bg-sunken) 82%, transparent);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--color-border-accent);
   }
 
   .status-dot {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--color-accent);
-    animation: pulse-dot 2s ease-in-out infinite;
+    box-shadow: 0 0 8px var(--color-accent);
   }
 
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  /* Content */
-  .project-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-  }
-
+  /* ---- Body ---- */
   .project-meta {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.7rem;
+    margin-bottom: 0.7rem;
   }
 
   .project-number {
-    font-family: var(--font-display);
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: var(--color-border);
-    line-height: 1;
-    letter-spacing: -0.05em;
-    user-select: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
   }
 
   .project-category {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: var(--color-text-faint);
   }
 
   .project-title {
     font-family: var(--font-display);
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
     font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--color-text);
+    letter-spacing: -0.035em;
     line-height: 1.1;
+    margin-bottom: 0.75rem;
   }
 
   .project-desc {
     font-size: 0.9rem;
+    line-height: 1.75;
     color: var(--color-text-muted);
-    line-height: 1.7;
+    max-width: 58ch;
   }
 
   .project-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.35rem 0.75rem;
     list-style: none;
+    margin-block: 1.1rem 1.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
   }
 
-  .project-tag {
-    padding: 0.25rem 0.65rem;
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    font-size: 0.78rem;
-    color: var(--color-text-muted);
-    font-weight: 500;
+  .project-tags li + li::before {
+    content: '/';
+    margin-right: 0.75rem;
+    color: var(--color-border-strong);
   }
 
-  /* CTAs */
   .project-ctas {
     display: flex;
-    gap: 0.75rem;
     flex-wrap: wrap;
+    gap: 0.7rem;
   }
 
-  .btn {
+  /* ---- More on GitHub ---- */
+  .more-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.65rem 1.3rem;
-    border-radius: var(--radius-md);
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, color 150ms ease;
-  }
-
-  .btn:hover {
-    transform: translateY(-2px);
-  }
-
-  .btn-primary {
-    background: var(--color-accent);
-    color: #000;
-  }
-
-  .btn-primary:hover {
-    box-shadow: 0 0 20px rgba(163, 230, 53, 0.4), 0 4px 12px rgba(0,0,0,0.3);
-  }
-
-  .btn-ghost {
-    background: transparent;
+    gap: 0.6rem;
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    width: 100%;
+    font-size: 0.85rem;
     color: var(--color-text-muted);
-    border: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: color var(--transition-fast);
   }
 
-  .btn-ghost:hover {
-    border-color: var(--color-accent);
+  .more-link svg {
+    transition: translate var(--transition-fast);
+  }
+
+  .more-link:hover {
     color: var(--color-accent);
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    .project-card {
+  .more-link:hover svg {
+    translate: 4px 0;
+  }
+
+  @media (max-width: 900px) {
+    .project {
       grid-template-columns: 1fr;
-      gap: 1.75rem;
     }
-
-    .project-card.reversed {
-      direction: ltr;
-    }
-
-    .project-number {
-      font-size: 2.5rem;
-    }
-
-    .projects-list {
-      gap: 3.5rem;
+    .project-desc {
+      max-width: 100%;
     }
   }
 </style>

@@ -17,15 +17,21 @@ const { lang = 'es', title, description } = Astro.props;
 const defaultTitle = `${PROFILE.name} — Full Stack Developer`;
 const defaultDesc =
   lang === 'es'
-    ? 'Desarrollador Web Full Stack especializado en Java, PHP, Python y JavaScript. Disponible para prácticas en Sevilla.'
-    : 'Full Stack Web Developer specialized in Java, PHP, Python and JavaScript. Open to internships in Seville, Spain.';
+    ? 'Desarrollador Web Full Stack en Sevilla. Java, PHP, Python y JavaScript; Laravel, Spring Boot, Django y React. Actualmente en Kentia Engineering.'
+    : 'Full Stack Web Developer based in Seville, Spain. Java, PHP, Python and JavaScript; Laravel, Spring Boot, Django and React. Currently at Kentia Engineering.';
 
 const resolvedTitle = title ?? defaultTitle;
 const resolvedDesc = description ?? defaultDesc;
 
 const canonical = `${SITE_URL}${Astro.url.pathname}`;
-// OG image: use profile photo until a proper 1200x630 design is created (Phase 11)
-const ogImage = `${SITE_URL}${BASE_URL}/images/IsmaelFoto.png`;
+// Purpose-built 1200x630 social cards, one per language.
+const ogImage = `${SITE_URL}${BASE_URL}/images/${lang === 'en' ? 'og-en' : 'og'}.png`;
+const ogImageAlt =
+  lang === 'es'
+    ? `${PROFILE.name} — Desarrollador Web Full Stack`
+    : `${PROFILE.name} — Full Stack Web Developer`;
+// schema.org/Person wants an actual photo of the person, not the social card.
+const photoUrl = `${SITE_URL}${BASE_URL}/images/IsmaelFoto.png`;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
 const alternateLang = getAlternateLang(lang);
 const alternatePath = getAlternatePath(lang);
@@ -35,7 +41,7 @@ const jsonLd = {
   '@type': 'Person',
   name: PROFILE.name,
   url: `${SITE_URL}${BASE_URL}/`,
-  image: ogImage,
+  image: photoUrl,
   jobTitle: lang === 'es' ? 'Desarrollador Web Full Stack' : 'Full Stack Web Developer',
   address: {
     '@type': 'PostalAddress',
@@ -75,7 +81,10 @@ const jsonLd = {
     <meta property="og:title" content={resolvedTitle} />
     <meta property="og:description" content={resolvedDesc} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:alt" content={`Foto de ${PROFILE.name}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:site_name" content={PROFILE.name} />
 
@@ -84,18 +93,20 @@ const jsonLd = {
     <meta name="twitter:title" content={resolvedTitle} />
     <meta name="twitter:description" content={resolvedDesc} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content={`Foto de ${PROFILE.name}`} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={`${BASE_URL}/favicon.svg`} />
 
-    <!-- Preconnect fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!--
+      Fonts are self-hosted (see @fontsource-variable imports in global.css),
+      so there is no third-party connection to preconnect to.
+      This flag runs before first paint: reveal animations are only armed
+      when JS is confirmed alive, so a JS failure can never leave the page blank.
+    -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
 
     <!-- JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
@@ -112,5 +123,30 @@ const jsonLd = {
       <slot />
     </main>
     <Footer lang={lang} />
+
+    <script>
+      // One observer for every [data-reveal] on the page. Individual sections
+      // opt in with `style="--delay: 120ms"` to stagger within a group.
+      const reveal = (el: Element) => el.classList.add('is-visible');
+      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const el = entry.target as HTMLElement;
+            observer.unobserve(el);
+            const delay = parseInt(el.style.getPropertyValue('--delay'), 10) || 0;
+            delay ? window.setTimeout(() => reveal(el), delay) : reveal(el);
+          }
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      );
+
+      targets.forEach((el) => observer.observe(el));
+
+      // Safety net: nothing stays invisible for more than 3s, whatever happens.
+      window.setTimeout(() => targets.forEach(reveal), 3000);
+    </script>
   </body>
 </html>

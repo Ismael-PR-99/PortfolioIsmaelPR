@@ -27,6 +27,9 @@ export const ui = {
     'hero.chip.type': 'Full Stack',
     'hero.cta.projects': 'Ver proyectos',
     'hero.cta.cv': 'Descargar CV',
+    'hero.now.label': 'Ahora',
+    'hero.now.role': 'Full Stack en Kentia Engineering',
+    'hero.scroll': 'Desplázate',
 
     // Stack
     'stack.label': 'Tecnologías',
@@ -102,6 +105,9 @@ export const ui = {
     'hero.chip.type': 'Full Stack',
     'hero.cta.projects': 'See projects',
     'hero.cta.cv': 'Download CV',
+    'hero.now.label': 'Now',
+    'hero.now.role': 'Full Stack at Kentia Engineering',
+    'hero.scroll': 'Scroll',
 
     // Stack
     'stack.label': 'Technologies',
