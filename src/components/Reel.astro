@@ -18,11 +18,25 @@ const files = fs.existsSync(DIR)
   ? fs.readdirSync(DIR).filter((f) => EXT.test(f)).sort()
   : [];
 
-// "03-sevilla-atardecer.jpg" -> "Sevilla atardecer"
+// Filenames are lowercase, but alt text is read aloud, so place names need
+// their capitals back. Everything is capitalised except these joining words.
+const MINOR = new Set([
+  'de', 'del', 'la', 'el', 'los', 'las', 'un', 'una', 'en', 'y', 'con', 'a',
+  'por', 'para', 'al', 'the', 'of', 'in', 'on', 'at', 'and', 'with', 'an',
+]);
+
+// "03-tapas-en-sevilla.jpg" -> "Tapas en Sevilla"
 function describe(file: string): string {
   const stem = file.replace(EXT, '').replace(/^\d+[-_\s]*/, '');
-  const words = stem.replace(/[-_]+/g, ' ').trim();
-  return words ? words.charAt(0).toUpperCase() + words.slice(1) : 'Foto';
+  const words = stem.replace(/[-_]+/g, ' ').trim().split(/\s+/).filter(Boolean);
+
+  if (words.length === 0) return 'Foto';
+
+  return words
+    .map((w, i) =>
+      i > 0 && MINOR.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)
+    )
+    .join(' ');
 }
 
 const photos = files.map((file) => ({
@@ -197,9 +211,16 @@ const photos = files.map((file) => ({
     const bar = document.querySelector<HTMLElement>('.reel-progress-bar');
     const maxScroll = () => track.scrollWidth - track.clientWidth;
 
+    const controls = document.querySelector<HTMLElement>('.reel-controls');
+
     function updateProgress() {
-      if (!bar) return;
       const max = maxScroll();
+
+      // With few photos everything fits and there is nothing to scroll.
+      // Arrows that do nothing read as broken, so the controls step aside.
+      controls?.toggleAttribute('hidden', max < 2);
+
+      if (!bar) return;
       bar.style.transform = `scaleX(${max > 0 ? track!.scrollLeft / max : 1})`;
     }
 
