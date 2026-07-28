@@ -46,72 +46,98 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
       </div>
       <p class="section-subtitle">{t('projects.subtitle')}</p>
     </header>
-  </div>
 
-  {
-    typedProjects.map((project, i) => {
-      const specs = [
-        project.role && { label: t('projects.spec.role'), value: project.role[lang] },
-        project.year && { label: t('projects.spec.year'), value: project.year },
-        project.context && { label: t('projects.spec.context'), value: project.context[lang] },
-      ].filter(Boolean) as { label: string; value: string }[];
+    {
+      typedProjects.map((project, i) => {
+        const specs = [
+          project.role && { label: t('projects.spec.role'), value: project.role[lang] },
+          project.year && { label: t('projects.spec.year'), value: project.year },
+          project.context && { label: t('projects.spec.context'), value: project.context[lang] },
+        ].filter(Boolean) as { label: string; value: string }[];
 
-      return (
-        <article class="case" data-reveal style={`--delay: ${i * 90}ms`}>
-          {/* Full-bleed shot: the screenshot is the hero of the section */}
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="case-shot"
-            data-spotlight
-            aria-label={
-              lang === 'es'
-                ? `Ver ${project.title} en producción (abre en nueva pestaña)`
-                : `View ${project.title} live (opens in new tab)`
-            }
-          >
-            <picture>
-              <source srcset={`${imageBase(project.image)}.avif`} type="image/avif" />
-              <source srcset={`${imageBase(project.image)}.webp`} type="image/webp" />
-              <img
-                src={`${BASE_URL}${project.image}`}
-                alt={`Captura de ${project.title}`}
-                width="1600"
-                height="900"
-                loading="lazy"
-                decoding="async"
-                class="case-img"
-              />
-            </picture>
+        return (
+          <article class="project" data-spotlight data-reveal style={`--delay: ${i * 90}ms`}>
+            <div class="project-main">
+              {/* Contained shot, framed — deliberately modest in size */}
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-shot"
+                aria-label={
+                  lang === 'es'
+                    ? `Ver ${project.title} en producción (abre en nueva pestaña)`
+                    : `View ${project.title} live (opens in new tab)`
+                }
+              >
+                <picture>
+                  <source srcset={`${imageBase(project.image)}.avif`} type="image/avif" />
+                  <source srcset={`${imageBase(project.image)}.webp`} type="image/webp" />
+                  <img
+                    src={`${BASE_URL}${project.image}`}
+                    alt={`Captura de ${project.title}`}
+                    width="620"
+                    height="388"
+                    loading="lazy"
+                    decoding="async"
+                    class="project-img"
+                  />
+                </picture>
 
-            <span class="shot-veil" aria-hidden="true" />
+                {project.status === 'live' && (
+                  <span class="status-badge">
+                    <span class="status-dot" aria-hidden="true" />
+                    {t('projects.live')}
+                  </span>
+                )}
+              </a>
 
-            {project.status === 'live' && (
-              <span class="status-badge">
-                <span class="status-dot" aria-hidden="true" />
-                {t('projects.live')}
-              </span>
-            )}
+              <div class="project-body">
+                <p class="project-meta">
+                  <span class="project-number">{project.number}</span>
+                  <span class="project-category">{project.category}</span>
+                </p>
 
-            <span class="shot-cta" aria-hidden="true">
-              {t('projects.cta.app')}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 17 17 7M17 7H7M17 7v10" />
-              </svg>
-            </span>
-          </a>
+                <h3 class="project-title">{project.title}</h3>
+                <p class="project-lead">{project.longDescription}</p>
 
-          <div class="container">
-            {/* Title sits across the full measure, oversized */}
-            <div class="case-head">
-              <span class="case-number" aria-hidden="true">{project.number}</span>
-              <h3 class="case-title">{project.title}</h3>
-              <span class="case-category">{project.category}</span>
+                <div class="project-ctas">
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-primary"
+                    aria-label={
+                      lang === 'es'
+                        ? `Ver ${project.title} en producción (abre en nueva pestaña)`
+                        : `View ${project.title} live (opens in new tab)`
+                    }
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                    {t('projects.cta.app')}
+                  </a>
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-ghost"
+                    aria-label={`Código fuente de ${project.title} en GitHub`}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    GitHub
+                  </a>
+                </div>
+              </div>
             </div>
 
-            {/* Spec table — the thing that makes it read as a case study */}
-            <dl class="case-specs">
+            {/* Spec strip runs the full measure under both columns */}
+            <dl class="project-specs">
               {specs.map((spec) => (
                 <div class="spec">
                   <dt>{spec.label}</dt>
@@ -129,50 +155,11 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                 </dd>
               </div>
             </dl>
+          </article>
+        );
+      })
+    }
 
-            <div class="case-body">
-              <p class="case-lead">{project.longDescription}</p>
-
-              <div class="case-ctas">
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn btn-primary"
-                  aria-label={
-                    lang === 'es'
-                      ? `Ver ${project.title} en producción (abre en nueva pestaña)`
-                      : `View ${project.title} live (opens in new tab)`
-                  }
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                  {t('projects.cta.app')}
-                </a>
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn btn-ghost"
-                  aria-label={`Código fuente de ${project.title} en GitHub`}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                  </svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
-      );
-    })
-  }
-
-  <div class="container">
     <a
       href={SOCIALS.github}
       target="_blank"
@@ -190,15 +177,15 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
 </section>
 
 <script>
-  // Pointer-tracked tilt on the full-bleed shot. Rotation goes straight to
-  // CSS custom properties so the compositor does the work, no rAF loop.
+  // Pointer-tracked tilt. Rotation goes straight to CSS custom properties so
+  // the compositor does the work and there is no rAF loop.
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const fine = window.matchMedia('(pointer: fine)');
 
   if (!reduced.matches && fine.matches) {
-    const MAX = 3; // degrees — subtle, the shot is large
+    const MAX = 5; // degrees
 
-    document.querySelectorAll<HTMLElement>('.case-shot').forEach((shot) => {
+    document.querySelectorAll<HTMLElement>('.project-shot').forEach((shot) => {
       shot.addEventListener(
         'pointermove',
         (e) => {
@@ -223,88 +210,74 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
 </script>
 
 <style>
-  /* ---------------------------------------------------------------
-     Case study
-     A single project has to carry the whole section, so it gets the
-     full viewport width and a spec table rather than sitting in a card.
-  --------------------------------------------------------------- */
-  .case + .case {
-    margin-top: clamp(4rem, 8vw, 7rem);
+  .project {
+    padding-block: clamp(1.5rem, 3vw, 2.5rem);
   }
 
-  /* ---- Full-bleed shot ---- */
-  .case-shot {
+  .project + .project {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .project-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.25rem);
+    align-items: center;
+  }
+
+  /* ---- Shot ---- */
+  .project-shot {
     position: relative;
     display: block;
-    width: 100%;
-    margin-bottom: clamp(1.75rem, 4vw, 3rem);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    border-block: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-strong);
     background: var(--color-bg-elevated);
-    transform: perspective(1600px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     will-change: transform;
   }
 
-  .case-shot:not(.is-tilting) {
-    transition: transform 600ms var(--ease-out-soft);
+  .project-shot:not(.is-tilting) {
+    transition:
+      transform 500ms var(--ease-out-soft),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
   }
 
-  .case-img {
+  .project-shot:hover {
+    border-color: var(--color-border-accent);
+    box-shadow: 0 0 40px #a3e63514, var(--shadow-card);
+  }
+
+  .project-img {
     display: block;
     width: 100%;
     height: auto;
-    /* A ratio alone runs away at full-bleed widths — 21/9 across 1400px is
-       a 600px slab. Clamp the band instead so it stays a banner at any width. */
-    height: clamp(180px, 34vh, 360px);
+    aspect-ratio: 16 / 10;
     object-fit: cover;
-    /* Skip past the app's own header so the band shows real UI, not chrome */
-    object-position: center 38%;
-    /* RefrigeraSpace has a light UI. Full-bleed and untreated it becomes a
-       white slab that blows out the page, so it rests dimmed and only comes
-       up to full brightness under the pointer. */
-    filter: brightness(0.42) saturate(0.75) contrast(1.05);
-    transition:
-      scale 700ms var(--ease-out-soft),
-      filter 500ms var(--ease-out-soft);
+    object-position: top center;
+    transition: scale var(--transition-slow);
   }
 
-  .case-shot:hover .case-img,
-  .case-shot:focus-visible .case-img {
-    filter: brightness(0.92) saturate(1) contrast(1);
-    scale: 1.015;
-  }
-
-  /* Melts the shot into the page instead of sitting it on top */
-  .shot-veil {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      linear-gradient(to top, var(--color-bg) 1%, transparent 45%),
-      linear-gradient(to bottom, var(--color-bg) 1%, transparent 35%),
-      linear-gradient(to right, var(--color-bg) 0%, transparent 22%, transparent 78%, var(--color-bg) 100%);
-    transition: opacity var(--transition-slow);
-  }
-
-  .case-shot:hover .shot-veil {
-    opacity: 0.55;
+  .project-shot:hover .project-img {
+    scale: 1.02;
   }
 
   .status-badge {
     position: absolute;
-    top: clamp(1rem, 3vw, 1.75rem);
-    left: clamp(1rem, 5vw, 2rem);
+    top: 0.85rem;
+    left: 0.85rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.32rem 0.7rem;
+    padding: 0.3rem 0.65rem;
     border-radius: 999px;
     font-size: 0.66rem;
     font-weight: 700;
     letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--color-accent);
-    background: color-mix(in srgb, var(--color-bg-sunken) 78%, transparent);
+    background: color-mix(in srgb, var(--color-bg-sunken) 82%, transparent);
     backdrop-filter: blur(6px);
     border: 1px solid var(--color-border-accent);
   }
@@ -317,92 +290,80 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     box-shadow: 0 0 8px var(--color-accent);
   }
 
-  .shot-cta {
-    position: absolute;
-    right: clamp(1rem, 5vw, 2rem);
-    bottom: clamp(1.5rem, 4vw, 2.5rem);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.5rem 1rem;
-    border-radius: 999px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--color-bg);
-    background: var(--color-accent);
-    opacity: 0;
-    translate: 0 0.5rem;
-    transition:
-      opacity var(--transition-base),
-      translate var(--transition-base);
-  }
-
-  .case-shot:hover .shot-cta,
-  .case-shot:focus-visible .shot-cta {
-    opacity: 1;
-    translate: 0 0;
-  }
-
-  /* ---- Head ---- */
-  .case-head {
+  /* ---- Body ---- */
+  .project-meta {
     display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.6rem 1.1rem;
-    margin-bottom: 1.5rem;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 0.7rem;
   }
 
-  .case-number {
+  .project-number {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     color: var(--color-accent);
     font-variant-numeric: tabular-nums;
   }
 
-  .case-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5.5vw, 3.6rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 1;
-  }
-
-  .case-category {
+  .project-category {
     font-size: 0.7rem;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-text-faint);
   }
 
-  /* ---- Spec table ---- */
-  .case-specs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    gap: 1.25rem 2rem;
-    padding-block: 1.4rem;
-    border-block: 1px solid var(--color-border);
-    margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  .project-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
   }
 
-  .spec-stack {
-    grid-column: span 2;
+  .project-lead {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--color-text-muted);
+    max-width: 58ch;
+    margin-bottom: 1.4rem;
+  }
+
+  .project-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  /* ---- Spec strip ---- */
+  .project-specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1.1rem 2rem;
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--color-border);
   }
 
   .spec dt {
-    font-size: 0.66rem;
+    font-size: 0.64rem;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-text-faint);
-    margin-bottom: 0.45rem;
+    margin-bottom: 0.4rem;
   }
 
   .spec dd {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     color: var(--color-text);
     line-height: 1.5;
+  }
+
+  .spec-stack {
+    grid-column: span 2;
   }
 
   .stack-marks {
@@ -411,7 +372,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     gap: 0.3rem 0.7rem;
     list-style: none;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -423,33 +384,12 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     color: var(--color-border-strong);
   }
 
-  /* ---- Body ---- */
-  .case-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-  }
-
-  .case-lead {
-    font-size: clamp(0.95rem, 1.5vw, 1.08rem);
-    line-height: 1.8;
-    color: var(--color-text-muted);
-    max-width: 62ch;
-  }
-
-  .case-ctas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-  }
-
   /* ---- More on GitHub ---- */
   .more-link {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    margin-top: clamp(2.5rem, 5vw, 4rem);
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
     padding-top: 1.5rem;
     border-top: 1px solid var(--color-border);
     width: 100%;
@@ -471,26 +411,26 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     translate: 4px 0;
   }
 
-  @media (max-width: 860px) {
-    .case-img {
-      height: clamp(160px, 26vh, 240px);
+  @media (max-width: 900px) {
+    .project-main {
+      grid-template-columns: 1fr;
     }
 
-    .case-specs {
+    .project-lead {
+      max-width: 100%;
+    }
+
+    .project-specs {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .spec-stack {
       grid-column: 1 / -1;
     }
-
-    .case-body {
-      grid-template-columns: 1fr;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .case-shot {
+    .project-shot {
       transform: none;
     }
   }
