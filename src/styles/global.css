@@ -141,6 +141,7 @@ section {
 }
 
 .section-index {
+  display: inline-block;
   font-family: var(--font-mono, monospace);
   font-size: 0.7rem;
   font-weight: 600;
@@ -205,15 +206,18 @@ section {
 --------------------------------------------------------------- */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(26px) scale(0.97);
+  filter: blur(2px);
   transition:
-    opacity 0.55s var(--ease-out-soft),
-    transform 0.55s var(--ease-out-soft);
+    opacity 0.65s var(--ease-out-soft),
+    transform 0.65s var(--ease-out-soft),
+    filter 0.65s var(--ease-out-soft);
 }
 
 .js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
+  filter: blur(0);
 }
 
 /* Safety net: if the observer never fires within 3s, show everything */

@@ -13,7 +13,7 @@ const t = useTranslations(lang);
     <header class="section-head" data-reveal>
       <div>
         <p class="section-eyebrow">
-          <span class="section-index">01</span>
+          <span class="section-index" data-parallax style="--parallax: 0.6">01</span>
           <span class="section-label">{t('stack.label')}</span>
         </p>
         <h2 class="section-title">{t('stack.title')}</h2>
@@ -131,7 +131,9 @@ const t = useTranslations(lang);
     background: var(--color-bg-elevated);
     transition:
       color var(--transition-fast),
-      border-color var(--transition-fast);
+      border-color var(--transition-fast),
+      transform var(--transition-fast),
+      background var(--transition-fast);
   }
 
   .tech.is-primary {
@@ -143,6 +145,12 @@ const t = useTranslations(lang);
   .stack-row:hover .tech.is-primary {
     border-color: var(--color-border-accent);
     color: var(--color-accent);
+  }
+
+  .tech:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-border-accent);
+    background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-elevated));
   }
 
   @media (max-width: 860px) {
