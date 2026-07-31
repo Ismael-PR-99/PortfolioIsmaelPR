@@ -168,7 +168,13 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
       const p = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - p, 3);
       el.textContent = String(Math.round(target * eased));
-      if (p < 1) requestAnimationFrame(frame);
+      if (p < 1) {
+        requestAnimationFrame(frame);
+      } else if ('vibrate' in navigator) {
+        // A single, tiny tick — only devices with real haptics have this API,
+        // so it never fires as an unwanted buzz on desktop.
+        navigator.vibrate(12);
+      }
     }
     requestAnimationFrame(frame);
   }

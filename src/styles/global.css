@@ -332,6 +332,14 @@ body::after {
   pointer-events: none;
 }
 
+@media (max-width: 640px) {
+  /* A 2px line reads as nothing on a small screen held at arm's length */
+  #scroll-progress {
+    height: 3px;
+    box-shadow: 0 0 6px var(--color-accent);
+  }
+}
+
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
     #scroll-progress {
