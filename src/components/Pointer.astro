@@ -22,23 +22,21 @@
     // Selector for anything that should make the ring bloom
     const INTERACTIVE = 'a, button, [role="tab"], input, textarea, select, summary';
 
-    let tx = window.innerWidth / 2;
-    let ty = window.innerHeight / 2;
-    let rx = tx;
-    let ry = ty;
-    let raf = 0;
     let visible = false;
 
     function onMove(e: PointerEvent) {
-      tx = e.clientX;
-      ty = e.clientY;
+      const tx = e.clientX;
+      const ty = e.clientY;
 
       if (!visible) {
         visible = true;
-        rx = tx;
-        ry = ty;
         root!.classList.add('is-active');
       }
+
+      // Dot and ring track the pointer exactly — no lag, so neither can
+      // ever drift away from the real cursor position near viewport edges.
+      dot.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+      ring.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
 
       // Spotlight: hand the hovered surface its local pointer position
       const surface = (e.target as Element)?.closest?.<HTMLElement>('[data-spotlight]');
@@ -49,20 +47,6 @@
       }
 
       root!.classList.toggle('is-hot', !!(e.target as Element)?.closest?.(INTERACTIVE));
-
-      if (!raf) raf = requestAnimationFrame(tick);
-    }
-
-    function tick() {
-      // Dot is exact, ring trails — that lag is the whole effect
-      dot.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
-
-      rx += (tx - rx) * 0.16;
-      ry += (ty - ry) * 0.16;
-      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
-
-      const settled = Math.abs(tx - rx) < 0.1 && Math.abs(ty - ry) < 0.1;
-      raf = settled ? 0 : requestAnimationFrame(tick);
     }
 
     if (!reduced.matches) {
