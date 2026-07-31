@@ -1,6 +1,6 @@
 ---
-// Custom cursor + spotlight driver. A single pointermove listener feeds both,
-// so the whole thing is one rAF loop. Skipped entirely on touch devices.
+// Custom cursor: a dot and ring that track the pointer exactly.
+// Skipped entirely on touch devices.
 ---
 
 <div id="cursor" aria-hidden="true">
@@ -37,14 +37,6 @@
       // ever drift away from the real cursor position near viewport edges.
       dot.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
       ring.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
-
-      // Spotlight: hand the hovered surface its local pointer position
-      const surface = (e.target as Element)?.closest?.<HTMLElement>('[data-spotlight]');
-      if (surface) {
-        const r = surface.getBoundingClientRect();
-        surface.style.setProperty('--mx', `${e.clientX - r.left}px`);
-        surface.style.setProperty('--my', `${e.clientY - r.top}px`);
-      }
 
       root!.classList.toggle('is-hot', !!(e.target as Element)?.closest?.(INTERACTIVE));
     }

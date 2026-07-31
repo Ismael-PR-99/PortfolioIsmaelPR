@@ -303,35 +303,6 @@ body::after {
   body::after { animation: none; }
 }
 
-/* ---------------------------------------------------------------
-   Cursor spotlight
-   Pointer.astro writes --mx/--my onto whatever [data-spotlight] surface
-   is hovered; the surface paints a soft radial glow at that point.
---------------------------------------------------------------- */
-[data-spotlight] {
-  position: relative;
-  isolation: isolate;
-}
-
-[data-spotlight]::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  opacity: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  transition: opacity var(--transition-base);
-  background: radial-gradient(
-    22rem circle at var(--mx, 50%) var(--my, 50%),
-    #a3e63514,
-    transparent 65%
-  );
-}
-
-[data-spotlight]:hover::before {
-  opacity: 1;
-}
 
 /* ---------------------------------------------------------------
    Scroll-driven parallax

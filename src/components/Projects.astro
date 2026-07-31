@@ -59,7 +59,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
         const hasDeployedUrl = project.liveUrl !== project.githubUrl;
 
         return (
-          <article class="project" data-spotlight data-reveal style={`--delay: ${i * 90}ms`}>
+          <article class="project" data-reveal style={`--delay: ${i * 90}ms`}>
             <div class="project-main">
               {/* Contained shot, framed — deliberately modest in size */}
               <a

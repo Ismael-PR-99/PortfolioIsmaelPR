@@ -24,7 +24,7 @@ const t = useTranslations(lang);
     <div class="stack-rows">
       {
         stack.map((category, i) => (
-          <article class="stack-row" data-spotlight data-reveal style={`--delay: ${i * 70}ms`}>
+          <article class="stack-row" data-reveal style={`--delay: ${i * 70}ms`}>
             <div class="row-head">
               <span class="row-index" aria-hidden="true">
                 {String(i + 1).padStart(2, '0')}
