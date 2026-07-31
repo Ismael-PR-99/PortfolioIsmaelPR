@@ -355,8 +355,15 @@ body::after {
     }
 
     @keyframes parallax-drift {
-      from { transform: translateY(calc(var(--parallax, 1) * 2.5rem)); }
-      to   { transform: translateY(calc(var(--parallax, 1) * -2.5rem)); }
+      from { transform: translateY(calc(var(--parallax, 1) * var(--parallax-amp, 2.5rem))); }
+      to   { transform: translateY(calc(var(--parallax, 1) * var(--parallax-amp, 2.5rem) * -1)); }
+    }
+
+    /* Short viewports pair a tall fixed header with sections that barely
+       clear it — cap the drift so [data-parallax] elements (e.g. the
+       section-index numbers) can never travel far enough to duck under it. */
+    @media (max-width: 640px) {
+      :root { --parallax-amp: 0.9rem; }
     }
 
     /* Section titles resolve into focus as they enter */
