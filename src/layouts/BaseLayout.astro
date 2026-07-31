@@ -4,7 +4,6 @@ import { SITE_URL, BASE_URL, PROFILE, SOCIALS } from '@config/site';
 import { type Lang, getAlternateLang, getAlternatePath } from '@i18n/utils';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
-import Aurora from '@components/Aurora.astro';
 import Pointer from '@components/Pointer.astro';
 
 interface Props {
@@ -118,7 +117,6 @@ const jsonLd = {
     <a href="#main-content" class="skip-link">
       {lang === 'es' ? 'Saltar al contenido' : 'Skip to content'}
     </a>
-    <Aurora />
     <Pointer />
     <Nav lang={lang} />
     <main id="main-content">
