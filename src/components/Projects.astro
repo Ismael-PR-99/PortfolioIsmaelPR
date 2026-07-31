@@ -24,6 +24,8 @@ interface Project {
   tags: string[];
   liveUrl: string;
   githubUrl: string;
+  downloadUrl?: string;
+  pdfUrl?: string;
   featured: boolean;
   status: string;
 }
@@ -132,6 +134,37 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                     </svg>
                     GitHub
                   </a>
+                  {project.downloadUrl && (
+                    <a
+                      href={project.downloadUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-ghost"
+                      aria-label={`${t('projects.cta.download')} — ${project.title}`}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                      </svg>
+                      {t('projects.cta.download')}
+                    </a>
+                  )}
+                  {project.pdfUrl && (
+                    <a
+                      href={`${BASE_URL}${project.pdfUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-ghost"
+                      aria-label={`${t('projects.cta.pdf')} — ${project.title}`}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                      </svg>
+                      {t('projects.cta.pdf')}
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

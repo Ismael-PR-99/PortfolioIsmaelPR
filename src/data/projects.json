@@ -15,5 +15,24 @@
     "githubUrl": "https://github.com/Ismael-PR-99/RefrigeraSpace",
     "featured": true,
     "status": "live"
+  },
+  {
+    "id": "4bito",
+    "number": "02",
+    "category": "E-commerce",
+    "title": "4BITO — Retro Sports",
+    "description": "E-commerce de camisetas y cuadros de fútbol retro. Backend Node/Express con PostgreSQL 18, frontend Angular 19, panel de administración completo y cliente de escritorio empaquetado con Tauri.",
+    "longDescription": "Tienda con búsqueda full-text, pagos por PayPal y tarjeta, stock por talla, lista de deseos, comparador, reseñas moderadas, devoluciones y chat de soporte con motor de intenciones propio. El panel de administración cubre pedidos, inventario, ventas y moderación. La misma app Angular se empaqueta además como ejecutable de escritorio nativo con Tauri 2 (instaladores MSI y NSIS para Windows).",
+    "image": "/images/4bito.png",
+    "year": "2026",
+    "role": { "es": "Full stack en solitario", "en": "Solo full stack" },
+    "context": { "es": "Proyecto personal", "en": "Personal project" },
+    "tags": ["Angular", "Node.js", "TypeScript", "PostgreSQL", "Express", "Tauri"],
+    "liveUrl": "https://github.com/Ismael-PR-99/4bito",
+    "githubUrl": "https://github.com/Ismael-PR-99/4bito",
+    "downloadUrl": "https://github.com/Ismael-PR-99/4bito/releases/tag/desktop-v0.1.0",
+    "pdfUrl": "/docs/4bito-guia-visual.pdf",
+    "featured": true,
+    "status": "wip"
   }
 ]
