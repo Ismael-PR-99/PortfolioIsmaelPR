@@ -72,11 +72,13 @@ function badgeLabel(badge: string, l: Lang): string {
       {
         timeline.map((item, i) => (
           <li
-            class="entry"
+            class={`entry ${item.current ? 'is-current' : ''}`}
             data-type={item.type}
             data-reveal
             style={`--delay: ${i * 70}ms`}
           >
+            <span class="entry-node" aria-hidden="true"></span>
+
             <!-- Rail: dates -->
             <div class="entry-rail">
               <time class="entry-date">
@@ -227,15 +229,64 @@ function badgeLabel(badge: string, l: Lang): string {
 
   .entry {
     display: grid;
-    grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
-    column-gap: clamp(1.5rem, 5vw, 3.5rem);
+    grid-template-columns: 1.1rem minmax(0, 13rem) minmax(0, 1fr);
+    column-gap: clamp(1.1rem, 4vw, 3.2rem);
     row-gap: 0.9rem;
+    align-items: start;
     padding-block: clamp(1.6rem, 3vw, 2.3rem);
     padding-inline: 0.9rem;
     margin-inline: -0.9rem;
     border-bottom: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     transition: background var(--transition-base);
+  }
+
+  /* ---- Connector spine ----
+     Each entry draws its own line segment, extended into its own
+     top/bottom padding by the exact clamp() used for padding-block, so
+     consecutive segments touch and read as one continuous line. The dot
+     sits on top, hollow-centered so the line appears to pass behind it. */
+  .entry-node {
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    justify-content: center;
+  }
+
+  .entry-node::before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * clamp(1.6rem, 3vw, 2.3rem));
+    bottom: calc(-1 * clamp(1.6rem, 3vw, 2.3rem));
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .entry-node::after {
+    content: '';
+    position: relative;
+    top: 0.3rem;
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 2px solid var(--color-border-strong);
+    z-index: 1;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .entry:first-child .entry-node::before {
+    top: 0.75rem;
+  }
+
+  .entry:last-child .entry-node::before {
+    bottom: calc(100% - 0.75rem);
+  }
+
+  .entry.is-current .entry-node::after {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
   }
 
   .entry:hover {
@@ -393,6 +444,11 @@ function badgeLabel(badge: string, l: Lang): string {
   }
 
   @media (max-width: 860px) {
+    /* The spine needs a real column to hang off of — not worth the
+       cramped math on narrow screens, so it steps aside there. */
+    .entry-node {
+      display: none;
+    }
     .entry {
       grid-template-columns: 1fr;
     }
