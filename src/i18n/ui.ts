@@ -30,6 +30,9 @@ export const ui = {
     'hero.now.label': 'Ahora',
     'hero.now.role': 'Full Stack en Kentia Engineering',
     'hero.scroll': 'Desplázate',
+    'hero.stat.projects': 'Proyectos',
+    'hero.stat.techs': 'Tecnologías',
+    'hero.stat.milestones': 'Hitos',
 
     // Stack
     'stack.label': 'Tecnologías',
@@ -125,6 +128,9 @@ export const ui = {
     'hero.now.label': 'Now',
     'hero.now.role': 'Full Stack at Kentia Engineering',
     'hero.scroll': 'Scroll',
+    'hero.stat.projects': 'Projects',
+    'hero.stat.techs': 'Technologies',
+    'hero.stat.milestones': 'Milestones',
 
     // Stack
     'stack.label': 'Technologies',

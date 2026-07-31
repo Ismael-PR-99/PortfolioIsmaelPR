@@ -2,6 +2,9 @@
 import { BASE_URL, PROFILE, SOCIALS } from '@config/site';
 import { type Lang } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
+import projects from '@data/projects.json';
+import { stack } from '@data/stack';
+import { timeline } from '@data/timeline';
 
 interface Props { lang?: Lang; }
 const { lang = 'es' } = Astro.props;
@@ -11,6 +14,14 @@ const photo = `${BASE_URL}/images/IsmaelFoto`;
 
 const chips = [t('hero.chip.location'), t('hero.chip.level'), t('hero.chip.type')];
 const [roleBefore, roleAfter] = t('hero.role').split('Full Stack');
+
+// Real counts, derived from the same data the other sections render —
+// never hand-typed numbers that drift out of sync.
+const stats = [
+  { value: projects.length, label: t('hero.stat.projects') },
+  { value: stack.reduce((n, c) => n + c.techs.length, 0), label: t('hero.stat.techs') },
+  { value: timeline.length, label: t('hero.stat.milestones') },
+];
 
 // Marks used in the portrait frame — the stack he actually ships with.
 const frameTech = ['Java', 'Laravel', 'React', 'Python', 'PostgreSQL'];
@@ -85,6 +96,15 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
           {t('hero.cta.cv')}
         </a>
       </div>
+
+      <ul class="hero-stats" style="--i: 6">
+        {stats.map((stat) => (
+          <li>
+            <span class="stat-num" data-count={stat.value}>0</span>
+            <span class="stat-label">{stat.label}</span>
+          </li>
+        ))}
+      </ul>
     </div>
 
     <!-- Right: portrait -->
@@ -127,6 +147,45 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
     <span class="scroll-cue-text">{t('hero.scroll')}</span>
   </a>
 </section>
+
+<script>
+  // Counts up once, the first time the hero is on screen. Hero renders above
+  // the fold, so this fires almost immediately on load — it's still an
+  // IntersectionObserver rather than a load listener so it also works if the
+  // page is opened mid-scroll (e.g. via a same-page anchor link).
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const nums = document.querySelectorAll<HTMLElement>('.stat-num');
+
+  function countUp(el: HTMLElement) {
+    const target = Number(el.dataset.count);
+    if (reduced.matches || !target) {
+      el.textContent = String(target);
+      return;
+    }
+    const duration = 900;
+    const start = performance.now();
+    function frame(now: number) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(target * eased));
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer.unobserve(entry.target);
+        countUp(entry.target as HTMLElement);
+      }
+    },
+    { threshold: 0.6 }
+  );
+
+  nums.forEach((el) => observer.observe(el));
+</script>
 
 <style>
   /* ---------------------------------------------------------------
@@ -319,6 +378,37 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
     flex-wrap: wrap;
     gap: 0.7rem;
     margin-top: 0.4rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: clamp(1.4rem, 4vw, 2.2rem);
+    list-style: none;
+    margin-top: 0.6rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .hero-stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .stat-num {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 3vw, 1.9rem);
+    font-weight: 700;
+    color: var(--color-accent);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
   }
 
   /* ---- Right column: portrait ---- */

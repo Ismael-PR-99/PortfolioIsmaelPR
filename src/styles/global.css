@@ -314,6 +314,38 @@ body::after {
    JS and no scroll listener. Guarded: browsers without support simply
    get the static layout, and the reveal system still handles entrances.
 --------------------------------------------------------------- */
+/* ---------------------------------------------------------------
+   Scroll progress bar
+   Pure CSS via a document-scroll timeline — no scroll listener, no JS.
+   Hidden outright on browsers without support, same as the reveal system.
+--------------------------------------------------------------- */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 9999;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: var(--color-accent);
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    #scroll-progress {
+      animation: scroll-progress-fill linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    @keyframes scroll-progress-fill {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+  }
+}
+
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     [data-parallax] {
