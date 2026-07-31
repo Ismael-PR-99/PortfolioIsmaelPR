@@ -62,14 +62,16 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
             <div class="project-main">
               {/* Contained shot, framed — deliberately modest in size */}
               <a
-                href={project.liveUrl}
+                href={project.status === 'live' ? project.liveUrl : project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="project-shot"
                 aria-label={
-                  lang === 'es'
-                    ? `Ver ${project.title} en producción (abre en nueva pestaña)`
-                    : `View ${project.title} live (opens in new tab)`
+                  project.status === 'live'
+                    ? lang === 'es'
+                      ? `Ver ${project.title} en producción (abre en nueva pestaña)`
+                      : `View ${project.title} live (opens in new tab)`
+                    : `Código fuente de ${project.title} en GitHub`
                 }
               >
                 <picture>
@@ -104,29 +106,31 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                 <p class="project-lead">{project.longDescription}</p>
 
                 <div class="project-ctas">
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn btn-primary"
-                    aria-label={
-                      lang === 'es'
-                        ? `Ver ${project.title} en producción (abre en nueva pestaña)`
-                        : `View ${project.title} live (opens in new tab)`
-                    }
-                  >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                    {t('projects.cta.app')}
-                  </a>
+                  {project.status === 'live' && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-primary"
+                      aria-label={
+                        lang === 'es'
+                          ? `Ver ${project.title} en producción (abre en nueva pestaña)`
+                          : `View ${project.title} live (opens in new tab)`
+                      }
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                      </svg>
+                      {t('projects.cta.app')}
+                    </a>
+                  )}
                   <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="btn btn-ghost"
+                    class={project.status === 'live' ? 'btn btn-ghost' : 'btn btn-primary'}
                     aria-label={`Código fuente de ${project.title} en GitHub`}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
