@@ -56,18 +56,19 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
           project.year && { label: t('projects.spec.year'), value: project.year },
           project.context && { label: t('projects.spec.context'), value: project.context[lang] },
         ].filter(Boolean) as { label: string; value: string }[];
+        const hasDeployedUrl = project.liveUrl !== project.githubUrl;
 
         return (
           <article class="project" data-spotlight data-reveal style={`--delay: ${i * 90}ms`}>
             <div class="project-main">
               {/* Contained shot, framed — deliberately modest in size */}
               <a
-                href={project.status === 'live' ? project.liveUrl : project.githubUrl}
+                href={hasDeployedUrl ? project.liveUrl : project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="project-shot"
                 aria-label={
-                  project.status === 'live'
+                  hasDeployedUrl
                     ? lang === 'es'
                       ? `Ver ${project.title} en producción (abre en nueva pestaña)`
                       : `View ${project.title} live (opens in new tab)`
@@ -106,7 +107,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                 <p class="project-lead">{project.longDescription}</p>
 
                 <div class="project-ctas">
-                  {project.status === 'live' && (
+                  {hasDeployedUrl && (
                     <a
                       href={project.liveUrl}
                       target="_blank"
@@ -130,7 +131,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class={project.status === 'live' ? 'btn btn-ghost' : 'btn btn-primary'}
+                    class={hasDeployedUrl ? 'btn btn-ghost' : 'btn btn-primary'}
                     aria-label={`Código fuente de ${project.title} en GitHub`}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
