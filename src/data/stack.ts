@@ -67,6 +67,7 @@ export const stack: StackCategory[] = [
       { name: 'Linux', level: 'secondary' },
       { name: 'Postman', level: 'secondary' },
       { name: 'Figma', level: 'secondary' },
+      { name: 'Tauri', level: 'secondary' },
     ],
   },
 ];
