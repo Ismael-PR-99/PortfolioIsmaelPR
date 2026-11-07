@@ -1,7 +1,25 @@
 [
   {
-    "id": "refrigeraspace",
+    "id": "dtf-al-metro",
     "number": "01",
+    "kind": "client",
+    "category": "E-commerce",
+    "title": "DTF al metro — RM Ingenia",
+    "description": "Tienda online de impresión DTF por metros para un taller de Sevilla: presupuesto al instante, revisión automática del archivo, pago con tarjeta y panel de pedidos de escritorio.",
+    "longDescription": "Encargo profesional para un cliente, de la maqueta al servidor. El cliente sube su PDF o imagen, la API comprueba resolución y medidas, calcula el precio y cobra con TPV Redsys. Incluye un montador de pliegos que encaja los diseños y genera el PDF a tamaño real, un personalizador de ropa sobre foto con la tarifa de casi 900 prendas, bonos, SEO local y cumplimiento LSSI/RGPD. El taller gestiona pedidos, envíos y correos desde una app de escritorio hecha con Tauri que se actualiza sola. Desplegada con Docker y Caddy en un VPS propio.",
+    "image": "/images/dtf-al-metro.png",
+    "year": "2026",
+    "role": { "es": "Full stack y despliegue", "en": "Full stack & deployment" },
+    "context": { "es": "Encargo de cliente · RM Ingenia (Sevilla)", "en": "Client commission · RM Ingenia (Seville)" },
+    "tags": ["Astro", "Tailwind", "FastAPI", "Python", "PostgreSQL", "Tauri", "Docker", "Caddy"],
+    "liveUrl": "https://dtfalmetro.es/",
+    "featured": true,
+    "status": "wip"
+  },
+  {
+    "id": "refrigeraspace",
+    "number": "02",
+    "kind": "personal",
     "category": "Aplicación Web",
     "title": "RefrigeraSpace",
     "description": "Aplicación web para el cálculo de frigorías y selección de equipos de aire acondicionado. Incluye scraping automático de catálogos, generación de PDF personalizada, panel de administración completo y sistema de usuarios con roles.",
@@ -18,7 +36,8 @@
   },
   {
     "id": "4bito",
-    "number": "02",
+    "number": "03",
+    "kind": "personal",
     "category": "E-commerce",
     "title": "4BITO — Retro Sports",
     "description": "E-commerce de camisetas y cuadros de fútbol retro. Backend Node/Express con PostgreSQL 18, frontend Angular 19, panel de administración completo y cliente de escritorio empaquetado con Tauri.",
@@ -32,22 +51,6 @@
     "githubUrl": "https://github.com/Ismael-PR-99/4bito",
     "downloadUrl": "https://github.com/Ismael-PR-99/4bito/releases/tag/desktop-v0.1.0",
     "pdfUrl": "/docs/4bito-guia-visual.pdf",
-    "featured": true,
-    "status": "wip"
-  },
-  {
-    "id": "dtf-al-metro",
-    "number": "03",
-    "category": "E-commerce · Cliente",
-    "title": "DTF al metro — RM Ingenia",
-    "description": "Tienda online de impresión DTF por metros para un taller de Sevilla: presupuesto al instante, revisión automática del archivo, pago con tarjeta y panel de pedidos de escritorio.",
-    "longDescription": "Web real para un cliente, de la maqueta al servidor. El cliente sube su PDF o imagen, la API comprueba resolución y medidas, calcula el precio y cobra con TPV Redsys. Incluye un montador de pliegos que encaja los diseños y genera el PDF a tamaño real, un personalizador de ropa sobre foto con la tarifa de casi 900 prendas, bonos, SEO local y cumplimiento LSSI/RGPD. El taller gestiona pedidos, envíos y correos desde una app de escritorio hecha con Tauri que se actualiza sola. Desplegada con Docker y Caddy en un VPS propio.",
-    "image": "/images/dtf-al-metro.png",
-    "year": "2026",
-    "role": { "es": "Full stack y despliegue", "en": "Full stack & deployment" },
-    "context": { "es": "Proyecto para cliente · RM Ingenia (Sevilla)", "en": "Client project · RM Ingenia (Seville)" },
-    "tags": ["Astro", "Tailwind", "FastAPI", "Python", "PostgreSQL", "Tauri", "Docker", "Caddy"],
-    "liveUrl": "https://dtfalmetro.es/",
     "featured": true,
     "status": "wip"
   }

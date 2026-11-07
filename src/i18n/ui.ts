@@ -67,7 +67,10 @@ export const ui = {
     'projects.label': 'Proyectos',
     'projects.title': 'Lo que he construido',
     'projects.subtitle':
-      'Proyectos reales desarrollados durante mi formación. Código propio, desplegado en producción.',
+      'Encargos de clientes y proyectos propios. Código mío, de la idea a producción.',
+    'projects.group.client': 'Trabajo para clientes',
+    'projects.group.personal': 'Proyectos personales y de formación',
+    'projects.badge.client': 'Cliente real',
     'projects.live': 'En producción',
     'projects.cta.app': 'Ver app',
     'projects.cta.github': 'GitHub',
@@ -164,7 +167,10 @@ export const ui = {
     'projects.label': 'Projects',
     'projects.title': 'What I\'ve built',
     'projects.subtitle':
-      'Real projects built during my training. Own code, deployed to production.',
+      'Client commissions and my own projects. My code, from idea to production.',
+    'projects.group.client': 'Client work',
+    'projects.group.personal': 'Personal & academic projects',
+    'projects.badge.client': 'Real client',
     'projects.live': 'Live',
     'projects.cta.app': 'View app',
     'projects.cta.github': 'GitHub',
