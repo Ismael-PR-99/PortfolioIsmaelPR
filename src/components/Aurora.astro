@@ -95,6 +95,11 @@
 
   function init() {
     if (!canvas) return;
+    // Phones/tablets: no WebGL backdrop, it only costs scroll smoothness there
+    if (window.matchMedia('(hover: none)').matches) {
+      canvas.remove();
+      return;
+    }
 
     const gl = (canvas.getContext('webgl', {
       alpha: true,
@@ -182,6 +187,12 @@
 </script>
 
 <style>
+  @media (hover: none) {
+    #aurora {
+      display: none;
+    }
+  }
+
   #aurora {
     position: fixed;
     top: 0;

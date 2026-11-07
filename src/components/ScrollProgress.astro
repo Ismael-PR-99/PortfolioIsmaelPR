@@ -1,30 +1,25 @@
 <div id="scroll-progress" aria-hidden="true"></div>
 
 <script>
-  const bar = document.getElementById('scroll-progress') as HTMLElement | null;
-  if (!bar) throw new Error('scroll-progress element not found');
-
-  let ticking = false;
-
-  function updateProgress(): void {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    bar!.style.width = `${progress}%`;
-    ticking = false;
+  // Thin bar under the header. transform (not width) so each scroll frame is
+  // a compositor-only change: no layout, nothing for iOS to re-flow.
+  const bar = document.getElementById('scroll-progress');
+  if (bar) {
+    let ticking = false;
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
   }
-
-  function onScroll(): void {
-    if (!ticking) {
-      requestAnimationFrame(updateProgress);
-      ticking = true;
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-
-  updateProgress();
 </script>
 
 <style>
@@ -32,11 +27,13 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    width: 100%;
     height: 2px;
-    width: 0%;
     background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
     pointer-events: none;
-    z-index: 10;
+    will-change: transform;
   }
 
   @media (max-width: 768px) {
