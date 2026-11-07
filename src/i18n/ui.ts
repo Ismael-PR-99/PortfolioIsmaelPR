@@ -67,7 +67,7 @@ export const ui = {
     'projects.label': 'Proyectos',
     'projects.title': 'Lo que he construido',
     'projects.subtitle':
-      'Encargos de clientes y proyectos propios. Código mío, de la idea a producción.',
+      'Proyectos para clientes y proyectos propios. Código mío, de la idea a producción.',
     'projects.group.client': 'Trabajo para clientes',
     'projects.group.personal': 'Proyectos personales y de formación',
     'projects.badge.client': 'Cliente real',
@@ -167,7 +167,7 @@ export const ui = {
     'projects.label': 'Projects',
     'projects.title': 'What I\'ve built',
     'projects.subtitle':
-      'Client commissions and my own projects. My code, from idea to production.',
+      'Client projects and my own. My code, from idea to production.',
     'projects.group.client': 'Client work',
     'projects.group.personal': 'Personal & academic projects',
     'projects.badge.client': 'Real client',

@@ -4,8 +4,8 @@ import { BASE_URL, SOCIALS } from '@config/site';
 import { type Lang } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 
-interface Props { lang?: Lang; }
-const { lang = 'es' } = Astro.props;
+interface Props { lang?: Lang; id?: string; index?: string; }
+const { lang = 'es', id = 'projects', index = '03' } = Astro.props;
 const t = useTranslations(lang);
 
 type Localised = { es: string; en: string };
@@ -37,12 +37,12 @@ const typedProjects = projects as Project[];
 const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`;
 ---
 
-<section id="projects" class="projects-section">
+<section id={id} class="projects-section">
   <div class="container">
     <header class="section-head" data-reveal>
       <div>
         <p class="section-eyebrow">
-          <span class="section-index" data-parallax style="--parallax: 0.7">03</span>
+          <span class="section-index" data-parallax style="--parallax: 0.7">{index}</span>
           <span class="section-label">{t('projects.label')}</span>
         </p>
         <h2 class="section-title">{t('projects.title')}</h2>

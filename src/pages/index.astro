@@ -1,18 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '@components/Hero.astro';
-import Stack from '@components/Stack.astro';
-import Timeline from '@components/Timeline.astro';
+import ServicesHero from '@components/ServicesHero.astro';
+import Services from '@components/Services.astro';
+import Calculator from '@components/Calculator.astro';
+import Process from '@components/Process.astro';
 import Projects from '@components/Projects.astro';
-import Reel from '@components/Reel.astro';
-import Contact from '@components/Contact.astro';
+import Faq from '@components/Faq.astro';
+import Quote from '@components/Quote.astro';
 ---
 
-<BaseLayout lang="es">
-  <Hero lang="es" />
-  <Stack lang="es" />
-  <Timeline lang="es" />
-  <Projects lang="es" />
-  <Reel lang="es" />
-  <Contact lang="es" />
+<BaseLayout
+  lang="es"
+  title="Ismael Piña — Webs, tiendas online y apps a medida en Sevilla"
+  description="Desarrollador web en Sevilla. Páginas web para negocios, tiendas online con pago con tarjeta, paneles de gestión y auditorías de seguridad. Precio cerrado y el código es tuyo."
+>
+  <ServicesHero lang="es" />
+  <Services lang="es" />
+  <Calculator lang="es" />
+  <Process lang="es" />
+  <Projects lang="es" id="trabajos" index="04" />
+  <Faq lang="es" />
+  <Quote lang="es" />
 </BaseLayout>

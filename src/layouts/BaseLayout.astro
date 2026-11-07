@@ -11,9 +11,10 @@ interface Props {
   lang?: Lang;
   title?: string;
   description?: string;
+  page?: 'home' | 'about';
 }
 
-const { lang = 'es', title, description } = Astro.props;
+const { lang = 'es', title, description, page = 'home' } = Astro.props;
 
 const defaultTitle = `${PROFILE.name} — Full Stack Developer`;
 const defaultDesc =
@@ -35,7 +36,7 @@ const ogImageAlt =
 const photoUrl = `${SITE_URL}${BASE_URL}/images/IsmaelFoto.png`;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
 const alternateLang = getAlternateLang(lang);
-const alternatePath = getAlternatePath(lang);
+const alternatePath = getAlternatePath(lang, page);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -121,7 +122,7 @@ const jsonLd = {
     <div id="scroll-progress" aria-hidden="true"></div>
     <Aurora />
     <Particles />
-    <Nav lang={lang} />
+    <Nav lang={lang} page={page} />
     <main id="main-content">
       <slot />
     </main>

@@ -1,0 +1,586 @@
+---
+import { type Lang } from '@i18n/ui';
+import { services } from '@data/services';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const es = lang === 'es';
+
+const icons: Record<string, string> = {
+  web: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>',
+  shop: '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>',
+  desktop: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  audit: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+};
+---
+
+<section id="servicios" class="sv">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <div>
+        <p class="section-eyebrow">
+          <span class="section-index">01</span>
+          <span class="section-label">{es ? 'Servicios' : 'Services'}</span>
+        </p>
+        <h2 class="section-title">{es ? 'Lo digital de tu negocio, hecho por una sola persona.' : 'Everything digital for your business, from one person.'}</h2>
+      </div>
+      <p class="section-subtitle">
+        {es
+          ? 'Sin intermediarios: hablas con quien diseña, programa, publica y revisa la seguridad.'
+          : 'No middlemen: you talk to the person who designs, builds, launches and security-tests it.'}
+      </p>
+    </header>
+
+    <div class="sv-grid">
+      {services.map((s, i) => (
+        <article class={`sv-card sv-${s.id}`} data-reveal style={`--delay: ${i * 80}ms`}>
+          <div class="sv-top">
+            <span class="sv-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" set:html={icons[s.id]} />
+            </span>
+            <span class="sv-badge">{s.badge[lang]}</span>
+          </div>
+
+          <div class="sv-body">
+            <div class="sv-text">
+              <h3 class="sv-name">{s.name[lang]}</h3>
+              <p class="sv-tag">{s.tagline[lang]}</p>
+              <ul class="sv-feats" role="list">
+                {s.features.map((f) => <li>{f[lang]}</li>)}
+              </ul>
+            </div>
+
+            <div class="sv-mock" aria-hidden="true">
+              {s.id === 'web' && (
+                <div class="mk-browser">
+                  <div class="mk-bar"><span /><span /><span /><em>tunegocio.es</em></div>
+                  <div class="mk-page">
+                    <i class="mk-logo" />
+                    <i class="mk-line w80" />
+                    <i class="mk-line w60" />
+                    <i class="mk-line thin w70" />
+                    <b class="mk-btn">{es ? 'Pedir cita' : 'Book now'}</b>
+                    <div class="mk-tiles"><i /><i /><i /></div>
+                  </div>
+                  <div class="mk-speed">
+                    <svg viewBox="0 0 36 36" width="38" height="38"><circle cx="18" cy="18" r="15" /><circle cx="18" cy="18" r="15" class="arc" /></svg>
+                    <span><strong>{es ? 'Carga rápida' : 'Loads fast'}</strong><small>{es ? 'Móvil y escritorio' : 'Mobile & desktop'}</small></span>
+                  </div>
+                </div>
+              )}
+
+              {s.id === 'shop' && (
+                <div class="mk-checkout">
+                  <p class="mk-h">{es ? 'Tu pedido' : 'Your order'}</p>
+                  <p class="mk-row"><span>Transfer DTF · 3 m</span><span>×1</span></p>
+                  <p class="mk-row"><span>{es ? 'Camiseta personalizada' : 'Custom T-shirt'}</span><span>×4</span></p>
+                  <p class="mk-row total"><span>{es ? 'Envío' : 'Shipping'}</span><span>24/48 h</span></p>
+                  <b class="mk-pay">{es ? 'Pagar con tarjeta' : 'Pay by card'}</b>
+                  <div class="mk-toast"><span class="ok">✓</span>{es ? 'Pago recibido · aviso enviado' : 'Payment received · email sent'}</div>
+                </div>
+              )}
+
+              {s.id === 'desktop' && (
+                <div class="mk-window">
+                  <div class="mk-wbar"><span>{es ? 'Panel de pedidos' : 'Orders panel'}</span><i>— ▢ ✕</i></div>
+                  <ul>
+                    <li><span>#1042</span><em>{es ? 'Nuevo' : 'New'}</em></li>
+                    <li><span>#1041</span><em class="run">{es ? 'En máquina' : 'Printing'}</em></li>
+                    <li><span>#1040</span><em class="done">{es ? 'Enviado' : 'Shipped'}</em></li>
+                    <li><span>#1039</span><em class="done">{es ? 'Enviado' : 'Shipped'}</em></li>
+                  </ul>
+                  <div class="mk-bell">🔔 <span>{es ? '1 pedido nuevo' : '1 new order'}</span></div>
+                </div>
+              )}
+
+              {s.id === 'audit' && (
+                <div class="mk-report">
+                  <p class="mk-h">{es ? 'Informe de seguridad' : 'Security report'}</p>
+                  <p class="mk-find"><b class="crit">{es ? 'Grave' : 'High'}</b><span>{es ? 'Acceso a datos ajenos' : 'Broken access control'}</span><i>✓</i></p>
+                  <p class="mk-find"><b class="crit">{es ? 'Grave' : 'High'}</b><span>{es ? 'XSS almacenado' : 'Stored XSS'}</span><i>✓</i></p>
+                  <p class="mk-find"><b class="med">{es ? 'Medio' : 'Medium'}</b><span>{es ? 'Cabeceras HTTP' : 'HTTP headers'}</span><i>✓</i></p>
+                  <p class="mk-sum">{es ? '3 de 3 corregidos y re-testeados' : '3 of 3 fixed and re-tested'}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <footer class="sv-foot">
+            <p class="sv-price">
+              <strong>{es ? 'A medida' : 'Tailored'}</strong>
+              <small>{es ? 'Plazo' : 'Timeline'}: {s.delivery[lang]}</small>
+            </p>
+            <a href="#contacto" class="btn btn-ghost sv-cta" data-service={s.id}>
+              {es ? 'Pedir presupuesto' : 'Get a quote'}
+            </a>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Carry the chosen service into the contact form.
+  document.querySelectorAll<HTMLAnchorElement>('[data-service]').forEach((a) => {
+    a.addEventListener('click', () => {
+      const field = document.querySelector<HTMLSelectElement>('#q-service');
+      if (field && a.dataset.service) field.value = a.dataset.service;
+    });
+  });
+</script>
+
+<style>
+  .sv-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .sv-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-elevated);
+    transition: border-color var(--transition-base), translate var(--transition-base);
+  }
+
+  .sv-card:hover {
+    border-color: var(--color-border-accent);
+    translate: 0 -3px;
+  }
+
+  .sv-card { grid-column: span 6; }
+
+  /* The flagship (shop) gets the inverted treatment */
+  .sv-shop {
+    background: linear-gradient(160deg, #1a2410, var(--color-bg-elevated) 60%);
+    border-color: var(--color-border-accent);
+  }
+
+  .sv-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sv-icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    background: var(--color-accent);
+    color: #0a0a0b;
+  }
+
+  .sv-badge {
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+  }
+
+  .sv-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    align-content: start;
+    flex: 1;
+  }
+
+  .sv-name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .sv-tag {
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .sv-feats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+    list-style: none;
+  }
+
+  .sv-feats li {
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+  }
+
+  .sv-feats li::before {
+    content: '✓ ';
+    color: var(--color-accent);
+  }
+
+  .sv-foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .sv-price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .sv-price strong {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .sv-price small {
+    font-size: 0.78rem;
+    color: var(--color-text-faint);
+  }
+
+  .sv-cta {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.82rem;
+  }
+
+  /* ---------- Mockups (pure CSS) ---------- */
+  .sv-mock {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+  }
+
+  .sv-mock i,
+  .sv-mock b {
+    font-style: normal;
+  }
+
+  /* web */
+  .mk-browser {
+    position: relative;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-sunken);
+    margin-bottom: 1rem;
+  }
+
+  .mk-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mk-bar span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-border-strong);
+  }
+
+  .mk-bar em {
+    margin-left: 0.5rem;
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.62rem;
+    color: var(--color-text-faint);
+  }
+
+  .mk-page {
+    display: grid;
+    gap: 0.45rem;
+    padding: 0.9rem;
+  }
+
+  .mk-logo {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: var(--color-text);
+  }
+
+  .mk-line {
+    height: 9px;
+    border-radius: 3px;
+    background: var(--color-text);
+  }
+
+  .mk-line.thin {
+    height: 5px;
+    background: var(--color-border-strong);
+  }
+
+  .w80 { width: 80%; }
+  .w70 { width: 70%; }
+  .w60 { width: 60%; }
+
+  .mk-btn {
+    justify-self: start;
+    margin-top: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    color: #0a0a0b;
+    font-size: 0.62rem;
+  }
+
+  .mk-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+  }
+
+  .mk-tiles i {
+    height: 30px;
+    border-radius: 4px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+  }
+
+  .mk-speed {
+    position: absolute;
+    right: -0.6rem;
+    bottom: -1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .mk-speed circle {
+    fill: none;
+    stroke: var(--color-border-strong);
+    stroke-width: 3.5;
+  }
+
+  .mk-speed .arc {
+    stroke: var(--color-accent);
+    stroke-dasharray: 94.2;
+    stroke-dashoffset: 4;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    stroke-linecap: round;
+  }
+
+  .mk-speed strong,
+  .mk-window strong {
+    display: block;
+    color: var(--color-text);
+  }
+
+  .mk-speed small {
+    color: var(--color-text-faint);
+    font-size: 0.62rem;
+  }
+
+  /* shop */
+  .mk-checkout,
+  .mk-report {
+    position: relative;
+    padding: 1rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-sunken);
+  }
+
+  .mk-h {
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: var(--color-text);
+    font-size: 0.78rem;
+  }
+
+  .mk-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    border-bottom: 1px dashed var(--color-border);
+  }
+
+  .mk-row.total {
+    border: 0;
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .mk-pay {
+    display: block;
+    margin-top: 0.6rem;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    color: #0a0a0b;
+    text-align: center;
+  }
+
+  .mk-toast {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.7rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--radius-sm);
+    background: #a3e63514;
+    border: 1px solid var(--color-border-accent);
+    color: var(--color-text);
+  }
+
+  .ok {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #0a0a0b;
+    font-size: 0.6rem;
+    font-weight: 800;
+  }
+
+  /* desktop */
+  .mk-window {
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-sunken);
+    overflow: hidden;
+  }
+
+  .mk-wbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.45rem 0.7rem;
+    background: var(--color-bg-card);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .mk-wbar i {
+    color: var(--color-text-faint);
+    letter-spacing: 0.3em;
+  }
+
+  .mk-window ul {
+    list-style: none;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .mk-window li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+  }
+
+  .mk-window em {
+    font-style: normal;
+    font-family: var(--font-body);
+    padding: 0.05rem 0.5rem;
+    border-radius: 999px;
+    background: #a3e6352a;
+    color: var(--color-accent);
+  }
+
+  .mk-window em.run {
+    background: #facc1522;
+    color: #facc15;
+  }
+
+  .mk-window em.done {
+    background: var(--color-bg-card);
+    color: var(--color-text-faint);
+  }
+
+  .mk-bell {
+    margin: 0 0.7rem 0.6rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-accent);
+    color: var(--color-text);
+    animation: mk-ping 2.8s ease-in-out infinite;
+  }
+
+  @keyframes mk-ping {
+    0%, 70%, 100% { box-shadow: none; }
+    80% { box-shadow: 0 0 0 4px #a3e63522; }
+  }
+
+  /* audit */
+  .mk-find {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mk-find b {
+    padding: 0.05rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .mk-find b.crit {
+    background: #ef444426;
+    color: #f87171;
+  }
+
+  .mk-find b.med {
+    background: #facc1522;
+    color: #facc15;
+  }
+
+  .mk-find i {
+    color: var(--color-accent);
+    font-weight: 800;
+  }
+
+  .mk-find span {
+    text-decoration: line-through;
+    text-decoration-color: var(--color-text-faint);
+  }
+
+  .mk-sum {
+    margin-top: 0.6rem;
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  @media (max-width: 960px) {
+    .sv-card {
+      grid-column: 1 / -1;
+    }
+  }
+
+</style>
