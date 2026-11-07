@@ -9,8 +9,12 @@
 <script>
   const canvas = document.getElementById('constellation') as HTMLCanvasElement | null;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // Phones/tablets: skip it. A full-screen canvas animating every frame
+  // competes with scrolling on iOS and adds nothing on a small screen.
+  const touch = window.matchMedia('(hover: none)').matches;
+  if (canvas && touch) canvas.remove();
 
-  if (canvas && !reduced.matches) {
+  if (canvas && !touch && !reduced.matches) {
     const ctx = canvas.getContext('2d', { alpha: true })!;
 
     const ACCENT = '31, 79, 209';
@@ -154,6 +158,12 @@
 </script>
 
 <style>
+  @media (hover: none) {
+    #constellation {
+      display: none;
+    }
+  }
+
   #constellation {
     position: fixed;
     top: 0;
