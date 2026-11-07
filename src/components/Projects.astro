@@ -13,6 +13,7 @@ type Localised = { es: string; en: string };
 interface Project {
   id: string;
   number: string;
+  kind: 'client' | 'personal';
   category: string;
   title: string;
   description: string;
@@ -57,9 +58,16 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
           project.context && { label: t('projects.spec.context'), value: project.context[lang] },
         ].filter(Boolean) as { label: string; value: string }[];
         const hasDeployedUrl = project.liveUrl !== project.githubUrl;
+        const startsGroup = i === 0 || typedProjects[i - 1].kind !== project.kind;
 
         return (
-          <article class="project" data-reveal style={`--delay: ${i * 90}ms`}>
+          <Fragment>
+          {startsGroup && (
+            <h3 class:list={['project-group', { 'is-client': project.kind === 'client' }]} data-reveal>
+              {t(project.kind === 'client' ? 'projects.group.client' : 'projects.group.personal')}
+            </h3>
+          )}
+          <article class:list={['project', { 'is-client': project.kind === 'client' }]} data-reveal style={`--delay: ${i * 90}ms`}>
             <div class="project-main">
               {/* Contained shot, framed — deliberately modest in size */}
               <a
@@ -101,9 +109,10 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                 <p class="project-meta">
                   <span class="project-number">{project.number}</span>
                   <span class="project-category">{project.category}</span>
+                  {project.kind === 'client' && <span class="client-badge">{t('projects.badge.client')}</span>}
                 </p>
 
-                <h3 class="project-title">{project.title}</h3>
+                <h4 class="project-title">{project.title}</h4>
                 <p class="project-lead">{project.longDescription}</p>
 
                 <div class="project-ctas">
@@ -196,6 +205,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
               </div>
             </dl>
           </article>
+          </Fragment>
         );
       })
     }
@@ -256,6 +266,45 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
 
   .project + .project {
     border-top: 1px solid var(--color-border);
+  }
+
+  /* ---- Groups: paid client work vs personal/academic ---- */
+  .project-group {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .project-group::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+  }
+
+  .project-group.is-client {
+    color: var(--color-accent);
+  }
+
+  .project-group.is-client::after {
+    background: var(--color-border-accent);
+  }
+
+  .client-badge {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-bg-sunken);
+    background: var(--color-accent);
   }
 
   .project-main {
