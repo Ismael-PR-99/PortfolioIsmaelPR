@@ -207,8 +207,10 @@ function badgeLabel(badge: string, l: Lang): string {
     transition: scale var(--transition-base);
   }
 
-  .filter-btn:hover {
-    color: var(--color-text);
+  @media (hover: hover) {
+    .filter-btn:hover {
+      color: var(--color-text);
+    }
   }
 
   .filter-btn.active {
@@ -289,12 +291,14 @@ function badgeLabel(badge: string, l: Lang): string {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
   }
 
-  .entry:hover {
-    background: linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-accent) 4%, transparent),
-      transparent 60%
-    );
+  @media (hover: hover) {
+    .entry:hover {
+      background: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-accent) 4%, transparent),
+        transparent 60%
+      );
+    }
   }
 
   .entry[hidden] {
@@ -338,19 +342,19 @@ function badgeLabel(badge: string, l: Lang): string {
   .entry-badge.is-experience {
     color: var(--color-accent);
     border-color: var(--color-border-accent);
-    background: #1f4fd10d;
+    background: color-mix(in srgb, var(--color-accent) 5%, transparent);
   }
 
   .entry-badge.is-cert {
-    color: #0369a1;
-    border-color: #0369a133;
-    background: #0369a10d;
+    color: var(--tag-sky);
+    border-color: color-mix(in srgb, var(--tag-sky) 20%, transparent);
+    background: color-mix(in srgb, var(--tag-sky) 5%, transparent);
   }
 
   .entry-badge.is-education {
-    color: #6d28d9;
-    border-color: #6d28d933;
-    background: #6d28d90d;
+    color: var(--tag-violet);
+    border-color: color-mix(in srgb, var(--tag-violet) 20%, transparent);
+    background: color-mix(in srgb, var(--tag-violet) 5%, transparent);
   }
 
   /* ---- Body ---- */

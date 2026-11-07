@@ -20,6 +20,7 @@
     precision highp float;
     uniform vec2  u_res;
     uniform float u_time;
+    uniform float u_dark;
 
     float hash(vec2 p) {
       return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -65,6 +66,9 @@
       // the cream page, output premultiplied so the page shows through.
       vec3 blue   = vec3(0.122, 0.310, 0.820);
       vec3 orange = vec3(0.949, 0.420, 0.227);
+      // Dark theme: same two hues, lifted so they glow against the navy page
+      blue   = mix(blue,   vec3(0.38, 0.56, 1.0),  u_dark);
+      orange = mix(orange, vec3(1.0, 0.52, 0.30),  u_dark);
       vec3 col = mix(blue, orange, smoothstep(0.3, 0.7, r.x));
 
       // This is a backdrop, not a subject. Text has to stay readable, so the
@@ -77,7 +81,7 @@
       // Extra falloff toward the lower-left, where the copy sits
       float clear = smoothstep(-0.3, 0.7, uv.x * 0.5 + uv.y * 0.4);
 
-      float a = clamp(glow * pool * clear * 0.22, 0.0, 1.0);
+      float a = clamp(glow * pool * clear * mix(0.22, 0.20, u_dark), 0.0, 1.0);
       gl_FragColor = vec4(col * a, a);
     }
   `;
@@ -130,6 +134,9 @@
 
     const uRes = gl.getUniformLocation(prog, 'u_res');
     const uTime = gl.getUniformLocation(prog, 'u_time');
+    const uDark = gl.getUniformLocation(prog, 'u_dark');
+    const setTheme = (theme: string) => gl!.uniform1f(uDark, theme === 'dark' ? 1 : 0);
+    setTheme(document.documentElement.dataset.theme ?? 'light');
 
     // Half resolution: the aurora is soft, nobody can tell, and it halves the fill cost
     const SCALE = 0.5;
@@ -179,6 +186,12 @@
     }
 
     reduced.addEventListener('change', (e) => (e.matches ? pause() : play()));
+
+    window.addEventListener('themechange', (e) => {
+      setTheme((e as CustomEvent<string>).detail);
+      // A paused (static) frame has to be redrawn to pick the new colours up
+      if (!raf) gl.drawArrays(gl.TRIANGLES, 0, 3);
+    });
   }
 
   // Never compete with first paint

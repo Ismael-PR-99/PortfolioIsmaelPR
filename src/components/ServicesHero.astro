@@ -1,5 +1,5 @@
 ---
-import { BASE_URL } from '@config/site';
+import { BASE_URL, PROFILE } from '@config/site';
 import { type Lang } from '@i18n/ui';
 import { sectors } from '@data/services';
 import SocialLinks from '@components/SocialLinks.astro';
@@ -19,17 +19,17 @@ const pills = es
 <section id="hero" class="sh">
   <div class="container sh-grid">
     <div class="sh-copy">
-      <p class="sh-status">
-        <span class="sh-pulse" aria-hidden="true"></span>
+      <p class="sh-status" style="--i: 0">
+        <span class="sh-dot" aria-hidden="true"></span>
         {es ? 'Disponible para nuevos proyectos · Sevilla' : 'Available for new projects · Seville'}
       </p>
 
-      <h1 class="sh-title">
+      <h1 class="sh-title" style="--i: 1">
         {es ? 'Webs y tiendas online' : 'Websites and online shops'}
         <span class="sh-accent">{es ? 'que trabajan por ti.' : 'that work for you.'}</span>
       </h1>
 
-      <p class="sh-lead">
+      <p class="sh-lead" style="--i: 2">
         {es ? (
           <>Soy <strong>Ismael</strong>. Diseño, programo y publico tu web, tu tienda con pagos o tu panel de gestión, y me aseguro de que sea segura. Sin agencias ni intermediarios: <strong>me escribes a mí y te respondo yo.</strong></>
         ) : (
@@ -37,7 +37,7 @@ const pills = es
         )}
       </p>
 
-      <div class="sh-ctas">
+      <div class="sh-ctas" style="--i: 3">
         <a href="#contacto" class="btn btn-primary">
           {es ? 'Pedir presupuesto' : 'Get a quote'}
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
@@ -45,16 +45,11 @@ const pills = es
         <a href="#trabajos" class="btn btn-ghost">{es ? 'Ver trabajos' : 'See my work'}</a>
       </div>
 
-      <ul class="sh-pills" role="list">
-        {pills.map((p) => (
-          <li>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-            {p}
-          </li>
-        ))}
+      <ul class="sh-pills" role="list" style="--i: 4">
+        {pills.map((p) => <li>{p}</li>)}
       </ul>
 
-      <div class="sh-social">
+      <div class="sh-social" style="--i: 5">
         <p>{es ? 'Cotillea mi trabajo y mi día a día' : 'Have a look at my work and my day-to-day'}</p>
         <SocialLinks variant="hero" lang={lang} />
       </div>
@@ -62,28 +57,27 @@ const pills = es
 
     <!-- The person you'll be talking to, front and centre -->
     <div class="sh-visual">
+      <div class="sh-halo" aria-hidden="true"></div>
+
       <figure class="sh-photo">
-        <picture>
-          <source srcset={`${photo}.avif`} type="image/avif" />
-          <source srcset={`${photo}.webp`} type="image/webp" />
-          <img
-            src={`${photo}.jpg`}
-            alt={es ? 'Ismael Piña, de noche en Sevilla' : 'Ismael Piña at night in Seville'}
-            width="960"
-            height="1200"
-            fetchpriority="high"
-          />
-        </picture>
+        <div class="sh-frame">
+          <picture>
+            <source srcset={`${photo}.avif`} type="image/avif" />
+            <source srcset={`${photo}.webp`} type="image/webp" />
+            <img
+              src={`${photo}.jpg`}
+              alt={es ? 'Ismael Piña, de noche en Sevilla' : 'Ismael Piña at night in Seville'}
+              width="960"
+              height="1200"
+              fetchpriority="high"
+            />
+          </picture>
+        </div>
+        <figcaption>
+          <span class="sh-cap-name">{PROFILE.name}</span>
+          <span class="sh-cap-role">{PROFILE.role[lang]}<span class="sh-cap-loc"> · {PROFILE.location.split(',')[0]}</span></span>
+        </figcaption>
       </figure>
-
-      <p class="sh-sticker" aria-hidden="true">
-        {es ? '¡Hola! Soy Ismael' : 'Hi! I’m Ismael'} <span class="sh-wave">👋</span>
-      </p>
-
-      <p class="sh-note" aria-hidden="true">
-        <span>📍 {es ? 'Sevilla' : 'Seville'}</span>
-        {es ? 'Hablas conmigo, no con una agencia' : 'You talk to me, not an agency'}
-      </p>
 
       <a href="#trabajos" class="sh-work">
         <picture>
@@ -108,7 +102,6 @@ const pills = es
     </ul>
   </div>
 </section>
-
 <style>
   .sh {
     padding-top: calc(var(--nav-h) + clamp(2rem, 5vw, 4rem));
@@ -122,39 +115,49 @@ const pills = es
     align-items: center;
   }
 
+  /* ---- Entrance: one calm cascade on load, nothing after ---- */
+  .sh-copy > * {
+    animation: sh-rise 0.9s var(--ease-out-soft) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+  }
+
+  .sh-visual {
+    animation: sh-fade 1.4s ease 0.25s both;
+  }
+
+  @keyframes sh-rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @keyframes sh-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
   .sh-status {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
-    padding: 0.35rem 0.85rem;
-    border: 1px solid var(--color-border-accent);
-    border-radius: 999px;
-    background: #1f4fd10f;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
     font-size: 0.78rem;
     font-weight: 500;
-    color: var(--color-text);
-    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+    color: var(--color-text-muted);
   }
 
-  .sh-pulse {
-    position: relative;
-    width: 8px;
-    height: 8px;
+  /* A quiet light that slowly breathes, not a blinking ping */
+  .sh-dot {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--color-accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 16%, transparent);
+    animation: sh-breathe 4s ease-in-out infinite;
   }
 
-  .sh-pulse::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: var(--color-accent);
-    animation: sh-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-
-  @keyframes sh-ping {
-    75%, 100% { transform: scale(2.6); opacity: 0; }
+  @keyframes sh-breathe {
+    50% { opacity: 0.45; box-shadow: 0 0 0 7px color-mix(in srgb, var(--color-accent) 5%, transparent); }
   }
 
   .sh-title {
@@ -169,6 +172,37 @@ const pills = es
   .sh-accent {
     display: block;
     color: var(--color-accent);
+  }
+
+  /* A slow band of light crosses the accent line every so often */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .sh-accent {
+      background-image: linear-gradient(
+        100deg,
+        var(--color-accent) 0%,
+        var(--color-accent) 40%,
+        color-mix(in srgb, var(--color-accent) 45%, var(--color-text)) 50%,
+        var(--color-accent) 60%,
+        var(--color-accent) 100%
+      );
+      background-size: 260% 100%;
+      background-position: 110% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .sh-accent {
+        animation: sh-sheen 11s ease-in-out 2.4s infinite;
+      }
+    }
+  }
+
+  @keyframes sh-sheen {
+    0%        { background-position: 110% 0; }
+    45%, 100% { background-position: -10% 0; }
   }
 
   .sh-lead {
@@ -191,162 +225,192 @@ const pills = es
     margin-top: 2rem;
   }
 
+  /* Plain facts with a small marker: reads as a statement, not as tags */
   .sh-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1.25rem;
+    gap: 0.35rem 1.4rem;
+    margin-top: 1.5rem;
     list-style: none;
   }
 
   .sh-pills li {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.32rem 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
+    gap: 0.55rem;
     font-size: 0.78rem;
+    letter-spacing: 0.02em;
     color: var(--color-text-muted);
   }
 
-  .sh-pills svg {
-    color: var(--color-accent);
+  .sh-pills li::before {
+    content: '';
+    width: 14px;
+    height: 1px;
+    background: var(--color-accent);
   }
-
   .sh-social {
     margin-top: 2rem;
     padding-top: 1.4rem;
-    border-top: 1px dashed var(--color-border-strong);
+    border-top: 1px solid var(--color-border);
   }
 
   .sh-social > p {
     margin-bottom: 0.75rem;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-text-faint);
   }
 
-  /* ---- Portrait ---- */
+  /* ---- Portrait: an editorial frame, level and still ---- */
   .sh-visual {
     position: relative;
     justify-self: center;
-    width: min(100%, 440px);
-    padding: 1.5rem 0 2.5rem;
+    width: min(100%, 420px);
+    padding: 0.5rem 0 0;
+    isolation: isolate;
+  }
+
+  /* Soft light behind the photo that slowly swells and settles */
+  .sh-halo {
+    position: absolute;
+    inset: -14% -22% 4%;
+    z-index: -1;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-accent) 20%, transparent),
+      transparent 72%
+    );
+    pointer-events: none;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .sh-halo {
+      animation: sh-halo 12s ease-in-out infinite;
+    }
+  }
+
+  @keyframes sh-halo {
+    50% { transform: scale(1.08); opacity: 0.7; }
   }
 
   .sh-photo {
     position: relative;
-    border-radius: 28px;
+  }
+
+  .sh-frame {
+    position: relative;
     overflow: hidden;
-    rotate: 2.5deg;
+    border-radius: 20px;
     border: 1px solid var(--color-border-strong);
-    box-shadow:
-      0 40px 80px #0f1e3333,
-      0 0 0 6px var(--color-bg),
-      0 0 0 7px var(--color-border-accent),
-      0 0 80px #1f4fd11f;
-    transition: rotate 500ms var(--ease-out-soft), scale 500ms var(--ease-out-soft);
+    box-shadow: var(--shadow-photo);
   }
 
-  .sh-visual:hover .sh-photo {
-    rotate: 0deg;
-    scale: 1.015;
-  }
-
-  .sh-photo::after {
+  /* A second outline, offset like a registration mark */
+  .sh-photo::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, #0f1e3359, transparent 35%);
+    translate: 14px 14px;
+    border: 1px solid var(--color-border-accent);
+    border-radius: 20px;
     pointer-events: none;
+    z-index: -1;
+    transition: translate 700ms var(--ease-out-soft);
   }
 
-  .sh-photo img {
+  @media (hover: hover) {
+    .sh-visual:hover .sh-photo::before {
+      translate: 20px 20px;
+    }
+  }
+
+  .sh-frame img {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    animation: sh-settle 1.8s var(--ease-out-soft) 0.2s both;
   }
 
-  .sh-sticker {
+  @keyframes sh-settle {
+    from { scale: 1.07; }
+    to   { scale: 1; }
+  }
+
+  .sh-frame::after {
+    content: '';
     position: absolute;
-    top: 0.2rem;
-    left: -1.6rem;
-    z-index: 2;
-    padding: 0.55rem 1rem;
-    border-radius: 14px;
-    background: var(--color-cta);
-    color: var(--color-on-accent);
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    rotate: -7deg;
-    box-shadow: 0 12px 30px #f26b3a4d;
+    inset: 0;
+    background: linear-gradient(to top, #060a14a6, transparent 38%);
+    pointer-events: none;
   }
 
-  .sh-wave {
-    display: inline-block;
-    transform-origin: 70% 70%;
-    animation: sh-wave 2.6s ease-in-out infinite;
+  /* On wide screens the photo drifts a little against the scroll */
+  @supports (animation-timeline: view()) {
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      .sh-frame img {
+        animation:
+          sh-settle 1.8s var(--ease-out-soft) 0.2s both,
+          sh-drift linear both;
+        animation-timeline: auto, view();
+        animation-range: normal, exit 0% exit 100%;
+      }
+
+      @keyframes sh-drift {
+        to { translate: 0 28px; }
+      }
+    }
   }
 
-  @keyframes sh-wave {
-    0%, 60%, 100% { rotate: 0deg; }
-    10%, 30% { rotate: 14deg; }
-    20%, 40% { rotate: -8deg; }
-  }
-
-  .sh-note {
+  .sh-photo figcaption {
     position: absolute;
-    right: -1.2rem;
-    bottom: 5.5rem;
-    z-index: 2;
+    left: 1.1rem;
+    right: 1.1rem;
+    bottom: 0.95rem;
     display: grid;
     gap: 0.1rem;
-    max-width: 13.5rem;
-    padding: 0.7rem 0.9rem;
-    border: 1px solid var(--color-border-strong);
-    border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--color-bg-card) 90%, transparent);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-card);
-    font-size: 0.8rem;
-    line-height: 1.35;
-    color: var(--color-text);
-    rotate: 3deg;
+    color: #f2f5fb;
   }
 
-  .sh-note span {
+  .sh-cap-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .sh-cap-role {
     font-size: 0.72rem;
-    color: var(--color-text-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f2f5fbc2;
   }
 
+  /* ---- Latest work: a quiet line under the photo ---- */
   .sh-work {
-    position: absolute;
-    left: -2rem;
-    bottom: 0.4rem;
-    z-index: 2;
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.45rem 0.8rem 0.45rem 0.45rem;
-    border: 1px solid var(--color-border-strong);
+    gap: 0.75rem;
+    margin-top: 1.6rem;
+    padding: 0.5rem 0.9rem 0.5rem 0.5rem;
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: var(--color-bg-card);
-    box-shadow: var(--shadow-card);
+    background: color-mix(in srgb, var(--color-bg-card) 70%, transparent);
     text-decoration: none;
     color: var(--color-text);
-    transition: border-color var(--transition-fast), translate var(--transition-fast);
+    transition: border-color var(--transition-base), background var(--transition-base);
   }
 
-  .sh-work:hover {
-    border-color: var(--color-accent);
-    translate: 0 -3px;
+  @media (hover: hover) {
+    .sh-work:hover {
+      border-color: var(--color-border-accent);
+      background: var(--color-bg-card);
+    }
   }
 
   .sh-work img {
@@ -358,14 +422,21 @@ const pills = es
     object-position: top;
   }
 
+  .sh-work > span {
+    flex: 1;
+  }
+
   .sh-work small {
     display: block;
     font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--color-text-faint);
   }
 
   .sh-work strong {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
+    font-weight: 600;
   }
 
   .sh-work svg {
@@ -384,7 +455,7 @@ const pills = es
     display: flex;
     width: max-content;
     list-style: none;
-    animation: sh-marquee 40s linear infinite;
+    animation: sh-marquee 60s linear infinite;
   }
 
   .sh-marquee li {
@@ -413,24 +484,24 @@ const pills = es
     /* On phones the face comes first: that's the hook */
     .sh-visual {
       order: -1;
-      width: min(78%, 360px);
+      width: min(80%, 360px);
       margin-bottom: 0.5rem;
     }
-    .sh-sticker {
-      left: -1rem;
+    .sh-halo {
+      inset: -10% -14% 8%;
     }
-    .sh-note {
-      right: -1rem;
-      bottom: 4.5rem;
+    .sh-photo::before {
+      translate: 10px 10px;
     }
-    .sh-work {
-      left: -1rem;
-    }
-  }
-
-  @media (max-width: 420px) {
-    .sh-note {
+    /* The status line above already says where I am */
+    .sh-cap-loc {
       display: none;
+    }
+    .sh-social {
+      text-align: center;
+    }
+    .sh-pills {
+      justify-content: center;
     }
   }
 </style>

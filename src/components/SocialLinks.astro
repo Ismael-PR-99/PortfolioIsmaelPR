@@ -64,8 +64,10 @@ const links = [
     transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), translate var(--transition-fast);
   }
 
-  .soc-link:hover {
-    color: var(--color-accent);
+  @media (hover: hover) {
+    .soc-link:hover {
+      color: var(--color-accent);
+    }
   }
 
   /* Hero: pill buttons with labels */
@@ -81,13 +83,15 @@ const links = [
     color: var(--color-text);
   }
 
-  .soc-hero .soc-link:hover,
-  .soc-menu .soc-link:hover,
-  .soc-footer .soc-link:hover {
-    border-color: var(--color-accent);
-    background: #1f4fd114;
-    color: var(--color-accent);
-    translate: 0 -2px;
+  @media (hover: hover) {
+    .soc-hero .soc-link:hover,
+    .soc-menu .soc-link:hover,
+    .soc-footer .soc-link:hover {
+      border-color: var(--color-accent);
+      background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+      color: var(--color-accent);
+      translate: 0 -2px;
+    }
   }
 
   .soc-menu {
@@ -116,13 +120,23 @@ const links = [
     padding: 0.2rem;
   }
 
-  .soc-rail .soc-link:hover {
-    translate: 0 -3px;
+  @media (hover: hover) {
+    .soc-rail .soc-link:hover {
+      translate: 0 -3px;
+    }
   }
 
   @media (max-width: 1279px) {
     .soc-rail {
       display: none;
+    }
+  }
+
+  /* Stacked (mobile/tablet) layouts: centre the pills under their caption */
+  @media (max-width: 900px) {
+    .soc-hero,
+    .soc-footer {
+      justify-content: center;
     }
   }
 </style>

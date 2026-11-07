@@ -211,7 +211,7 @@ const timings = es
   .calc-opt:has(input:checked),
   .calc-chip:has(input:checked) {
     border-color: var(--color-accent);
-    background: #1f4fd110;
+    background: color-mix(in srgb, var(--color-accent) 6%, transparent);
   }
 
   .calc-opt:has(input:focus-visible),
@@ -269,7 +269,7 @@ const timings = es
     flex-direction: column;
     gap: 0.8rem;
     padding: clamp(1.25rem, 3vw, 2rem);
-    background: var(--color-accent);
+    background: var(--color-accent-solid);
     color: var(--color-on-accent);
   }
 

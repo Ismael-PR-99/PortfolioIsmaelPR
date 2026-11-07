@@ -1,0 +1,122 @@
+---
+import { type Lang } from '@i18n/ui';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const label = lang === 'es' ? 'Cambiar entre modo claro y oscuro' : 'Switch between light and dark mode';
+---
+
+<button type="button" class="theme-toggle" aria-label={label} title={label} aria-pressed="false">
+  <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  </svg>
+  <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+  </svg>
+</button>
+
+<script>
+  const root = document.documentElement;
+  const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const touch = window.matchMedia('(hover: none)');
+  const KEY = 'portfolio-theme';
+
+  const current = () => (root.dataset.theme === 'dark' ? 'dark' : 'light');
+
+  function apply(theme: 'light' | 'dark') {
+    root.dataset.theme = theme;
+    button?.setAttribute('aria-pressed', String(theme === 'dark'));
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'dark' ? '#0a0f1c' : '#faf7f2');
+    window.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
+  }
+
+  apply(current());
+
+  button?.addEventListener('click', (e) => {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    try {
+      localStorage.setItem(KEY, next);
+    } catch {
+      /* private mode: the choice just won't persist */
+    }
+
+    // Desktop: the new theme grows out of the button as a circle. Touch
+    // devices and reduced-motion users get a plain cross-fade instead
+    // (view transitions over fixed layers are what makes iOS stutter).
+    if (!document.startViewTransition || reduced.matches || touch.matches) {
+      root.classList.add('theme-fade');
+      apply(next);
+      window.setTimeout(() => root.classList.remove('theme-fade'), 350);
+      return;
+    }
+
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+
+    root.classList.add('theme-vt');
+    const transition = document.startViewTransition(() => apply(next));
+    transition.finished.finally(() => root.classList.remove('theme-vt'));
+    transition.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        { duration: 600, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    });
+  });
+
+</script>
+
+<style>
+  .theme-toggle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+
+  @media (hover: hover) {
+    .theme-toggle:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+  }
+
+  .theme-toggle svg {
+    grid-area: 1 / 1;
+    transition:
+      transform 450ms var(--ease-out-soft),
+      opacity 250ms ease;
+  }
+
+  /* Sun shows in light mode (click → dark), moon in dark mode */
+  .icon-moon {
+    opacity: 0;
+    transform: rotate(-70deg) scale(0.4);
+  }
+
+  :global(html[data-theme='dark']) .icon-sun {
+    opacity: 0;
+    transform: rotate(70deg) scale(0.4);
+  }
+
+  :global(html[data-theme='dark']) .icon-moon {
+    opacity: 1;
+    transform: none;
+  }
+</style>

@@ -68,12 +68,14 @@ const t = useTranslations(lang);
     transition: background var(--transition-base);
   }
 
-  .stack-row:hover {
-    background: linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-accent) 4%, transparent),
-      transparent 60%
-    );
+  @media (hover: hover) {
+    .stack-row:hover {
+      background: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-accent) 4%, transparent),
+        transparent 60%
+      );
+    }
   }
 
   /* ---- Left: category ---- */
@@ -142,15 +144,19 @@ const t = useTranslations(lang);
     font-weight: 500;
   }
 
-  .stack-row:hover .tech.is-primary {
-    border-color: var(--color-border-accent);
-    color: var(--color-accent);
+  @media (hover: hover) {
+    .stack-row:hover .tech.is-primary {
+      border-color: var(--color-border-accent);
+      color: var(--color-accent);
+    }
   }
 
-  .tech:hover {
-    transform: translateY(-2px);
-    border-color: var(--color-border-accent);
-    background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-elevated));
+  @media (hover: hover) {
+    .tech:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-border-accent);
+      background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-elevated));
+    }
   }
 
   @media (max-width: 860px) {

@@ -68,11 +68,15 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- iOS turns "1–2 semanas", "9:00–19:00" and the like into blue phone/date links -->
+    <meta name="format-detection" content="telephone=no, date=no, address=no" />
     <meta name="description" content={resolvedDesc} />
+    <meta name="theme-color" content="#0a0f1c" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang} href={canonical} />
     <link rel="alternate" hreflang={alternateLang} href={`${SITE_URL}${alternatePath}`} />
@@ -109,6 +113,16 @@ const jsonLd = {
     -->
     <script is:inline>
       document.documentElement.classList.add('js');
+      // Theme before first paint: dark unless the visitor chose light
+      (function () {
+        var theme = 'dark';
+        try {
+          if (localStorage.getItem('portfolio-theme') === 'light') theme = 'light';
+        } catch (e) {}
+        document.documentElement.dataset.theme = theme;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', theme === 'dark' ? '#0a0f1c' : '#faf7f2');
+      })();
     </script>
 
     <!-- JSON-LD -->
@@ -149,6 +163,21 @@ const jsonLd = {
       );
 
       targets.forEach((el) => observer.observe(el));
+
+      // Soft light following the pointer on [data-spotlight] cards (mouse only)
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        document.querySelectorAll<HTMLElement>('[data-spotlight]').forEach((card) => {
+          card.addEventListener(
+            'pointermove',
+            (e) => {
+              const r = card.getBoundingClientRect();
+              card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+              card.style.setProperty('--my', `${e.clientY - r.top}px`);
+            },
+            { passive: true }
+          );
+        });
+      }
 
       // Safety net: nothing stays invisible for more than 3s, whatever happens.
       window.setTimeout(() => targets.forEach(reveal), 3000);

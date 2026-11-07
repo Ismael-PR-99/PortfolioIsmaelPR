@@ -326,6 +326,14 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     will-change: transform;
   }
 
+  /* Tilt is mouse-only: don't keep a 3D layer per card on a phone */
+  @media (hover: none) {
+    .project-shot {
+      transform: none;
+      will-change: auto;
+    }
+  }
+
   .project-shot:not(.is-tilting) {
     transition:
       transform 500ms var(--ease-out-soft),
@@ -333,9 +341,11 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
       box-shadow var(--transition-base);
   }
 
-  .project-shot:hover {
-    border-color: var(--color-border-accent);
-    box-shadow: 0 0 40px #1f4fd114, var(--shadow-card);
+  @media (hover: hover) {
+    .project-shot:hover {
+      border-color: var(--color-border-accent);
+      box-shadow: 0 0 40px color-mix(in srgb, var(--color-accent) 8%, transparent), var(--shadow-card);
+    }
   }
 
   .project-img {
@@ -348,8 +358,15 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     transition: scale var(--transition-slow);
   }
 
-  .project-shot:hover .project-img {
-    scale: 1.02;
+  /* Bright screenshots (white sites) would glare on the dark page */
+  :global(html[data-theme='dark']) .project-img {
+    filter: brightness(0.92);
+  }
+
+  @media (hover: hover) {
+    .project-shot:hover .project-img {
+      scale: 1.02;
+    }
   }
 
   .status-badge {
@@ -367,6 +384,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     text-transform: uppercase;
     color: var(--color-accent);
     background: color-mix(in srgb, var(--color-bg-sunken) 82%, transparent);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     border: 1px solid var(--color-border-accent);
   }
@@ -492,12 +510,16 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     transition: translate var(--transition-fast);
   }
 
-  .more-link:hover {
-    color: var(--color-accent);
+  @media (hover: hover) {
+    .more-link:hover {
+      color: var(--color-accent);
+    }
   }
 
-  .more-link:hover svg {
-    translate: 4px 0;
+  @media (hover: hover) {
+    .more-link:hover svg {
+      translate: 4px 0;
+    }
   }
 
   @media (max-width: 900px) {

@@ -34,7 +34,7 @@ const socialLinks = [
     <header class="section-head" data-reveal>
       <div>
         <p class="section-eyebrow">
-          <span class="section-index" data-parallax style="--parallax: 0.8">05</span>
+          <span class="section-index" data-parallax style="--parallax: 0.8">03</span>
           <span class="section-label">{t('contact.label')}</span>
         </p>
         <h2 class="section-title contact-title">{t('contact.title')}</h2>
@@ -148,14 +148,16 @@ const socialLinks = [
       background var(--transition-base);
   }
 
-  .social-row:hover {
-    color: var(--color-text);
-    padding-inline: 0.75rem 0.25rem;
-    background: linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-accent) 5%, transparent),
-      transparent 55%
-    );
+  @media (hover: hover) {
+    .social-row:hover {
+      color: var(--color-text);
+      padding-inline: 0.75rem 0.25rem;
+      background: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-accent) 5%, transparent),
+        transparent 55%
+      );
+    }
   }
 
   .social-icon {
@@ -169,8 +171,10 @@ const socialLinks = [
     height: 18px;
   }
 
-  .social-row:hover .social-icon {
-    color: var(--color-accent);
+  @media (hover: hover) {
+    .social-row:hover .social-icon {
+      color: var(--color-accent);
+    }
   }
 
   .social-name {
@@ -193,9 +197,11 @@ const socialLinks = [
       color var(--transition-fast);
   }
 
-  .social-row:hover .social-arrow {
-    color: var(--color-accent);
-    translate: 3px -3px;
+  @media (hover: hover) {
+    .social-row:hover .social-arrow {
+      color: var(--color-accent);
+      translate: 3px -3px;
+    }
   }
 
   /* ---- CV card ---- */

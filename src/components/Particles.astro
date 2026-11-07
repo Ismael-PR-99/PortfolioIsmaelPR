@@ -17,7 +17,13 @@
   if (canvas && !touch && !reduced.matches) {
     const ctx = canvas.getContext('2d', { alpha: true })!;
 
-    const ACCENT = '31, 79, 209';
+    // Brand blue, lightened on the dark theme so the network stays visible
+    const ACCENT_LIGHT = '31, 79, 209';
+    const ACCENT_DARK = '123, 160, 255';
+    let ACCENT = document.documentElement.dataset.theme === 'dark' ? ACCENT_DARK : ACCENT_LIGHT;
+    window.addEventListener('themechange', (e) => {
+      ACCENT = (e as CustomEvent<string>).detail === 'dark' ? ACCENT_DARK : ACCENT_LIGHT;
+    });
     const LINK_DISTANCE = 150;
     const GRAB_DISTANCE = 120;
     const DENSITY = 60 / (1920 * 1080); // particles per css pixel²

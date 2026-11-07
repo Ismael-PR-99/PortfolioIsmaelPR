@@ -67,7 +67,7 @@ const after = es
     </div>
 
     <div class="qt-form-wrap" data-reveal style="--delay: 120ms">
-      <div class="qt-mail">
+      <div class="qt-mail" data-spotlight>
         <p class="qt-kicker">{es ? 'Escríbeme' : 'Write to me'}</p>
         <p class="qt-mail-lead">
           {es
@@ -204,8 +204,10 @@ const after = es
     word-break: break-word;
   }
 
-  a.qt-card:hover {
-    border-color: var(--color-border-accent);
+  @media (hover: hover) {
+    a.qt-card:hover {
+      border-color: var(--color-border-accent);
+    }
   }
 
   .qt-card small {
@@ -214,8 +216,8 @@ const after = es
   }
 
   .qt-dark {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
+    background: var(--color-accent-solid);
+    border-color: var(--color-accent-solid);
     color: var(--color-on-accent);
   }
 
@@ -292,7 +294,7 @@ const after = es
     border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-xl);
     background:
-      radial-gradient(circle at 100% 0%, #1f4fd114, transparent 55%),
+      radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 55%),
       var(--color-bg-elevated);
     box-shadow: var(--shadow-card);
   }
@@ -316,8 +318,10 @@ const after = es
     transition: border-color var(--transition-fast);
   }
 
-  .qt-mail-addr:hover {
-    border-color: var(--color-accent);
+  @media (hover: hover) {
+    .qt-mail-addr:hover {
+      border-color: var(--color-accent);
+    }
   }
 
   .qt-mail-actions,
@@ -341,7 +345,7 @@ const after = es
     padding: clamp(1.75rem, 4vw, 3rem);
     border-radius: var(--radius-xl);
     background:
-      radial-gradient(circle at 85% 20%, #1f4fd126, transparent 45%),
+      radial-gradient(circle at 85% 20%, color-mix(in srgb, var(--color-accent) 15%, transparent), transparent 45%),
       var(--color-bg-card);
     border: 1px solid var(--color-border-accent);
   }
