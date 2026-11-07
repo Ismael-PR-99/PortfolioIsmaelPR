@@ -1,13 +1,14 @@
 ---
-import { BASE_URL, PROFILE } from '@config/site';
+import { BASE_URL } from '@config/site';
 import { type Lang } from '@i18n/ui';
 import { sectors } from '@data/services';
+import SocialLinks from '@components/SocialLinks.astro';
 
 interface Props { lang?: Lang; }
 const { lang = 'es' } = Astro.props;
 const es = lang === 'es';
 
-const photo = `${BASE_URL}/images/IsmaelFoto`;
+const photo = `${BASE_URL}/images/ismael-retrato`;
 const shot = `${BASE_URL}/images/dtf-al-metro`;
 
 const pills = es
@@ -18,16 +19,9 @@ const pills = es
 <section id="hero" class="sh">
   <div class="container sh-grid">
     <div class="sh-copy">
-      <p class="sh-hello">
-        <picture>
-          <source srcset={`${photo}.avif`} type="image/avif" />
-          <source srcset={`${photo}.webp`} type="image/webp" />
-          <img src={`${photo}.png`} alt="" width="28" height="28" />
-        </picture>
-        <span>
-          {es ? 'Hola, soy' : 'Hi, I’m'} <strong>{PROFILE.name.split(' ').slice(0, 2).join(' ')}</strong> ·
-          {es ? ' desarrollador web en Sevilla' : ' web developer in Seville'}
-        </span>
+      <p class="sh-status">
+        <span class="sh-pulse" aria-hidden="true"></span>
+        {es ? 'Disponible para nuevos proyectos · Sevilla' : 'Available for new projects · Seville'}
       </p>
 
       <h1 class="sh-title">
@@ -36,11 +30,11 @@ const pills = es
       </h1>
 
       <p class="sh-lead">
-        {
-          es
-            ? 'Diseño, programo y publico tu web, tu tienda con pagos o tu panel de gestión, y me aseguro de que sea segura. Un solo interlocutor, de la idea a producción.'
-            : 'I design, build and launch your website, your shop with payments or your admin panel, and make sure it’s secure. One person, from idea to production.'
-        }
+        {es ? (
+          <>Soy <strong>Ismael</strong>. Diseño, programo y publico tu web, tu tienda con pagos o tu panel de gestión, y me aseguro de que sea segura. Sin agencias ni intermediarios: <strong>me escribes a mí y te respondo yo.</strong></>
+        ) : (
+          <>I’m <strong>Ismael</strong>. I design, build and launch your website, your shop with payments or your admin panel, and make sure it’s secure. No agencies, no middlemen: <strong>you write to me and I answer.</strong></>
+        )}
       </p>
 
       <div class="sh-ctas">
@@ -59,47 +53,50 @@ const pills = es
           </li>
         ))}
       </ul>
+
+      <div class="sh-social">
+        <p>{es ? 'Cotillea mi trabajo y mi día a día' : 'Have a look at my work and my day-to-day'}</p>
+        <SocialLinks variant="hero" lang={lang} />
+      </div>
     </div>
 
-    <!-- Live work in a browser frame, with the bits a client actually cares about floating around it -->
-    <div class="sh-visual" aria-hidden="true">
-      <div class="sh-browser">
-        <div class="sh-bar">
-          <span></span><span></span><span></span>
-          <em>dtfalmetro.es</em>
-        </div>
+    <!-- The person you'll be talking to, front and centre -->
+    <div class="sh-visual">
+      <figure class="sh-photo">
+        <picture>
+          <source srcset={`${photo}.avif`} type="image/avif" />
+          <source srcset={`${photo}.webp`} type="image/webp" />
+          <img
+            src={`${photo}.jpg`}
+            alt={es ? 'Ismael Piña, de noche en Sevilla' : 'Ismael Piña at night in Seville'}
+            width="960"
+            height="1200"
+            fetchpriority="high"
+          />
+        </picture>
+      </figure>
+
+      <p class="sh-sticker" aria-hidden="true">
+        {es ? '¡Hola! Soy Ismael' : 'Hi! I’m Ismael'} <span class="sh-wave">👋</span>
+      </p>
+
+      <p class="sh-note" aria-hidden="true">
+        <span>📍 {es ? 'Sevilla' : 'Seville'}</span>
+        {es ? 'Hablas conmigo, no con una agencia' : 'You talk to me, not an agency'}
+      </p>
+
+      <a href="#trabajos" class="sh-work">
         <picture>
           <source srcset={`${shot}.avif`} type="image/avif" />
           <source srcset={`${shot}.webp`} type="image/webp" />
-          <img src={`${shot}.png`} alt="" width="700" height="438" fetchpriority="high" />
+          <img src={`${shot}.png`} alt="" width="112" height="70" loading="lazy" />
         </picture>
-      </div>
-
-      <div class="sh-float sh-float-order">
-        <span class="sh-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></svg>
-        </span>
         <span>
-          <strong>{es ? 'Pago con tarjeta' : 'Card payment'}</strong>
-          <small>{es ? 'Pedido confirmado' : 'Order confirmed'}</small>
+          <small>{es ? 'Último trabajo' : 'Latest work'}</small>
+          <strong>dtfalmetro.es</strong>
         </span>
-        <span class="sh-ok">✓</span>
-      </div>
-
-      <div class="sh-float sh-float-sec">
-        <span class="sh-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" /></svg>
-        </span>
-        <span>
-          <strong>{es ? 'Auditada' : 'Security-tested'}</strong>
-          <small>OWASP Top 10</small>
-        </span>
-      </div>
-
-      <div class="sh-float sh-float-client">
-        <span class="sh-dot"></span>
-        {es ? 'Cliente real · en producción' : 'Real client · live'}
-      </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17 17 7M17 7H7M17 7v10" /></svg>
+      </a>
     </div>
   </div>
 
@@ -114,41 +111,50 @@ const pills = es
 
 <style>
   .sh {
-    padding-top: calc(64px + clamp(2.5rem, 6vw, 5rem));
+    padding-top: calc(64px + clamp(2rem, 5vw, 4rem));
     padding-bottom: 0;
   }
 
   .sh-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: clamp(2rem, 5vw, 4.5rem);
     align-items: center;
   }
 
-  .sh-hello {
+  .sh-status {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.3rem 0.85rem 0.3rem 0.3rem;
-    border: 1px solid var(--color-border-strong);
+    gap: 0.55rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--color-border-accent);
     border-radius: 999px;
-    background: var(--color-bg-elevated);
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    margin-bottom: 1.6rem;
-  }
-
-  .sh-hello img {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .sh-hello strong {
+    background: #a3e6350f;
+    font-size: 0.78rem;
+    font-weight: 500;
     color: var(--color-text);
-    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .sh-pulse {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  .sh-pulse::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--color-accent);
+    animation: sh-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes sh-ping {
+    75%, 100% { transform: scale(2.6); opacity: 0; }
   }
 
   .sh-title {
@@ -167,10 +173,15 @@ const pills = es
 
   .sh-lead {
     margin-top: 1.4rem;
-    max-width: 52ch;
+    max-width: 54ch;
     font-size: 1.02rem;
     line-height: 1.7;
     color: var(--color-text-muted);
+  }
+
+  .sh-lead strong {
+    color: var(--color-text);
+    font-weight: 600;
   }
 
   .sh-ctas {
@@ -184,7 +195,7 @@ const pills = es
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 1.4rem;
+    margin-top: 1.25rem;
     list-style: none;
   }
 
@@ -203,136 +214,162 @@ const pills = es
     color: var(--color-accent);
   }
 
-  /* ---- Visual ---- */
+  .sh-social {
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px dashed var(--color-border-strong);
+  }
+
+  .sh-social > p {
+    margin-bottom: 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  /* ---- Portrait ---- */
   .sh-visual {
     position: relative;
+    justify-self: center;
+    width: min(100%, 440px);
     padding: 1.5rem 0 2.5rem;
   }
 
-  .sh-browser {
-    border-radius: var(--radius-lg);
+  .sh-photo {
+    position: relative;
+    border-radius: 28px;
     overflow: hidden;
+    rotate: 2.5deg;
     border: 1px solid var(--color-border-strong);
-    background: var(--color-bg-elevated);
-    box-shadow: 0 30px 80px #00000080, 0 0 60px #a3e63512;
-    transform: perspective(1400px) rotateY(-6deg) rotateX(2deg);
+    box-shadow:
+      0 40px 90px #000000a0,
+      0 0 0 6px var(--color-bg),
+      0 0 0 7px var(--color-border-accent),
+      0 0 80px #a3e63526;
+    transition: rotate 500ms var(--ease-out-soft), scale 500ms var(--ease-out-soft);
   }
 
-  .sh-bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0.6rem 0.8rem;
-    border-bottom: 1px solid var(--color-border);
+  .sh-visual:hover .sh-photo {
+    rotate: 0deg;
+    scale: 1.015;
   }
 
-  .sh-bar span {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--color-border-strong);
+  .sh-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #0a0a0bb3, transparent 38%);
+    pointer-events: none;
   }
 
-  .sh-bar em {
-    margin-left: 0.6rem;
-    flex: 1;
-    max-width: 16rem;
-    padding: 0.18rem 0.7rem;
-    border-radius: var(--radius-sm);
-    background: var(--color-bg-sunken);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-style: normal;
-    color: var(--color-text-muted);
-  }
-
-  .sh-browser img {
+  .sh-photo img {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
   }
 
-  .sh-float {
+  .sh-sticker {
     position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.65rem 0.85rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--color-border-strong);
-    background: color-mix(in srgb, var(--color-bg-card) 92%, transparent);
-    backdrop-filter: blur(8px);
-    box-shadow: var(--shadow-card);
-    font-size: 0.78rem;
-    animation: sh-bob 6s ease-in-out infinite;
-  }
-
-  .sh-float strong {
-    display: block;
-    font-weight: 600;
-    color: var(--color-text);
-  }
-
-  .sh-float small {
-    display: block;
-    color: var(--color-text-faint);
-    font-size: 0.7rem;
-  }
-
-  .sh-icon {
-    display: grid;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: var(--radius-sm);
-    background: #a3e6351f;
-    color: var(--color-accent);
-  }
-
-  .sh-ok {
-    display: grid;
-    place-items: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    top: 0.2rem;
+    left: -1.6rem;
+    z-index: 2;
+    padding: 0.55rem 1rem;
+    border-radius: 14px;
     background: var(--color-accent);
     color: #0a0a0b;
-    font-size: 0.7rem;
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    rotate: -7deg;
+    box-shadow: 0 12px 30px #00000080;
   }
 
-  .sh-float-order {
-    left: -1.5rem;
-    bottom: 0.5rem;
+  .sh-wave {
+    display: inline-block;
+    transform-origin: 70% 70%;
+    animation: sh-wave 2.6s ease-in-out infinite;
   }
 
-  .sh-float-sec {
-    right: -1rem;
-    top: 0;
-    animation-delay: -2s;
+  @keyframes sh-wave {
+    0%, 60%, 100% { rotate: 0deg; }
+    10%, 30% { rotate: 14deg; }
+    20%, 40% { rotate: -8deg; }
   }
 
-  .sh-float-client {
-    right: 1.5rem;
-    bottom: -0.5rem;
-    gap: 0.5rem;
-    padding: 0.45rem 0.8rem;
-    border-radius: 999px;
-    color: var(--color-text-muted);
-    animation-delay: -4s;
+  .sh-note {
+    position: absolute;
+    right: -1.2rem;
+    bottom: 5.5rem;
+    z-index: 2;
+    display: grid;
+    gap: 0.1rem;
+    max-width: 13.5rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-bg-card) 90%, transparent);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-card);
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: var(--color-text);
+    rotate: 3deg;
   }
 
-  .sh-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    box-shadow: 0 0 8px var(--color-accent);
+  .sh-note span {
+    font-size: 0.72rem;
+    color: var(--color-text-faint);
   }
 
-  @keyframes sh-bob {
-    0%, 100% { translate: 0 0; }
-    50% { translate: 0 -8px; }
+  .sh-work {
+    position: absolute;
+    left: -2rem;
+    bottom: 0.4rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.45rem 0.8rem 0.45rem 0.45rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card);
+    box-shadow: var(--shadow-card);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: border-color var(--transition-fast), translate var(--transition-fast);
+  }
+
+  .sh-work:hover {
+    border-color: var(--color-accent);
+    translate: 0 -3px;
+  }
+
+  .sh-work img {
+    display: block;
+    width: 56px;
+    height: 35px;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .sh-work small {
+    display: block;
+    font-size: 0.66rem;
+    color: var(--color-text-faint);
+  }
+
+  .sh-work strong {
+    font-size: 0.82rem;
+  }
+
+  .sh-work svg {
+    color: var(--color-accent);
   }
 
   /* ---- Marquee ---- */
@@ -373,20 +410,26 @@ const pills = es
     .sh-grid {
       grid-template-columns: 1fr;
     }
-    .sh-browser {
-      transform: none;
+    /* On phones the face comes first: that's the hook */
+    .sh-visual {
+      order: -1;
+      width: min(78%, 360px);
+      margin-bottom: 0.5rem;
     }
-    .sh-float-order {
-      left: 0.5rem;
+    .sh-sticker {
+      left: -1rem;
     }
-    .sh-float-sec {
-      right: 0.5rem;
+    .sh-note {
+      right: -1rem;
+      bottom: 4.5rem;
+    }
+    .sh-work {
+      left: -1rem;
     }
   }
 
-  @media (max-width: 520px) {
-    .sh-float-sec,
-    .sh-float-client {
+  @media (max-width: 420px) {
+    .sh-note {
       display: none;
     }
   }
