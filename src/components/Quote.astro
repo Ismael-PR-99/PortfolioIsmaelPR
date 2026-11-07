@@ -1,18 +1,13 @@
 ---
-import { BASE_URL, CONTACT, SOCIALS } from '@config/site';
+import { CONTACT } from '@config/site';
 import { type Lang } from '@i18n/ui';
-import { services } from '@data/services';
 
 interface Props { lang?: Lang; }
 const { lang = 'es' } = Astro.props;
 const es = lang === 'es';
 
-// Web3Forms when there's a key; otherwise the same form opens the visitor's
-// mail app with everything filled in, so nothing is stored anywhere.
-const viaApi = CONTACT.web3formsKey.length > 0;
-const hasForm = viaApi || CONTACT.email.length > 0;
 const whatsappHref = CONTACT.whatsapp ? `https://wa.me/${CONTACT.whatsapp}` : '';
-const privacyHref = `${BASE_URL}${es ? '/privacidad/' : '/en/privacy/'}`;
+const mailHref = `mailto:${CONTACT.email}?subject=${encodeURIComponent(es ? 'Solicitud de presupuesto' : 'Quote request')}`;
 
 const after = es
   ? [
@@ -46,12 +41,6 @@ const after = es
           <strong>24 h</strong>
           <span>{es ? 'tiempo máximo de respuesta' : 'maximum reply time'}</span>
         </div>
-        {CONTACT.email && (
-          <a class="qt-card" href={`mailto:${CONTACT.email}`}>
-            <small>Email</small>
-            <span>{CONTACT.email}</span>
-          </a>
-        )}
         {whatsappHref && (
           <a class="qt-card qt-wa" href={whatsappHref} target="_blank" rel="noopener">
             <small>WhatsApp</small>
@@ -62,12 +51,6 @@ const after = es
           <small>{es ? 'Horario' : 'Hours'}</small>
           <span>{CONTACT.hours[lang]}</span>
         </div>
-        {!CONTACT.email && !whatsappHref && (
-          <a class="qt-card" href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer">
-            <small>LinkedIn</small>
-            <span>{es ? 'Escríbeme por mensaje' : 'Send me a message'}</span>
-          </a>
-        )}
       </div>
 
       <div class="qt-after">
@@ -84,83 +67,62 @@ const after = es
     </div>
 
     <div class="qt-form-wrap" data-reveal style="--delay: 120ms">
-      {hasForm ? (
-        <form
-          class="qt-form"
-          action={viaApi ? 'https://api.web3forms.com/submit' : `mailto:${CONTACT.email}`}
-          method="POST"
-          enctype={viaApi ? undefined : 'text/plain'}
-          data-mailto={viaApi ? undefined : CONTACT.email}
-          data-subject={es ? 'Solicitud de presupuesto' : 'Quote request'}
-        >
-          {viaApi && <input type="hidden" name="access_key" value={CONTACT.web3formsKey} />}
-          {viaApi && <input type="hidden" name="subject" value={es ? 'Nueva solicitud desde la web' : 'New request from the website'} />}
-          {viaApi && <input type="checkbox" name="botcheck" class="qt-hp" tabindex="-1" autocomplete="off" />}
+      <div class="qt-mail">
+        <p class="qt-kicker">{es ? 'Escríbeme' : 'Write to me'}</p>
+        <p class="qt-mail-lead">
+          {es
+            ? 'Cuéntame tu negocio, qué necesitas y para cuándo. Te contesto con una propuesta por escrito.'
+            : 'Tell me about your business, what you need and when. I’ll reply with a written proposal.'}
+        </p>
 
-          <div class="qt-row">
-            <label>
-              <span>{es ? 'Nombre' : 'Name'}</span>
-              <input name="name" required autocomplete="name" placeholder="María Ortega" />
-            </label>
-            <label>
-              <span>{es ? 'Teléfono (opcional)' : 'Phone (optional)'}</span>
-              <input name="phone" type="tel" autocomplete="tel" placeholder="600 000 000" />
-            </label>
-          </div>
-          <label>
-            <span>Email</span>
-            <input name="email" type="email" required autocomplete="email" placeholder={es ? 'tu@negocio.com' : 'you@business.com'} />
-          </label>
-          <label>
-            <span>{es ? 'Servicio' : 'Service'}</span>
-            <select id="q-service" name="service">
-              {services.map((s) => <option value={s.id}>{s.name[lang]}</option>)}
-              <option value="other">{es ? 'Varios / no lo sé' : 'Several / not sure'}</option>
-            </select>
-          </label>
-          <label>
-            <span>{es ? 'Mensaje' : 'Message'}</span>
-            <textarea id="q-message" name="message" rows="5" required placeholder={es ? 'Tengo una tienda en Triana y quiero vender online…' : 'I run a shop and want to sell online…'} />
-          </label>
-          {viaApi && (
-            <label class="qt-check">
-              <input type="checkbox" required />
-              <span>
-                {es ? 'He leído y acepto la ' : 'I have read and accept the '}
-                <a href={privacyHref}>{es ? 'política de privacidad' : 'privacy policy'}</a>.
-                {es ? ' Solo uso tus datos para responderte.' : ' I only use your details to reply.'}
-              </span>
-            </label>
-          )}
-          <button type="submit" class="btn btn-primary qt-send">{es ? 'Enviar solicitud' : 'Send request'}</button>
-          {!viaApi && (
-            <p class="qt-alt">
-              {es ? 'Se abrirá tu correo con el mensaje listo. ¿No tienes app de correo? Escríbeme a ' : 'Your mail app will open with the message ready. No mail app? Write to '}
-              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        {CONTACT.email && (
+          <>
+            <a class="qt-mail-addr" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+            <div class="qt-mail-actions">
+              <a
+                id="qt-mail-link"
+                class="btn btn-primary"
+                href={mailHref}
+                data-base-href={mailHref}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
+                {es ? 'Escribir un email' : 'Send an email'}
+              </a>
+              <button
+                type="button"
+                class="btn btn-ghost"
+                data-copy={CONTACT.email}
+                data-done={es ? '¡Copiado!' : 'Copied!'}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="9" y="9" width="12" height="12" rx="2" />
+                  <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+                </svg>
+                <span>{es ? 'Copiar dirección' : 'Copy address'}</span>
+              </button>
+            </div>
+            <p class="qt-mail-note">
+              {es ? '¿No se abre tu app de correo? Copia la dirección y escríbeme desde donde prefieras.' : 'Mail app not opening? Copy the address and write from wherever you like.'}
             </p>
-          )}
-          {CONTACT.bookingUrl && (
-            <a class="qt-book" href={CONTACT.bookingUrl} target="_blank" rel="noopener">
-              {es ? '¿Prefieres hablar? Reserva una llamada de 15 min →' : 'Rather talk? Book a 15-min call →'}
-            </a>
-          )}
-        </form>
-      ) : (
-        <div class="qt-form qt-fallback">
-          <p class="qt-kicker">{es ? 'Pide tu presupuesto' : 'Ask for a quote'}</p>
-          <p>
-            {es
-              ? 'Cuéntame tu negocio, qué necesitas y para cuándo. Te contesto con una propuesta por escrito.'
-              : 'Tell me about your business, what you need and when. I’ll reply with a written proposal.'}
-          </p>
-          {CONTACT.email && <a class="btn btn-primary" href={`mailto:${CONTACT.email}`}>{es ? 'Escribir un email' : 'Send an email'}</a>}
-          {whatsappHref && <a class="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener">WhatsApp</a>}
-          <a class="btn btn-ghost" href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-      )}
+          </>
+        )}
+
+        {(whatsappHref || CONTACT.bookingUrl) && (
+          <div class="qt-mail-more">
+            {whatsappHref && <a class="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener">WhatsApp</a>}
+            {CONTACT.bookingUrl && (
+              <a class="btn btn-ghost" href={CONTACT.bookingUrl} target="_blank" rel="noopener">
+                {es ? 'Reservar llamada de 15 min' : 'Book a 15-min call'}
+              </a>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   </div>
-
   <div class="container">
     <div class="qt-band" data-reveal>
       <div>
@@ -176,39 +138,37 @@ const after = es
 </section>
 
 <script>
-  // Mail-app mode: build a readable email instead of the browser's raw text/plain post.
-  const form = document.querySelector<HTMLFormElement>('.qt-form[data-mailto]');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const d = new FormData(form);
-    const service = form.querySelector<HTMLSelectElement>('select[name="service"]');
-    const body = [
-      String(d.get('message') ?? '').trim(),
-      '',
-      '—',
-      `${d.get('name') ?? ''}`,
-      `${d.get('email') ?? ''}`,
-      `${d.get('phone') ?? ''}`,
-      service?.selectedOptions[0]?.textContent ?? '',
-    ]
-      .filter((l, i) => i < 3 || l)
-      .join('\n');
-    const subject = `${form.dataset.subject} — ${d.get('name') ?? ''}`;
-    window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  // Calculator / service buttons hand their choice over as a prefilled email.
+  const link = document.querySelector<HTMLAnchorElement>('#qt-mail-link');
+  window.addEventListener('quote:prefill', (e) => {
+    if (!link?.dataset.baseHref) return;
+    const { subject, body } = (e as CustomEvent<{ subject: string; body?: string }>).detail;
+    const params = [`subject=${encodeURIComponent(subject)}`];
+    if (body) params.push(`body=${encodeURIComponent(body)}`);
+    link.href = `${link.dataset.baseHref.split('?')[0]}?${params.join('&')}`;
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    const label = btn.querySelector('span');
+    const original = label?.textContent ?? '';
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = btn.dataset.copy ?? '';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      if (label) label.textContent = btn.dataset.done ?? original;
+      window.setTimeout(() => label && (label.textContent = original), 2000);
+    });
   });
 </script>
 
 <style>
-  .qt-alt {
-    font-size: 0.78rem;
-    text-align: center;
-    color: var(--color-text-faint);
-  }
-
-  .qt-alt a {
-    color: var(--color-accent);
-  }
-
   .qt-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -324,86 +284,53 @@ const after = es
     color: var(--color-text-muted);
   }
 
-  .qt-form {
+  .qt-mail {
     display: grid;
-    gap: 1rem;
-    padding: clamp(1.25rem, 3vw, 2rem);
+    gap: 1.1rem;
+    justify-items: start;
+    padding: clamp(1.5rem, 3.5vw, 2.5rem);
     border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-xl);
-    background: var(--color-bg-elevated);
+    background:
+      radial-gradient(circle at 100% 0%, #1f4fd114, transparent 55%),
+      var(--color-bg-elevated);
+    box-shadow: var(--shadow-card);
   }
 
-  .qt-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .qt-form label {
-    display: grid;
-    gap: 0.4rem;
-    font-size: 0.82rem;
-    color: var(--color-text-muted);
-  }
-
-  .qt-form input:not([type='checkbox']),
-  .qt-form select,
-  .qt-form textarea {
-    width: 100%;
-    padding: 0.7rem 0.85rem;
-    border: 1px solid var(--color-border-strong);
-    border-radius: var(--radius-md);
-    background: var(--color-bg-sunken);
-    color: var(--color-text);
-    font: inherit;
-    font-size: 0.9rem;
-  }
-
-  .qt-form textarea {
-    resize: vertical;
-  }
-
-  .qt-form :is(input, select, textarea):focus {
-    outline: none;
-    border-color: var(--color-accent);
-  }
-
-  .qt-hp {
-    display: none;
-  }
-
-  .qt-check {
-    grid-template-columns: auto 1fr !important;
-    align-items: start;
-    font-size: 0.8rem !important;
-  }
-
-  .qt-check input {
-    margin-top: 0.2rem;
-    accent-color: var(--color-accent);
-  }
-
-  .qt-check a {
-    color: var(--color-accent);
-  }
-
-  .qt-send {
-    justify-content: center;
-  }
-
-  .qt-book {
-    text-align: center;
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-  }
-
-  .qt-fallback {
-    align-content: start;
-    justify-items: start;
+  .qt-mail-lead {
     color: var(--color-text-muted);
     line-height: 1.7;
   }
 
+  .qt-mail-addr {
+    max-width: 100%;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 4.6vw, 1.85rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    color: var(--color-accent);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    border-bottom: 2px solid var(--color-border-accent);
+    transition: border-color var(--transition-fast);
+  }
+
+  .qt-mail-addr:hover {
+    border-color: var(--color-accent);
+  }
+
+  .qt-mail-actions,
+  .qt-mail-more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .qt-mail-note {
+    font-size: 0.8rem;
+    color: var(--color-text-faint);
+  }
   .qt-band {
     display: flex;
     align-items: center;
@@ -447,7 +374,6 @@ const after = es
   }
 
   @media (max-width: 480px) {
-    .qt-row,
     .qt-cards {
       grid-template-columns: 1fr;
     }

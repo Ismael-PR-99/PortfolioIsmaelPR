@@ -121,11 +121,13 @@ const icons: Record<string, string> = {
 </section>
 
 <script>
-  // Carry the chosen service into the contact form.
+  // Carry the chosen service into the prefilled email.
   document.querySelectorAll<HTMLAnchorElement>('[data-service]').forEach((a) => {
     a.addEventListener('click', () => {
-      const field = document.querySelector<HTMLSelectElement>('#q-service');
-      if (field && a.dataset.service) field.value = a.dataset.service;
+      const name = a.closest('.sv-card')?.querySelector('h3')?.textContent?.trim();
+      if (!name) return;
+      const prefix = document.documentElement.lang === 'es' ? 'Presupuesto' : 'Quote';
+      window.dispatchEvent(new CustomEvent('quote:prefill', { detail: { subject: `${prefix}: ${name}` } }));
     });
   });
 </script>

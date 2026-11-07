@@ -134,15 +134,13 @@ const timings = es
     box.addEventListener('change', update);
     update();
 
-    // Hand the selection to the contact form so the client doesn't retype it.
+    // Hand the selection over as a prefilled email so the client doesn't retype it.
     box.querySelector('[data-calc-cta]')?.addEventListener('click', () => {
       const r = read();
-      const service = document.querySelector<HTMLSelectElement>('#q-service');
-      if (service) service.value = r.id;
-      const msg = document.querySelector<HTMLTextAreaElement>('#q-message');
-      if (msg && !msg.value) {
-        msg.value = [r.service, ...r.extras.map((e) => `+ ${e}`), `→ ${r.timing}`].join('\n') + '\n\n';
-      }
+      const body = [r.service, ...r.extras.map((e) => `+ ${e}`), `→ ${r.timing}`].join('\n') + '\n\n';
+      window.dispatchEvent(
+        new CustomEvent('quote:prefill', { detail: { subject: `${document.documentElement.lang === 'es' ? 'Presupuesto' : 'Quote'}: ${r.service}`, body } })
+      );
     });
   }
 </script>

@@ -17,7 +17,6 @@ export const CONTACT = {
   email: 'ismael199904@gmail.com',
   whatsapp: '', // international format, digits only: 34600000000
   whatsappLabel: '',
-  web3formsKey: '', // access key from web3forms.com — enables the contact form
   bookingUrl: '', // e.g. a cal.com link for "book a call"
   hours: { es: 'L–V, 9:00–19:00', en: 'Mon–Fri, 9:00–19:00' },
 } as const;

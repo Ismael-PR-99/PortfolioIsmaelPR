@@ -4,7 +4,6 @@
 // scroll, and every section is reachable from the hero and the footer.
 import { type Lang } from '@i18n/ui';
 import { getAlternateLang, getAlternatePath, getHomePath, getAboutPath } from '@i18n/utils';
-import ScrollProgress from '@components/ScrollProgress.astro';
 
 interface Props {
   lang?: Lang;
@@ -18,12 +17,13 @@ const alternatePath = getAlternatePath(lang, page);
 const home = getHomePath(lang);
 const about = getAboutPath(lang);
 
+// `short` is the label for the mobile strip, where all five must fit at once
 const navLinks = [
-  { href: `${home}#servicios`, label: es ? 'Servicios' : 'Services' },
-  { href: `${home}#presupuesto`, label: es ? 'Presupuesto' : 'Quote' },
-  { href: `${home}#proceso`, label: es ? 'Cómo trabajo' : 'How I work' },
-  { href: `${home}#trabajos`, label: es ? 'Trabajos' : 'Work' },
-  { href: `${home}#preguntas`, label: es ? 'Preguntas' : 'FAQ' },
+  { href: `${home}#servicios`, label: es ? 'Servicios' : 'Services', short: es ? 'Servicios' : 'Services' },
+  { href: `${home}#presupuesto`, label: es ? 'Presupuesto' : 'Quote', short: es ? 'Presupuesto' : 'Quote' },
+  { href: `${home}#proceso`, label: es ? 'Cómo trabajo' : 'How I work', short: es ? 'Proceso' : 'Process' },
+  { href: `${home}#trabajos`, label: es ? 'Trabajos' : 'Work', short: es ? 'Trabajos' : 'Work' },
+  { href: `${home}#preguntas`, label: es ? 'Preguntas' : 'FAQ', short: es ? 'Preguntas' : 'FAQ' },
 ];
 ---
 
@@ -68,12 +68,21 @@ const navLinks = [
       </a>
     </div>
   </nav>
-  <ScrollProgress />
+
+  <nav class="nav-sections" aria-label={es ? 'Secciones' : 'Sections'}>
+    <ul role="list">
+      {navLinks.map((link) => (
+        <li>
+          <a href={link.href} class="nav-link nav-chip">{link.short}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
 </header>
 
 <script>
   const header = document.querySelector<HTMLElement>('.nav-header');
-  const links = document.querySelectorAll<HTMLAnchorElement>('.nav-links .nav-link');
+  const links = document.querySelectorAll<HTMLAnchorElement>('.nav-links .nav-link, .nav-sections .nav-link');
 
   // Only touch the class when the state actually flips, not on every scroll event
   let scrolled = false;
@@ -260,9 +269,52 @@ const navLinks = [
     display: none;
   }
 
+  /* Section strip: replaces the hidden desktop links on small screens.
+     Plain horizontal scroll, no hamburger or overlay. */
+  .nav-sections {
+    display: none;
+  }
+
   @media (max-width: 1080px) {
     .nav-links {
       display: none;
+    }
+
+    .nav-sections {
+      display: block;
+      position: relative;
+      height: 40px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .nav-sections::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-sections ul {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      width: max-content;
+      min-width: 100%;
+      height: 100%;
+      padding-inline: max(1rem, env(safe-area-inset-left));
+      list-style: none;
+    }
+
+    .nav-chip {
+      display: block;
+      padding-block: 0.55rem;
+      font-size: clamp(0.66rem, 3.1vw, 0.8rem);
+    }
+
+    .nav-chip::after {
+      bottom: 2px;
     }
   }
 
