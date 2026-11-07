@@ -13,7 +13,7 @@
   if (canvas && !reduced.matches) {
     const ctx = canvas.getContext('2d', { alpha: true })!;
 
-    const ACCENT = '163, 230, 53';
+    const ACCENT = '31, 79, 209';
     const LINK_DISTANCE = 150;
     const GRAB_DISTANCE = 120;
     const DENSITY = 60 / (1920 * 1080); // particles per css pixel²
@@ -31,7 +31,10 @@
     const rand = (min: number, max: number) => min + Math.random() * (max - min);
 
     function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const nextDpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Setting canvas.width clears it: only do it when the size really changed
+      if (canvas!.clientWidth === width && canvas!.clientHeight === height && nextDpr === dpr) return;
+      dpr = nextDpr;
       width = canvas!.clientWidth;
       height = canvas!.clientHeight;
       canvas!.width = Math.round(width * dpr);
@@ -153,9 +156,13 @@
 <style>
   #constellation {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
+    /* lvh, not 100%: on iOS the toolbar collapsing while scrolling would
+       otherwise resize (and repaint) this layer on every scroll */
+    height: 100vh;
+    height: 100lvh;
     z-index: 0;
     pointer-events: none;
   }
