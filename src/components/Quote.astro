@@ -1,0 +1,455 @@
+---
+import { BASE_URL, CONTACT, SOCIALS } from '@config/site';
+import { type Lang } from '@i18n/ui';
+import { services } from '@data/services';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const es = lang === 'es';
+
+// Web3Forms when there's a key; otherwise the same form opens the visitor's
+// mail app with everything filled in, so nothing is stored anywhere.
+const viaApi = CONTACT.web3formsKey.length > 0;
+const hasForm = viaApi || CONTACT.email.length > 0;
+const whatsappHref = CONTACT.whatsapp ? `https://wa.me/${CONTACT.whatsapp}` : '';
+const privacyHref = `${BASE_URL}${es ? '/privacidad/' : '/en/privacy/'}`;
+
+const after = es
+  ? [
+      ['Te llamo', 'En menos de 24 h, 15 minutos sin compromiso.'],
+      ['Recibes la propuesta', 'Precio cerrado y fecha de entrega, por escrito.'],
+      ['Empezamos', 'Solo si te convence. La mitad al empezar.'],
+    ]
+  : [
+      ['I call you', 'Within 24 h, 15 minutes, no strings.'],
+      ['You get the proposal', 'Fixed price and delivery date, in writing.'],
+      ['We start', 'Only if you’re happy. Half up front.'],
+    ];
+---
+
+<section id="contacto" class="qt">
+  <div class="container qt-grid">
+    <div class="qt-info" data-reveal>
+      <p class="section-eyebrow">
+        <span class="section-index">06</span>
+        <span class="section-label">{es ? 'Contacto' : 'Contact'}</span>
+      </p>
+      <h2 class="section-title">{es ? 'Cuéntame qué necesitas.' : 'Tell me what you need.'}</h2>
+      <p class="qt-lead">
+        {es
+          ? 'Te respondo en menos de 24 h laborables con una propuesta o una llamada.'
+          : 'I reply within one working day with a proposal or a call.'}
+      </p>
+
+      <div class="qt-cards">
+        <div class="qt-card qt-dark">
+          <strong>24 h</strong>
+          <span>{es ? 'tiempo máximo de respuesta' : 'maximum reply time'}</span>
+        </div>
+        {CONTACT.email && (
+          <a class="qt-card" href={`mailto:${CONTACT.email}`}>
+            <small>Email</small>
+            <span>{CONTACT.email}</span>
+          </a>
+        )}
+        {whatsappHref && (
+          <a class="qt-card qt-wa" href={whatsappHref} target="_blank" rel="noopener">
+            <small>WhatsApp</small>
+            <span>{CONTACT.whatsappLabel || CONTACT.whatsapp}</span>
+          </a>
+        )}
+        <div class="qt-card">
+          <small>{es ? 'Horario' : 'Hours'}</small>
+          <span>{CONTACT.hours[lang]}</span>
+        </div>
+        {!CONTACT.email && !whatsappHref && (
+          <a class="qt-card" href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer">
+            <small>LinkedIn</small>
+            <span>{es ? 'Escríbeme por mensaje' : 'Send me a message'}</span>
+          </a>
+        )}
+      </div>
+
+      <div class="qt-after">
+        <p class="qt-kicker">{es ? 'Qué pasa después' : 'What happens next'}</p>
+        <ol role="list">
+          {after.map(([t, d], i) => (
+            <li>
+              <span>{i + 1}</span>
+              <div><strong>{t}</strong><p>{d}</p></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <div class="qt-form-wrap" data-reveal style="--delay: 120ms">
+      {hasForm ? (
+        <form
+          class="qt-form"
+          action={viaApi ? 'https://api.web3forms.com/submit' : `mailto:${CONTACT.email}`}
+          method="POST"
+          enctype={viaApi ? undefined : 'text/plain'}
+          data-mailto={viaApi ? undefined : CONTACT.email}
+          data-subject={es ? 'Solicitud de presupuesto' : 'Quote request'}
+        >
+          {viaApi && <input type="hidden" name="access_key" value={CONTACT.web3formsKey} />}
+          {viaApi && <input type="hidden" name="subject" value={es ? 'Nueva solicitud desde la web' : 'New request from the website'} />}
+          {viaApi && <input type="checkbox" name="botcheck" class="qt-hp" tabindex="-1" autocomplete="off" />}
+
+          <div class="qt-row">
+            <label>
+              <span>{es ? 'Nombre' : 'Name'}</span>
+              <input name="name" required autocomplete="name" placeholder="María Ortega" />
+            </label>
+            <label>
+              <span>{es ? 'Teléfono (opcional)' : 'Phone (optional)'}</span>
+              <input name="phone" type="tel" autocomplete="tel" placeholder="600 000 000" />
+            </label>
+          </div>
+          <label>
+            <span>Email</span>
+            <input name="email" type="email" required autocomplete="email" placeholder={es ? 'tu@negocio.com' : 'you@business.com'} />
+          </label>
+          <label>
+            <span>{es ? 'Servicio' : 'Service'}</span>
+            <select id="q-service" name="service">
+              {services.map((s) => <option value={s.id}>{s.name[lang]}</option>)}
+              <option value="other">{es ? 'Varios / no lo sé' : 'Several / not sure'}</option>
+            </select>
+          </label>
+          <label>
+            <span>{es ? 'Mensaje' : 'Message'}</span>
+            <textarea id="q-message" name="message" rows="5" required placeholder={es ? 'Tengo una tienda en Triana y quiero vender online…' : 'I run a shop and want to sell online…'} />
+          </label>
+          {viaApi && (
+            <label class="qt-check">
+              <input type="checkbox" required />
+              <span>
+                {es ? 'He leído y acepto la ' : 'I have read and accept the '}
+                <a href={privacyHref}>{es ? 'política de privacidad' : 'privacy policy'}</a>.
+                {es ? ' Solo uso tus datos para responderte.' : ' I only use your details to reply.'}
+              </span>
+            </label>
+          )}
+          <button type="submit" class="btn btn-primary qt-send">{es ? 'Enviar solicitud' : 'Send request'}</button>
+          {!viaApi && (
+            <p class="qt-alt">
+              {es ? 'Se abrirá tu correo con el mensaje listo. ¿No tienes app de correo? Escríbeme a ' : 'Your mail app will open with the message ready. No mail app? Write to '}
+              <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+            </p>
+          )}
+          {CONTACT.bookingUrl && (
+            <a class="qt-book" href={CONTACT.bookingUrl} target="_blank" rel="noopener">
+              {es ? '¿Prefieres hablar? Reserva una llamada de 15 min →' : 'Rather talk? Book a 15-min call →'}
+            </a>
+          )}
+        </form>
+      ) : (
+        <div class="qt-form qt-fallback">
+          <p class="qt-kicker">{es ? 'Pide tu presupuesto' : 'Ask for a quote'}</p>
+          <p>
+            {es
+              ? 'Cuéntame tu negocio, qué necesitas y para cuándo. Te contesto con una propuesta por escrito.'
+              : 'Tell me about your business, what you need and when. I’ll reply with a written proposal.'}
+          </p>
+          {CONTACT.email && <a class="btn btn-primary" href={`mailto:${CONTACT.email}`}>{es ? 'Escribir un email' : 'Send an email'}</a>}
+          {whatsappHref && <a class="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener">WhatsApp</a>}
+          <a class="btn btn-ghost" href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="qt-band" data-reveal>
+      <div>
+        <p class="qt-band-title">{es ? 'Tu negocio online, listo en semanas. No en meses.' : 'Your business online in weeks, not months.'}</p>
+        <p class="qt-band-sub">{es ? 'Primera llamada gratis y sin compromiso.' : 'First call free, no strings.'}</p>
+      </div>
+      <div class="qt-band-ctas">
+        <a href="#contacto" class="btn btn-primary">{es ? 'Pedir presupuesto' : 'Get a quote'}</a>
+        <a href="#presupuesto" class="btn btn-ghost">{es ? 'Arma tu proyecto' : 'Build your project'}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Mail-app mode: build a readable email instead of the browser's raw text/plain post.
+  const form = document.querySelector<HTMLFormElement>('.qt-form[data-mailto]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const service = form.querySelector<HTMLSelectElement>('select[name="service"]');
+    const body = [
+      String(d.get('message') ?? '').trim(),
+      '',
+      '—',
+      `${d.get('name') ?? ''}`,
+      `${d.get('email') ?? ''}`,
+      `${d.get('phone') ?? ''}`,
+      service?.selectedOptions[0]?.textContent ?? '',
+    ]
+      .filter((l, i) => i < 3 || l)
+      .join('\n');
+    const subject = `${form.dataset.subject} — ${d.get('name') ?? ''}`;
+    window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>
+
+<style>
+  .qt-alt {
+    font-size: 0.78rem;
+    text-align: center;
+    color: var(--color-text-faint);
+  }
+
+  .qt-alt a {
+    color: var(--color-accent);
+  }
+
+  .qt-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .qt-lead {
+    margin-top: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .qt-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .qt-card {
+    display: grid;
+    gap: 0.2rem;
+    align-content: end;
+    min-height: 92px;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-elevated);
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 0.88rem;
+    word-break: break-word;
+  }
+
+  a.qt-card:hover {
+    border-color: var(--color-border-accent);
+  }
+
+  .qt-card small {
+    font-size: 0.72rem;
+    color: var(--color-text-faint);
+  }
+
+  .qt-dark {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #0a0a0b;
+  }
+
+  .qt-dark strong {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .qt-dark span {
+    font-size: 0.8rem;
+  }
+
+  .qt-wa {
+    border-color: #25d36655;
+    background: #25d36612;
+  }
+
+  .qt-after {
+    margin-top: 1rem;
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .qt-kicker {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .qt-after ol {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1rem;
+    list-style: none;
+  }
+
+  .qt-after li {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .qt-after li > span {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-text);
+    color: #0a0a0b;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .qt-after strong {
+    font-size: 0.9rem;
+  }
+
+  .qt-after p {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .qt-form {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-elevated);
+  }
+
+  .qt-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .qt-form label {
+    display: grid;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .qt-form input:not([type='checkbox']),
+  .qt-form select,
+  .qt-form textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-sunken);
+    color: var(--color-text);
+    font: inherit;
+    font-size: 0.9rem;
+  }
+
+  .qt-form textarea {
+    resize: vertical;
+  }
+
+  .qt-form :is(input, select, textarea):focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .qt-hp {
+    display: none;
+  }
+
+  .qt-check {
+    grid-template-columns: auto 1fr !important;
+    align-items: start;
+    font-size: 0.8rem !important;
+  }
+
+  .qt-check input {
+    margin-top: 0.2rem;
+    accent-color: var(--color-accent);
+  }
+
+  .qt-check a {
+    color: var(--color-accent);
+  }
+
+  .qt-send {
+    justify-content: center;
+  }
+
+  .qt-book {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .qt-fallback {
+    align-content: start;
+    justify-items: start;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .qt-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    padding: clamp(1.75rem, 4vw, 3rem);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 85% 20%, #a3e63526, transparent 45%),
+      var(--color-bg-card);
+    border: 1px solid var(--color-border-accent);
+  }
+
+  .qt-band-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    max-width: 18ch;
+  }
+
+  .qt-band-sub {
+    margin-top: 0.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .qt-band-ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 860px) {
+    .qt-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .qt-row,
+    .qt-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

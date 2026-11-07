@@ -1,22 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '@components/Hero.astro';
-import Stack from '@components/Stack.astro';
-import Timeline from '@components/Timeline.astro';
+import ServicesHero from '@components/ServicesHero.astro';
+import Services from '@components/Services.astro';
+import Calculator from '@components/Calculator.astro';
+import Process from '@components/Process.astro';
 import Projects from '@components/Projects.astro';
-import Reel from '@components/Reel.astro';
-import Contact from '@components/Contact.astro';
+import Faq from '@components/Faq.astro';
+import Quote from '@components/Quote.astro';
 ---
 
 <BaseLayout
   lang="en"
-  title="Ismael Piña Ramos — Full Stack Developer"
-  description="Full Stack Web Developer specialized in Java, PHP, Python and JavaScript. Open to internships in Seville, Spain."
+  title="Ismael Piña — Websites, online shops and custom apps in Seville"
+  description="Web developer in Seville, Spain. Business websites, online shops with card payments, admin panels and security audits. Fixed price, and you own the code."
 >
-  <Hero lang="en" />
-  <Stack lang="en" />
-  <Timeline lang="en" />
-  <Projects lang="en" />
-  <Reel lang="en" />
-  <Contact lang="en" />
+  <ServicesHero lang="en" />
+  <Services lang="en" />
+  <Calculator lang="en" />
+  <Process lang="en" />
+  <Projects lang="en" id="trabajos" index="04" />
+  <Faq lang="en" />
+  <Quote lang="en" />
 </BaseLayout>

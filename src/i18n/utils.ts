@@ -17,6 +17,15 @@ export function getAlternateLang(lang: Lang): Lang {
   return lang === 'es' ? 'en' : 'es';
 }
 
-export function getAlternatePath(lang: Lang): string {
-  return lang === 'es' ? `${BASE_URL}/en/` : `${BASE_URL}/`;
+export function getHomePath(lang: Lang): string {
+  return lang === 'es' ? `${BASE_URL}/` : `${BASE_URL}/en/`;
+}
+
+export function getAboutPath(lang: Lang): string {
+  return lang === 'es' ? `${BASE_URL}/sobre-mi/` : `${BASE_URL}/en/about/`;
+}
+
+export function getAlternatePath(lang: Lang, page: 'home' | 'about' = 'home'): string {
+  const other = getAlternateLang(lang);
+  return page === 'about' ? getAboutPath(other) : getHomePath(other);
 }

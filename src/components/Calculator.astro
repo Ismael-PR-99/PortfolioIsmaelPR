@@ -1,0 +1,362 @@
+---
+// "Build your project": no prices on purpose (every client gets a written
+// quote). The client picks what they need and the summary travels to the
+// contact form, so the first message already says what they want.
+import { type Lang } from '@i18n/ui';
+import { services, extras } from '@data/services';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const es = lang === 'es';
+const first = services[0];
+
+const timings = es
+  ? ['Lo antes posible', 'En 1–2 meses', 'Sin prisa']
+  : ['As soon as possible', 'In 1–2 months', 'No rush'];
+---
+
+<section id="presupuesto" class="calc">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <div>
+        <p class="section-eyebrow">
+          <span class="section-index">02</span>
+          <span class="section-label">{es ? 'Presupuesto' : 'Quote'}</span>
+        </p>
+        <h2 class="section-title">{es ? 'Arma tu proyecto en 20 segundos.' : 'Build your project in 20 seconds.'}</h2>
+      </div>
+      <p class="section-subtitle">
+        {es
+          ? 'Cada negocio es un mundo, así que no hay tarifas cerradas. Marca lo que necesitas y te mando un presupuesto a medida, gratis y por escrito.'
+          : 'Every business is different, so there are no fixed rates. Tick what you need and I’ll send you a tailored quote, free and in writing.'}
+      </p>
+    </header>
+
+    <form class="calc-box" data-reveal onsubmit="return false">
+      <div class="calc-in">
+        <fieldset>
+          <legend>1. {es ? '¿Qué necesitas?' : 'What do you need?'}</legend>
+          <div class="calc-opts">
+            {services.map((s, i) => (
+              <label class="calc-opt">
+                <input type="radio" name="service" value={s.id} checked={i === 0} />
+                <span>{s.name[lang]}</span>
+                <small>{s.delivery[lang]}</small>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>2. {es ? '¿Algo más?' : 'Anything else?'}</legend>
+          <div class="calc-extras">
+            {extras.map((x) => (
+              <label class="calc-extra" data-for={x.for.join(' ')} hidden={!x.for.includes(first.id)}>
+                <input type="checkbox" name="extra" value={x.id} />
+                <span>{x.name[lang]}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. {es ? '¿Para cuándo?' : 'When?'}</legend>
+          <div class="calc-chips">
+            {timings.map((t, i) => (
+              <label class="calc-chip">
+                <input type="radio" name="timing" value={t} checked={i === 1} />
+                <span>{t}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </div>
+
+      <aside class="calc-out" aria-live="polite">
+        <p class="calc-kicker">{es ? 'Tu proyecto' : 'Your project'}</p>
+        <p class="calc-service" data-out="service">{first.name[lang]}</p>
+        <ul class="calc-list" data-out="extras" data-empty={es ? 'Sin extras' : 'No extras'}>
+          <li class="muted">{es ? 'Sin extras' : 'No extras'}</li>
+        </ul>
+        <p class="calc-line"><span>{es ? 'Plazo orientativo' : 'Typical timeline'}</span><strong data-out="delivery">{first.delivery[lang]}</strong></p>
+        <p class="calc-line"><span>{es ? 'Para' : 'Needed'}</span><strong data-out="timing">{timings[1]}</strong></p>
+        <p class="calc-price">{es ? 'Presupuesto a medida' : 'Tailored quote'}<small>{es ? 'gratis · en 48 h · por escrito' : 'free · within 48 h · in writing'}</small></p>
+        <a href="#contacto" class="btn btn-primary calc-cta" data-calc-cta>
+          {es ? 'Pedir este presupuesto' : 'Request this quote'}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+        </a>
+      </aside>
+    </form>
+  </div>
+</section>
+
+<script>
+  const box = document.querySelector<HTMLFormElement>('.calc-box');
+  if (box) {
+    const out = (k: string) => box.querySelector<HTMLElement>(`[data-out="${k}"]`)!;
+    const labelOf = (input: Element | null) =>
+      input?.closest('label')?.querySelector('span')?.textContent?.trim() ?? '';
+
+    const read = () => {
+      const svc = box.querySelector<HTMLInputElement>('input[name="service"]:checked')!;
+      box.querySelectorAll<HTMLLabelElement>('.calc-extra').forEach((row) => {
+        const show = (row.dataset.for ?? '').split(' ').includes(svc.value);
+        row.hidden = !show;
+        if (!show) row.querySelector('input')!.checked = false;
+      });
+      const picked = [...box.querySelectorAll<HTMLInputElement>('input[name="extra"]:checked')].map(labelOf);
+      const timing = box.querySelector<HTMLInputElement>('input[name="timing"]:checked')!;
+      return {
+        id: svc.value,
+        service: labelOf(svc),
+        delivery: svc.closest('label')?.querySelector('small')?.textContent?.trim() ?? '',
+        extras: picked,
+        timing: timing.value,
+      };
+    };
+
+    const update = () => {
+      const r = read();
+      out('service').textContent = r.service;
+      out('delivery').textContent = r.delivery;
+      out('timing').textContent = r.timing;
+      const list = out('extras');
+      list.replaceChildren(
+        ...(r.extras.length ? r.extras : [list.dataset.empty ?? '']).map((t) => {
+          const li = document.createElement('li');
+          li.textContent = t;
+          if (!r.extras.length) li.className = 'muted';
+          return li;
+        })
+      );
+    };
+
+    box.addEventListener('change', update);
+    update();
+
+    // Hand the selection to the contact form so the client doesn't retype it.
+    box.querySelector('[data-calc-cta]')?.addEventListener('click', () => {
+      const r = read();
+      const service = document.querySelector<HTMLSelectElement>('#q-service');
+      if (service) service.value = r.id;
+      const msg = document.querySelector<HTMLTextAreaElement>('#q-message');
+      if (msg && !msg.value) {
+        msg.value = [r.service, ...r.extras.map((e) => `+ ${e}`), `→ ${r.timing}`].join('\n') + '\n\n';
+      }
+    });
+  }
+</script>
+
+<style>
+  .calc-box {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--color-bg-elevated);
+  }
+
+  .calc-in {
+    display: grid;
+    gap: 1.75rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  fieldset {
+    border: 0;
+  }
+
+  legend {
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .calc-opts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .calc-opt,
+  .calc-chip {
+    position: relative;
+    cursor: pointer;
+    border: 1px solid var(--color-border-strong);
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .calc-opt {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .calc-opt input,
+  .calc-chip input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .calc-opt span {
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+
+  .calc-opt small {
+    font-size: 0.74rem;
+    color: var(--color-text-faint);
+  }
+
+  .calc-opt:has(input:checked),
+  .calc-chip:has(input:checked) {
+    border-color: var(--color-accent);
+    background: #a3e63510;
+  }
+
+  .calc-opt:has(input:focus-visible),
+  .calc-chip:has(input:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .calc-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .calc-chip {
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
+  }
+
+  .calc-extras {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .calc-extra {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.86rem;
+    cursor: pointer;
+  }
+
+  .calc-extra[hidden] {
+    display: none;
+  }
+
+  .calc-extra input {
+    flex: none;
+    accent-color: var(--color-accent);
+    width: 16px;
+    height: 16px;
+  }
+
+  .calc-extra:has(input:checked) {
+    border-color: var(--color-border-accent);
+  }
+
+  .calc-out {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--color-accent);
+    color: #0a0a0b;
+  }
+
+  .calc-kicker {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .calc-service {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .calc-list {
+    display: grid;
+    gap: 0.3rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #0a0a0b26;
+    list-style: none;
+    font-size: 0.86rem;
+  }
+
+  .calc-list :global(li)::before {
+    content: '+ ';
+    font-weight: 700;
+  }
+
+  .calc-list :global(li.muted) {
+    opacity: 0.6;
+  }
+
+  .calc-list :global(li.muted)::before {
+    content: '';
+  }
+
+  .calc-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: 0.86rem;
+  }
+
+  .calc-price {
+    display: grid;
+    margin-top: 0.4rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid #0a0a0b26;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+
+  .calc-price small {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    opacity: 0.75;
+  }
+
+  .calc-cta {
+    margin-top: auto;
+    justify-content: center;
+    background: #0a0a0b;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 860px) {
+    .calc-box {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .calc-opts,
+    .calc-extras {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

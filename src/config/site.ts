@@ -11,6 +11,17 @@ export const PROFILE = {
   available: true,
 } as const;
 
+// Business contact for the services landing. Anything left empty is simply
+// not rendered, so the page never shows a dead link or a placeholder.
+export const CONTACT = {
+  email: 'ismael199904@gmail.com',
+  whatsapp: '', // international format, digits only: 34600000000
+  whatsappLabel: '',
+  web3formsKey: '', // access key from web3forms.com — enables the contact form
+  bookingUrl: '', // e.g. a cal.com link for "book a call"
+  hours: { es: 'L–V, 9:00–19:00', en: 'Mon–Fri, 9:00–19:00' },
+} as const;
+
 export const SOCIALS = {
   github: 'https://github.com/Ismael-PR-99',
   linkedin: 'https://www.linkedin.com/in/ismael-piña-ramos-1b6b121b4/',

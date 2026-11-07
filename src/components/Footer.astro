@@ -1,5 +1,5 @@
 ---
-import { SOCIALS, PROFILE } from '@config/site';
+import { SOCIALS, PROFILE, CONTACT } from '@config/site';
 import { type Lang } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
 
@@ -28,6 +28,14 @@ const year = new Date().getFullYear();
     </p>
 
     <div class="footer-socials">
+      {CONTACT.email && (
+        <a href={`mailto:${CONTACT.email}`} aria-label="Email" class="footer-social-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 6-10 7L2 6" />
+          </svg>
+        </a>
+      )}
       <a
         href={SOCIALS.github}
         target="_blank"
