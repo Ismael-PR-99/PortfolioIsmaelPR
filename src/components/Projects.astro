@@ -23,7 +23,7 @@ interface Project {
   context?: Localised;
   tags: string[];
   liveUrl: string;
-  githubUrl: string;
+  githubUrl?: string;
   downloadUrl?: string;
   pdfUrl?: string;
   featured: boolean;
@@ -127,6 +127,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                       {t('projects.cta.app')}
                     </a>
                   )}
+                  {project.githubUrl && (
                   <a
                     href={project.githubUrl}
                     target="_blank"
@@ -139,6 +140,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                     </svg>
                     GitHub
                   </a>
+                  )}
                   {project.downloadUrl && (
                     <a
                       href={project.downloadUrl}
