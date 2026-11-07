@@ -2,6 +2,7 @@
 import { type Lang } from '@i18n/ui';
 import { useTranslations, getAlternateLang, getAlternatePath, getHomePath, getAboutPath } from '@i18n/utils';
 import ScrollProgress from '@components/ScrollProgress.astro';
+import SocialLinks from '@components/SocialLinks.astro';
 
 interface Props {
   lang?: Lang;
@@ -81,6 +82,9 @@ const navLinks = [
         </li>
       ))}
     </ul>
+    <div class="mobile-social">
+      <SocialLinks variant="menu" lang={lang} />
+    </div>
     <div class="mobile-lang">
       <a href={alternatePath} class="mobile-lang-link">
         {alternateLang === 'en' ? '🇬🇧 English' : '🇪🇸 Español'}
@@ -344,7 +348,11 @@ const navLinks = [
     transform: none;
   }
 
-  .mobile-menu ul {
+  .mobile-social {
+    margin-top: 2rem;
+  }
+
+  .mobile-menu > ul {
     list-style: none;
     display: flex;
     flex-direction: column;

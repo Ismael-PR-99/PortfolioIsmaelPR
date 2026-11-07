@@ -10,7 +10,7 @@ interface Props { lang?: Lang; }
 const { lang = 'es' } = Astro.props;
 const t = useTranslations(lang);
 
-const photo = `${BASE_URL}/images/IsmaelFoto`;
+const photo = `${BASE_URL}/images/ismael-retrato`;
 
 const chips = [t('hero.chip.location'), t('hero.chip.level'), t('hero.chip.type')];
 const [roleBefore, roleAfter] = t('hero.role').split('Full Stack');
@@ -116,7 +116,7 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
           <source srcset={`${photo}.avif`} type="image/avif" />
           <source srcset={`${photo}.webp`} type="image/webp" />
           <img
-            src={`${photo}.png`}
+            src={`${photo}.jpg`}
             alt={`Retrato de ${PROFILE.name}`}
             width="440"
             height="540"

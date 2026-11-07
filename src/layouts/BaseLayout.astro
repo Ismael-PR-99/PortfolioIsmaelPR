@@ -6,6 +6,7 @@ import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import Particles from '@components/Particles.astro';
 import Aurora from '@components/Aurora.astro';
+import SocialLinks from '@components/SocialLinks.astro';
 
 interface Props {
   lang?: Lang;
@@ -33,7 +34,7 @@ const ogImageAlt =
     ? `${PROFILE.name} — Desarrollador Web Full Stack`
     : `${PROFILE.name} — Full Stack Web Developer`;
 // schema.org/Person wants an actual photo of the person, not the social card.
-const photoUrl = `${SITE_URL}${BASE_URL}/images/IsmaelFoto.png`;
+const photoUrl = `${SITE_URL}${BASE_URL}/images/ismael-retrato.jpg`;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
 const alternateLang = getAlternateLang(lang);
 const alternatePath = getAlternatePath(lang, page);
@@ -123,6 +124,7 @@ const jsonLd = {
     <Aurora />
     <Particles />
     <Nav lang={lang} page={page} />
+    <SocialLinks variant="rail" lang={lang} />
     <main id="main-content">
       <slot />
     </main>
