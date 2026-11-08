@@ -14,6 +14,8 @@ const photo = `${BASE_URL}/images/ismael-retrato`;
 
 const chips = [t('hero.chip.location'), t('hero.chip.level'), t('hero.chip.type')];
 const [roleBefore, roleAfter] = t('hero.role').split('Full Stack');
+// The accent word types through these; the markup itself ships as "Full Stack"
+const roleWords = ['Full Stack', 'Backend', 'Frontend', 'Laravel', 'Java'];
 
 // Real counts, derived from the same data the other sections render —
 // never hand-typed numbers that drift out of sync.
@@ -65,7 +67,7 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
       </h1>
 
       <p class="hero-role" style="--i: 2">
-        {roleBefore}<span class="role-accent">Full Stack</span>{roleAfter}
+        {roleBefore}<span class="role-accent" data-words={roleWords.join('|')}>Full Stack</span>{roleAfter}
       </p>
 
       <p class="hero-bio" style="--i: 3">{t('hero.bio')}</p>
@@ -75,7 +77,7 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
       </ul>
 
       <div class="hero-ctas" style="--i: 5">
-        <a href={`${BASE_URL}${lang === 'es' ? '/' : '/en/'}#trabajos`} class="btn btn-primary">
+        <a href="#projects" class="btn btn-primary">
           {t('hero.cta.projects')}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="m6 9 6 6 6-6" />
@@ -191,6 +193,34 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
   );
 
   nums.forEach((el) => observer.observe(el));
+
+  // Typewriter on the accent word of the role. The full phrase stays in the
+  // h1/aria context for crawlers and screen readers, so this is decoration only.
+  const accent = document.querySelector<HTMLElement>('.role-accent');
+  const words = accent?.dataset.words?.split('|') ?? [];
+  if (accent && words.length > 1 && !reduced.matches) {
+    accent.classList.add('is-typing');
+    let w = 0;
+    let n = words[0].length;
+    let deleting = false;
+    const tick = () => {
+      const word = words[w];
+      accent.textContent = word.slice(0, n);
+      let wait = deleting ? 45 : 85;
+      if (!deleting && n === word.length) {
+        deleting = true;
+        wait = 1800;
+      } else if (deleting && n === 0) {
+        deleting = false;
+        w = (w + 1) % words.length;
+        wait = 300;
+      } else {
+        n += deleting ? -1 : 1;
+      }
+      window.setTimeout(tick, wait);
+    };
+    window.setTimeout(tick, 2600);
+  }
 </script>
 
 <style>
@@ -233,6 +263,21 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
     display: inline-block;
     animation: letter-in 0.7s var(--ease-out-soft) both;
     animation-delay: calc(220ms + var(--l) * 38ms);
+  }
+
+  /* After the entrance, a slow colour wave runs along the name */
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .letter {
+      animation:
+        letter-in 0.7s var(--ease-out-soft) both,
+        letter-wave 7s ease-in-out infinite;
+      animation-delay: calc(220ms + var(--l) * 38ms), calc(2.2s + var(--l) * 140ms);
+    }
+  }
+
+  @keyframes letter-wave {
+    0%, 22%, 100% { color: var(--color-text); }
+    10% { color: var(--color-accent); }
   }
 
   .letter-space {
@@ -354,6 +399,21 @@ const nameLetters = [...PROFILE.name].map((char, i) => ({
 
   .role-accent {
     color: var(--color-accent);
+  }
+
+  .role-accent.is-typing::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left: 3px;
+    vertical-align: -0.12em;
+    background: currentColor;
+    animation: caret-blink 1s steps(1) infinite;
+  }
+
+  @keyframes caret-blink {
+    50% { opacity: 0; }
   }
 
   .hero-bio {

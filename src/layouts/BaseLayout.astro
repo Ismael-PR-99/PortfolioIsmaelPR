@@ -12,10 +12,9 @@ interface Props {
   lang?: Lang;
   title?: string;
   description?: string;
-  page?: 'home' | 'about';
 }
 
-const { lang = 'es', title, description, page = 'home' } = Astro.props;
+const { lang = 'es', title, description } = Astro.props;
 
 const defaultTitle = `${PROFILE.name} — Full Stack Developer`;
 const defaultDesc =
@@ -37,7 +36,7 @@ const ogImageAlt =
 const photoUrl = `${SITE_URL}${BASE_URL}/images/ismael-retrato.jpg`;
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
 const alternateLang = getAlternateLang(lang);
-const alternatePath = getAlternatePath(lang, page);
+const alternatePath = getAlternatePath(lang);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -136,7 +135,7 @@ const jsonLd = {
     </a>
     <Aurora />
     <Particles />
-    <Nav lang={lang} page={page} />
+    <Nav lang={lang} />
     <SocialLinks variant="rail" lang={lang} />
     <main id="main-content">
       <slot />

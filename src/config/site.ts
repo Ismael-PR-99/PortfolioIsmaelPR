@@ -11,15 +11,12 @@ export const PROFILE = {
   available: true,
 } as const;
 
-// Business contact for the services landing. Anything left empty is simply
-// not rendered, so the page never shows a dead link or a placeholder.
 export const CONTACT = {
   email: 'ismael199904@gmail.com',
-  whatsapp: '', // international format, digits only: 34600000000
-  whatsappLabel: '',
-  bookingUrl: '', // e.g. a cal.com link for "book a call"
-  hours: { es: 'L–V, 9:00–19:00', en: 'Mon–Fri, 9:00–19:00' },
 } as const;
+
+// Services, quotes and client work live on the studio site, not here.
+export const STUDIO_URL = 'https://aguilerastudio.dev';
 
 export const SOCIALS = {
   github: 'https://github.com/Ismael-PR-99',
