@@ -1,0 +1,131 @@
+---
+import { STUDIO_URL } from '@config/site';
+import { type Lang } from '@i18n/ui';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const es = lang === 'es';
+---
+
+<a
+  id="floating-cta"
+  class="fcta"
+  href={`${STUDIO_URL}/#contacto`}
+  target="_blank"
+  rel="noopener"
+  aria-hidden="true"
+  tabindex="-1"
+>
+  <span class="fcta-dot" aria-hidden="true"></span>
+  <span class="fcta-long">{es ? '¿Necesitas una web? Pide presupuesto' : 'Need a website? Get a quote'}</span>
+  <span class="fcta-short">{es ? 'Pide presupuesto' : 'Get a quote'}</span>
+  <span aria-hidden="true">↗</span>
+</a>
+
+<script>
+  // Shown once the hero is behind you, hidden again while the studio and
+  // contact sections (which already carry the same call to action) are on screen.
+  const cta = document.getElementById('floating-cta');
+  const hero = document.getElementById('hero');
+  const own = ['studio', 'contact'].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+
+  if (cta && hero) {
+    let pastHero = false;
+    let overOwn = new Set<Element>();
+
+    const update = () => {
+      const show = pastHero && overOwn.size === 0;
+      cta.classList.toggle('is-shown', show);
+      cta.setAttribute('aria-hidden', String(!show));
+      cta.tabIndex = show ? 0 : -1;
+    };
+
+    new IntersectionObserver(
+      ([e]) => {
+        pastHero = !e.isIntersecting;
+        update();
+      },
+      { threshold: 0.1 }
+    ).observe(hero);
+
+    const ownObserver = new IntersectionObserver((entries) => {
+      for (const e of entries) e.isIntersecting ? overOwn.add(e.target) : overOwn.delete(e.target);
+      update();
+    });
+    own.forEach((s) => ownObserver.observe(s));
+  }
+</script>
+
+<style>
+  .fcta {
+    position: fixed;
+    z-index: 90;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-on-accent);
+    background: var(--color-cta);
+    box-shadow: 0 10px 28px #f26b3a59;
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+    transition: opacity 250ms ease, transform 250ms var(--ease-out-soft), background 150ms ease;
+  }
+
+  .fcta.is-shown {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .fcta-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 0 #ffffffb3;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fcta-dot {
+      animation: fcta-pulse 2s ease-out infinite;
+    }
+  }
+
+  @keyframes fcta-pulse {
+    to { box-shadow: 0 0 0 9px #ffffff00; }
+  }
+
+  @media (hover: hover) {
+    .fcta:hover {
+      background: var(--color-cta-hover);
+    }
+  }
+
+  .fcta-short {
+    display: none;
+  }
+
+  @media (max-width: 400px) {
+    .fcta-long {
+      display: none;
+    }
+    .fcta-short {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .fcta {
+      left: max(1rem, env(safe-area-inset-left));
+      justify-content: center;
+    }
+  }
+</style>

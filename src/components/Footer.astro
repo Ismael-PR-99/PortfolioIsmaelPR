@@ -1,5 +1,5 @@
 ---
-import { PROFILE } from '@config/site';
+import { PROFILE, STUDIO_URL } from '@config/site';
 import SocialLinks from '@components/SocialLinks.astro';
 import { type Lang } from '@i18n/ui';
 import { useTranslations } from '@i18n/utils';
@@ -26,6 +26,8 @@ const year = new Date().getFullYear();
       >
         Tailwind
       </a>
+      ·
+      <a href={STUDIO_URL} target="_blank" rel="noopener" class="footer-link">Aguilera Studio</a>
     </p>
 
     <SocialLinks variant="footer" lang={lang} />

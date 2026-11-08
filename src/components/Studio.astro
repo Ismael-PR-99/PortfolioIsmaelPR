@@ -1,0 +1,279 @@
+---
+import { CONTACT, STUDIO_URL } from '@config/site';
+import { type Lang } from '@i18n/ui';
+
+interface Props { lang?: Lang; index?: string; }
+const { lang = 'es', index = '04' } = Astro.props;
+const es = lang === 'es';
+
+const services = [
+  {
+    path: '/diseno-web-sevilla',
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/>',
+    title: es ? 'Páginas web' : 'Websites',
+    text: es
+      ? 'Tu web profesional, rápida, adaptada a móvil y lista para que te encuentren en Google.'
+      : 'A fast, mobile-ready business website, set up so people can find you on Google.',
+  },
+  {
+    path: '/carta-qr-restaurantes-sevilla',
+    icon: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v1M14 20h1M18 20h3v-3"/>',
+    title: es ? 'Carta digital con QR' : 'QR digital menus',
+    text: es
+      ? 'La carta en el móvil del cliente, con fotos, alérgenos y varios idiomas.'
+      : 'Your menu on the customer’s phone, with photos, allergens and several languages.',
+  },
+  {
+    path: '/apps-moviles-sevilla',
+    icon: '<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/>',
+    title: es ? 'Apps móviles' : 'Mobile apps',
+    text: es
+      ? 'Tu app para fidelizar clientes, gestionar citas o vender, en iOS y Android.'
+      : 'Your own app to keep customers, manage bookings or sell, on iOS and Android.',
+  },
+  {
+    path: '/automatizaciones-sevilla',
+    icon: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+    title: es ? 'Automatizaciones' : 'Automations',
+    text: es
+      ? 'Que las tareas repetitivas se hagan solas: facturas, avisos, clientes y más.'
+      : 'Let repetitive tasks run on their own: invoices, reminders, customers and more.',
+  },
+  {
+    path: '/auditoria-web-sevilla',
+    icon: '<path d="M12 3 4 6v6c0 4.5 3.2 8 8 9 4.8-1 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+    title: es ? 'Auditoría web gratis' : 'Free website audit',
+    text: es
+      ? 'Revisamos velocidad, SEO y seguridad de tu web y te decimos qué mejorar.'
+      : 'We check your site’s speed, SEO and security and tell you what to improve.',
+  },
+];
+
+const points = es
+  ? ['Precio cerrado, sin sorpresas', 'Respuesta en 24 h', 'Para pymes y autónomos']
+  : ['Fixed price, no surprises', 'Reply within 24 h', 'For small businesses and freelancers'];
+---
+
+<section id="studio" class="studio-section">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <div>
+        <p class="section-eyebrow">
+          <span class="section-index" data-parallax style="--parallax: 0.8">{index}</span>
+          <span class="section-label">Aguilera Studio</span>
+        </p>
+        <h2 class="section-title">
+          {es ? '¿Tienes un negocio? También puedo ayudarte.' : 'Got a business? I can help too.'}
+        </h2>
+      </div>
+      <p class="section-subtitle">
+        {es
+          ? 'Aguilera Studio es mi estudio digital en Sevilla: webs, cartas QR, apps y automatizaciones para pymes y autónomos. Puedes pedir presupuesto sin compromiso.'
+          : 'Aguilera Studio is my digital studio in Seville: websites, QR menus, apps and automations for small businesses and freelancers. Ask for a quote, no strings attached.'}
+      </p>
+    </header>
+
+    <ul class="studio-grid" role="list">
+      {services.map((s, i) => (
+        <li data-reveal style={`--delay: ${i * 60}ms`}>
+          <a class="studio-card" data-spotlight href={`${STUDIO_URL}${s.path}`} target="_blank" rel="noopener">
+            <span class="studio-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={s.icon} />
+            </span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <span class="studio-more" aria-hidden="true">{es ? 'Ver más' : 'Learn more'} ↗</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="studio-foot" data-reveal>
+      <ul class="studio-points" role="list">
+        {points.map((p) => <li>{p}</li>)}
+      </ul>
+      <div class="studio-ctas">
+        <a class="btn btn-primary" href={`${STUDIO_URL}/#contacto`} target="_blank" rel="noopener">
+          {es ? 'Pedir presupuesto gratis' : 'Get a free quote'}
+        </a>
+        <a class="btn btn-ghost" href={`${STUDIO_URL}/#servicios`} target="_blank" rel="noopener">
+          {es ? 'Ver todos los servicios' : 'See all services'}
+        </a>
+      </div>
+      <p class="studio-mail">
+        {es ? '¿Prefieres escribirme directamente?' : 'Prefer to write to me directly?'}
+        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .studio-section {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(4rem, 9vw, 7rem);
+  }
+
+  /* Soft glow so this section reads as the one with something to offer */
+  .studio-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(50% 45% at 20% 30%, color-mix(in srgb, var(--color-accent) 11%, transparent), transparent 70%),
+      radial-gradient(40% 40% at 85% 80%, color-mix(in srgb, var(--color-cta) 9%, transparent), transparent 70%);
+  }
+
+  .studio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    margin-top: 2.5rem;
+  }
+
+  .studio-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    height: 100%;
+    padding: 1.4rem;
+    text-decoration: none;
+    color: var(--color-text);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: border-color 200ms ease, transform 200ms ease;
+  }
+
+  .studio-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .studio-icon {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    margin-bottom: 0.4rem;
+    border-radius: var(--radius-md);
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    border: 1px solid var(--color-border-accent);
+    transition: transform 250ms var(--ease-out-soft), background 250ms ease;
+  }
+
+  @media (hover: hover) {
+    .studio-card:hover .studio-icon {
+      transform: rotate(-6deg) scale(1.08);
+      background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    }
+  }
+
+  .studio-card p {
+    flex: 1;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .studio-more {
+    color: var(--color-accent);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  @media (hover: hover) {
+    .studio-card:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-3px);
+    }
+  }
+
+  .studio-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem 2rem;
+    margin-top: 2rem;
+    padding: 1.4rem;
+    border: 1px solid var(--color-border-accent);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(60% 140% at 100% 0%, color-mix(in srgb, var(--color-cta) 14%, transparent), transparent 70%),
+      var(--color-bg-sunken);
+  }
+
+  .studio-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    list-style: none;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .studio-points li::before {
+    content: '✓';
+    margin-right: 0.45rem;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .studio-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .studio-mail {
+    flex-basis: 100%;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .studio-mail a {
+    margin-left: 0.35rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 640px) {
+    .studio-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 1rem;
+      row-gap: 0.35rem;
+      padding: 1.1rem;
+    }
+
+    .studio-icon {
+      grid-row: 1 / span 3;
+      margin-bottom: 0;
+    }
+
+    .studio-card p {
+      flex: none;
+    }
+
+    .studio-ctas,
+    .studio-ctas .btn {
+      width: 100%;
+    }
+
+    .studio-ctas .btn {
+      justify-content: center;
+    }
+  }
+</style>
