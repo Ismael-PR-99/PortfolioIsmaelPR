@@ -9,27 +9,55 @@ export interface TimelineItem {
   dateEnd: string;
   dateEndEn?: string;
   title: string;
+  titleEn?: string;
   institution: string;
   location: string;
+  locationEn?: string;
   description: string;
+  descriptionEn?: string;
   tags?: string[];
+  tagsEn?: string[];
   current?: boolean;
 }
 
 export const timeline: TimelineItem[] = [
   {
-    id: 'kentia',
+    id: 'kentia-ai-cybersecurity',
+    type: 'experience',
+    badge: 'Empleo',
+    dateStart: 'Ago 2026',
+    dateStartEn: 'Aug 2026',
+    dateEnd: '',
+    title: 'IA y Ciberseguridad',
+    titleEn: 'AI & Cybersecurity',
+    institution: 'Kentia Engineering',
+    location: 'Sevilla, España',
+    locationEn: 'Seville, Spain',
+    description:
+      'Trabajo en IA y ciberseguridad en Kentia Engineering. También contribuyo a KENTIA Calibration Manager, aplicación web y de escritorio para gestionar el ciclo de vida de calibraciones de ECUs, y a tareas de seguridad de aplicaciones.',
+    descriptionEn:
+      'I work in AI and cybersecurity at Kentia Engineering. I also contribute to KENTIA Calibration Manager, a web and desktop application for managing the lifecycle of ECU calibrations, and to application security work.',
+    tags: ['React', 'Tauri', 'FastAPI', 'PostgreSQL', 'Docker', 'Ciberseguridad'],
+    tagsEn: ['React', 'Tauri', 'FastAPI', 'PostgreSQL', 'Docker', 'Cybersecurity'],
+    current: true,
+  },
+  {
+    id: 'kentia-full-stack',
     type: 'experience',
     badge: 'Empleo',
     dateStart: 'Mar 2026',
-    dateEnd: '',
+    dateEnd: 'Ago 2026',
+    dateEndEn: 'Aug 2026',
     title: 'Desarrollador Full Stack',
-    institution: 'Kentia engineering',
+    titleEn: 'Full Stack Developer',
+    institution: 'Kentia Engineering',
     location: 'Sevilla, España',
+    locationEn: 'Seville, Spain',
     description:
-      'Diseñé y desarrollé HERKO Calibration Manager, aplicación de escritorio (Tauri + React + FastAPI) para gestión de calibraciones de ECUs automotrices. Parsers propios para formatos A2L, DCM y S37, flujo de aprobación de work packages con 8 roles diferenciados, trazabilidad completa vía audit log y migración de MongoDB a PostgreSQL. Actualmente ampliando funciones hacia análisis de ciberseguridad: revisión de vulnerabilidades en dependencias, buenas prácticas OWASP y primeros pasos con herramientas de análisis estático de código (SAST).',
-    tags: ['React', 'Tauri', 'FastAPI', 'PostgreSQL', 'Docker', 'Ciberseguridad'],
-    current: true,
+      'Contribuí al desarrollo full stack de KENTIA Calibration Manager, aplicación web y de escritorio para gestionar calibraciones de ECUs.',
+    descriptionEn:
+      'I contributed to the full-stack development of KENTIA Calibration Manager, a web and desktop application for managing ECU calibrations.',
+    tags: ['React', 'Tauri', 'FastAPI', 'PostgreSQL'],
   },
   {
     id: 'ifcd0112',

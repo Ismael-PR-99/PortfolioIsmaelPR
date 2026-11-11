@@ -1,7 +1,34 @@
 [
   {
-    "id": "dtf-al-metro",
+    "id": "kentia-calibration-manager",
     "number": "01",
+    "kind": "professional",
+    "category": { "es": "Software automotriz", "en": "Automotive software" },
+    "title": { "es": "KENTIA Calibration Manager", "en": "KENTIA Calibration Manager" },
+    "description": {
+      "es": "Aplicación web y de escritorio para gestionar el ciclo de vida de calibraciones de ECUs.",
+      "en": "Web and desktop application for managing the lifecycle of ECU calibrations."
+    },
+    "longDescription": {
+      "es": "Producto de Kentia Engineering para gestionar releases de software y datasets de calibración de ECUs, con flujos de aprobación y trazabilidad de cambios. Contribuyo a su desarrollo y a tareas de seguridad de aplicaciones.",
+      "en": "Kentia Engineering product for managing software releases and ECU calibration datasets, with approval workflows and change traceability. I contribute to its development and application security work."
+    },
+    "year": "2026",
+    "role": {
+      "es": "Desarrollo de producto y seguridad de aplicaciones",
+      "en": "Product development & application security"
+    },
+    "context": {
+      "es": "Experiencia profesional · Kentia Engineering",
+      "en": "Professional experience · Kentia Engineering"
+    },
+    "tags": ["React", "Tauri", "FastAPI", "Python", "PostgreSQL", "Docker"],
+    "featured": true,
+    "status": "in-progress"
+  },
+  {
+    "id": "dtf-al-metro",
+    "number": "02",
     "kind": "client",
     "category": "E-commerce",
     "title": "DTF al metro — RM Ingenia",
@@ -18,7 +45,7 @@
   },
   {
     "id": "refrigeraspace",
-    "number": "02",
+    "number": "03",
     "kind": "personal",
     "category": "Aplicación Web",
     "title": "RefrigeraSpace",
@@ -36,7 +63,7 @@
   },
   {
     "id": "4bito",
-    "number": "03",
+    "number": "04",
     "kind": "personal",
     "category": "E-commerce",
     "title": "4BITO — Retro Sports",

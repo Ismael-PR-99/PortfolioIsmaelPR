@@ -98,7 +98,7 @@ function badgeLabel(badge: string, l: Lang): string {
             <!-- Body -->
             <div class="entry-body">
               <div class="entry-heading">
-                <h3 class="entry-title">{item.title}</h3>
+                <h3 class="entry-title">{lang === 'en' && item.titleEn ? item.titleEn : item.title}</h3>
                 {item.current && (
                   <span class="entry-current">
                     <span class="current-dot" aria-hidden="true" />
@@ -110,17 +110,17 @@ function badgeLabel(badge: string, l: Lang): string {
               <p class="entry-org">
                 <span class="entry-institution">{item.institution}</span>
                 <span class="entry-dot" aria-hidden="true">·</span>
-                <span class="entry-location">{item.location}</span>
+                <span class="entry-location">{lang === 'en' && item.locationEn ? item.locationEn : item.location}</span>
               </p>
 
-              <p class="entry-desc">{item.description}</p>
+              <p class="entry-desc">{lang === 'en' && item.descriptionEn ? item.descriptionEn : item.description}</p>
 
               {item.tags && item.tags.length > 0 && (
                 <ul
                   class="entry-tags"
                   aria-label={lang === 'es' ? 'Tecnologías' : 'Technologies'}
                 >
-                  {item.tags.map((tag) => (
+                  {(lang === 'en' && item.tagsEn ? item.tagsEn : item.tags).map((tag) => (
                     <li>{tag}</li>
                   ))}
                 </ul>

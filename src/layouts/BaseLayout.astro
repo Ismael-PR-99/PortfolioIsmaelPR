@@ -19,8 +19,8 @@ const { lang = 'es', title, description } = Astro.props;
 const defaultTitle = `${PROFILE.name} — Full Stack Developer`;
 const defaultDesc =
   lang === 'es'
-    ? 'Desarrollador Web Full Stack en Sevilla. Java, PHP, Python y JavaScript; Laravel, Spring Boot, Django y React. Actualmente en Kentia Engineering.'
-    : 'Full Stack Web Developer based in Seville, Spain. Java, PHP, Python and JavaScript; Laravel, Spring Boot, Django and React. Currently at Kentia Engineering.';
+    ? 'Desarrollador en Sevilla. Trabajo en IA y ciberseguridad en Kentia Engineering y contribuyo a software para calibración de ECUs. React, Tauri, FastAPI y PostgreSQL.'
+    : 'Software developer based in Seville, Spain. I work in AI and cybersecurity at Kentia Engineering and contribute to ECU calibration software. React, Tauri, FastAPI and PostgreSQL.';
 
 const resolvedTitle = title ?? defaultTitle;
 const resolvedDesc = description ?? defaultDesc;
@@ -44,7 +44,7 @@ const jsonLd = {
   name: PROFILE.name,
   url: `${SITE_URL}${BASE_URL}/`,
   image: photoUrl,
-  jobTitle: lang === 'es' ? 'Desarrollador Web Full Stack' : 'Full Stack Web Developer',
+  jobTitle: lang === 'es' ? 'IA y Ciberseguridad' : 'AI & Cybersecurity',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Sevilla',
