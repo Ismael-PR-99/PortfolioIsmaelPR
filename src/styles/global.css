@@ -381,6 +381,37 @@ main > section:not(:first-child):not(#stack)::after {
 }
 
 /* ---------------------------------------------------------------
+   Section titles: each word rises out of its own mask, one after the
+   other, once the section header is revealed. The words are wrapped by
+   the script in BaseLayout; the hidden state only applies where the other
+   entrance motion does (mouse devices, no reduced-motion preference).
+--------------------------------------------------------------- */
+.section-title .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders and tight line-height, so the mask never clips glyphs */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.section-title .w-in {
+  display: inline-block;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .js .section-title .w-in {
+    transform: translateY(110%);
+    transition: transform 0.9s var(--ease-out-soft);
+    transition-delay: calc(var(--wi, 0) * 70ms + 120ms);
+  }
+
+  .js .is-visible .section-title .w-in {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------
    Buttons — shared across Hero, Projects, Contact
 --------------------------------------------------------------- */
 .btn {
@@ -546,8 +577,9 @@ a, button, summary, label, input, select {
       :root { --parallax-amp: 0.9rem; }
     }
 
-    /* Section titles resolve into focus as they enter */
-    .section-title {
+    /* Section titles resolve into focus as they enter (titles split into
+       words get the mask reveal below instead) */
+    .section-title:not(.is-split) {
       animation: title-focus linear both;
       animation-timeline: view();
       animation-range: entry 10% entry 90%;

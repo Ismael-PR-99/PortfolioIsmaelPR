@@ -10,7 +10,7 @@ const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
+<footer class="footer" data-reveal>
   <div class="container footer-inner">
     <p class="footer-copy">
       © {year} {PROFILE.name}. {t('footer.built')}
@@ -41,6 +41,26 @@ const year = new Date().getFullYear();
     border-top: 1px solid var(--color-border);
     padding: 2rem 0 calc(2rem + env(safe-area-inset-bottom));
     margin-top: 4rem;
+  }
+
+  /* An accent glint draws out along the top edge as the footer arrives */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      width: min(420px, 70%);
+      height: 1px;
+      translate: -50% 0;
+      background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+      scale: 0 1;
+      transition: scale 1.4s var(--ease-out-soft) 0.15s;
+    }
+
+    .footer.is-visible::before {
+      scale: 1 1;
+    }
   }
 
   .footer-inner {

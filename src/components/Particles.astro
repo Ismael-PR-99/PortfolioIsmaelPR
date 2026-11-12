@@ -20,16 +20,18 @@
     // Brand blue, lightened on the dark theme so the network stays visible
     const ACCENT_LIGHT = '31, 79, 209';
     const ACCENT_DARK = '123, 160, 255';
+    // A minority of nodes pick up the warm brand orange
+    const WARM = '242, 107, 58';
     let ACCENT = document.documentElement.dataset.theme === 'dark' ? ACCENT_DARK : ACCENT_LIGHT;
     window.addEventListener('themechange', (e) => {
       ACCENT = (e as CustomEvent<string>).detail === 'dark' ? ACCENT_DARK : ACCENT_LIGHT;
     });
-    const LINK_DISTANCE = 150;
-    const GRAB_DISTANCE = 120;
-    const DENSITY = 60 / (1920 * 1080); // particles per css pixel²
-    const MAX_PARTICLES = 90;
+    const LINK_DISTANCE = 170;
+    const GRAB_DISTANCE = 150;
+    const DENSITY = 72 / (1920 * 1080); // particles per css pixel²
+    const MAX_PARTICLES = 110;
 
-    type Particle = { x: number; y: number; vx: number; vy: number; r: number; o: number };
+    type Particle = { x: number; y: number; vx: number; vy: number; r: number; o: number; warm: boolean; ph: number };
 
     let particles: Particle[] = [];
     let width = 0;
@@ -61,13 +63,15 @@
           y: rand(0, height),
           vx: rand(-0.4, 0.4),
           vy: rand(-0.4, 0.4),
-          r: rand(0.5, 1.5),
-          o: rand(0.1, 0.4),
+          r: rand(0.7, 1.8),
+          o: rand(0.2, 0.55),
+          warm: Math.random() < 0.16,
+          ph: rand(0, Math.PI * 2),
         });
       }
     }
 
-    function step() {
+    function step(now: number) {
       ctx.clearRect(0, 0, width, height);
 
       for (const p of particles) {
@@ -80,9 +84,16 @@
         p.x = Math.max(0, Math.min(width, p.x));
         p.y = Math.max(0, Math.min(height, p.y));
 
+        // Each node breathes on its own phase, with a soft halo around it
+        const twinkle = 0.65 + 0.35 * Math.sin(now / 900 + p.ph);
+        const rgb = p.warm ? WARM : ACCENT;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 3.2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rgb}, ${p.o * twinkle * 0.14})`;
+        ctx.fill();
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${ACCENT}, ${p.o})`;
+        ctx.fillStyle = `rgba(${rgb}, ${p.o * twinkle})`;
         ctx.fill();
       }
 
@@ -101,7 +112,7 @@
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(${ACCENT}, ${0.12 * (1 - dist / LINK_DISTANCE)})`;
+          ctx.strokeStyle = `rgba(${ACCENT}, ${0.17 * (1 - dist / LINK_DISTANCE)})`;
           ctx.stroke();
         }
 
@@ -113,7 +124,7 @@
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(pointer.x, pointer.y);
-          ctx.strokeStyle = `rgba(${ACCENT}, ${0.25 * (1 - pdist / GRAB_DISTANCE)})`;
+          ctx.strokeStyle = `rgba(${WARM}, ${0.4 * (1 - pdist / GRAB_DISTANCE)})`;
           ctx.stroke();
         }
       }

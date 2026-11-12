@@ -148,8 +148,10 @@ const jsonLd = {
       const reveal = (el: Element) => el.classList.add('is-visible');
       const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
 
+      let observerReported = false;
       const observer = new IntersectionObserver(
         (entries) => {
+          observerReported = true;
           for (const entry of entries) {
             if (!entry.isIntersecting) continue;
             const el = entry.target as HTMLElement;
@@ -162,6 +164,29 @@ const jsonLd = {
       );
 
       targets.forEach((el) => observer.observe(el));
+
+      // Section titles: wrap every word so CSS can lift it out of a mask.
+      // The heading keeps its full text for assistive tech; the spans are decoration.
+      document.querySelectorAll<HTMLElement>('.section-title:not(.contact-title)').forEach((title) => {
+        if (title.children.length > 0) return;
+        const text = (title.textContent ?? '').trim();
+        if (!text) return;
+        title.setAttribute('aria-label', text);
+        title.classList.add('is-split');
+        title.textContent = '';
+        text.split(/\s+/).forEach((word, i, all) => {
+          const outer = document.createElement('span');
+          outer.className = 'w';
+          outer.setAttribute('aria-hidden', 'true');
+          const inner = document.createElement('span');
+          inner.className = 'w-in';
+          inner.style.setProperty('--wi', String(i));
+          inner.textContent = word;
+          outer.appendChild(inner);
+          title.appendChild(outer);
+          if (i < all.length - 1) title.appendChild(document.createTextNode(' '));
+        });
+      });
 
       // Soft light following the pointer on [data-spotlight] cards (mouse only)
       if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
@@ -178,8 +203,12 @@ const jsonLd = {
         });
       }
 
-      // Safety net: nothing stays invisible for more than 3s, whatever happens.
-      window.setTimeout(() => targets.forEach(reveal), 3000);
+      // Safety net: if the observer never reports back (broken or unsupported),
+      // reveal everything after 3s instead of leaving the page blank. When it
+      // works, sections must keep waiting for their scroll-in.
+      window.setTimeout(() => {
+        if (!observerReported) targets.forEach(reveal);
+      }, 3000);
     </script>
   </body>
 </html>
