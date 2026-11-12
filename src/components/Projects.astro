@@ -13,17 +13,18 @@ type Localised = { es: string; en: string };
 interface Project {
   id: string;
   number: string;
-  kind: 'client' | 'personal';
-  category: string;
-  title: string;
-  description: string;
-  longDescription: string;
-  image: string;
+  kind: 'professional' | 'client' | 'personal';
+  category: string | Localised;
+  title: string | Localised;
+  description: string | Localised;
+  longDescription: string | Localised;
+  image?: string;
+  mobileImage?: string;
   year?: string;
   role?: Localised;
   context?: Localised;
   tags: string[];
-  liveUrl: string;
+  liveUrl?: string;
   githubUrl?: string;
   downloadUrl?: string;
   pdfUrl?: string;
@@ -32,6 +33,9 @@ interface Project {
 }
 
 const typedProjects = projects as Project[];
+
+const localise = (value: string | Localised) =>
+  typeof value === 'string' ? value : value[lang];
 
 // Strip the extension so <picture> can offer avif/webp/png of the same asset.
 const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`;
@@ -52,68 +56,99 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
 
     {
       typedProjects.map((project, i) => {
+        const title = localise(project.title);
+        const category = localise(project.category);
+        const longDescription = localise(project.longDescription);
         const specs = [
           project.role && { label: t('projects.spec.role'), value: project.role[lang] },
           project.year && { label: t('projects.spec.year'), value: project.year },
           project.context && { label: t('projects.spec.context'), value: project.context[lang] },
         ].filter(Boolean) as { label: string; value: string }[];
-        const hasDeployedUrl = project.liveUrl !== project.githubUrl;
+        const hasDeployedUrl = Boolean(project.liveUrl && project.liveUrl !== project.githubUrl);
+        const projectUrl = hasDeployedUrl ? project.liveUrl : project.githubUrl;
+        const shotUrl = projectUrl
+          ? (({ host, pathname }) => host + pathname.replace(/\/$/, ''))(new URL(projectUrl))
+          : '';
         const startsGroup = i === 0 || typedProjects[i - 1].kind !== project.kind;
 
         return (
           <Fragment>
           {startsGroup && (
-            <h3 class:list={['project-group', { 'is-client': project.kind === 'client' }]} data-reveal>
-              {t(project.kind === 'client' ? 'projects.group.client' : 'projects.group.personal')}
+            <h3 class:list={['project-group', { 'is-client': project.kind === 'client', 'is-professional': project.kind === 'professional' }]} data-reveal>
+              {t(project.kind === 'professional' ? 'projects.group.professional' : project.kind === 'client' ? 'projects.group.client' : 'projects.group.personal')}
             </h3>
           )}
-          <article class:list={['project', { 'is-client': project.kind === 'client' }]} data-reveal style={`--delay: ${i * 90}ms`}>
-            <div class="project-main">
-              {/* Contained shot, framed — deliberately modest in size */}
-              <a
-                href={hasDeployedUrl ? project.liveUrl : project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="project-shot"
-                aria-label={
-                  hasDeployedUrl
-                    ? lang === 'es'
-                      ? `Ver ${project.title} en producción (abre en nueva pestaña)`
-                      : `View ${project.title} live (opens in new tab)`
-                    : `Código fuente de ${project.title} en GitHub`
-                }
-              >
-                <picture>
-                  <source srcset={`${imageBase(project.image)}.avif`} type="image/avif" />
-                  <source srcset={`${imageBase(project.image)}.webp`} type="image/webp" />
-                  <img
-                    src={`${BASE_URL}${project.image}`}
-                    alt={`Captura de ${project.title}`}
-                    width="620"
-                    height="388"
-                    loading="lazy"
-                    decoding="async"
-                    class="project-img"
-                  />
-                </picture>
+          <article class:list={['project', { 'is-client': project.kind === 'client', 'is-professional': project.kind === 'professional' }]} data-reveal style={`--delay: ${i * 90}ms`}>
+            <div class:list={['project-main', { 'is-text-only': !project.image || !projectUrl }]}>
+              {project.image && projectUrl && (
+                <a
+                  href={projectUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="project-shot"
+                  aria-label={
+                    hasDeployedUrl
+                      ? lang === 'es'
+                        ? `Ver ${title} en producción (abre en nueva pestaña)`
+                        : `View ${title} live (opens in new tab)`
+                      : `Código fuente de ${title} en GitHub`
+                  }
+                >
+                  <span class="browser">
+                    <span class="browser-bar" aria-hidden="true">
+                      <span class="browser-dots"><i></i><i></i><i></i></span>
+                      <span class="browser-url">{shotUrl}</span>
+                    </span>
+                    <picture>
+                      <source srcset={`${imageBase(project.image)}.avif`} type="image/avif" />
+                      <source srcset={`${imageBase(project.image)}.webp`} type="image/webp" />
+                      <img
+                        src={`${BASE_URL}${project.image}`}
+                        alt={lang === 'es' ? `Captura de ${title} en escritorio` : `Desktop screenshot of ${title}`}
+                        width="1400"
+                        height="875"
+                        loading="lazy"
+                        decoding="async"
+                        class="project-img"
+                      />
+                    </picture>
 
-                {project.status === 'live' && (
-                  <span class="status-badge">
-                    <span class="status-dot" aria-hidden="true" />
-                    {t('projects.live')}
+                    {project.status === 'live' && (
+                      <span class="status-badge">
+                        <span class="status-dot" aria-hidden="true" />
+                        {t('projects.live')}
+                      </span>
+                    )}
                   </span>
-                )}
-              </a>
+
+                  {project.mobileImage && (
+                    <picture class="phone">
+                      <source srcset={`${imageBase(project.mobileImage)}.avif`} type="image/avif" />
+                      <source srcset={`${imageBase(project.mobileImage)}.webp`} type="image/webp" />
+                      <img
+                        src={`${BASE_URL}${project.mobileImage}`}
+                        alt={lang === 'es' ? `Captura de ${title} en móvil` : `Mobile screenshot of ${title}`}
+                        width="600"
+                        height="1022"
+                        loading="lazy"
+                        decoding="async"
+                        class="phone-img"
+                      />
+                    </picture>
+                  )}
+                </a>
+              )}
 
               <div class="project-body">
                 <p class="project-meta">
                   <span class="project-number">{project.number}</span>
-                  <span class="project-category">{project.category}</span>
+                  <span class="project-category">{category}</span>
                   {project.kind === 'client' && <span class="client-badge">{t('projects.badge.client')}</span>}
+                  {project.kind === 'professional' && <span class="client-badge">{t('projects.badge.professional')}</span>}
                 </p>
 
-                <h4 class="project-title">{project.title}</h4>
-                <p class="project-lead">{project.longDescription}</p>
+                <h4 class="project-title">{title}</h4>
+                <p class="project-lead">{longDescription}</p>
 
                 <div class="project-ctas">
                   {hasDeployedUrl && (
@@ -124,8 +159,8 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                       class="btn btn-primary"
                       aria-label={
                         lang === 'es'
-                          ? `Ver ${project.title} en producción (abre en nueva pestaña)`
-                          : `View ${project.title} live (opens in new tab)`
+                          ? `Ver ${title} en producción (abre en nueva pestaña)`
+                          : `View ${title} live (opens in new tab)`
                       }
                     >
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -142,7 +177,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                     target="_blank"
                     rel="noopener noreferrer"
                     class={hasDeployedUrl ? 'btn btn-ghost' : 'btn btn-primary'}
-                    aria-label={`Código fuente de ${project.title} en GitHub`}
+                    aria-label={`Código fuente de ${title} en GitHub`}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
@@ -156,7 +191,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                       target="_blank"
                       rel="noopener noreferrer"
                       class="btn btn-ghost"
-                      aria-label={`${t('projects.cta.download')} — ${project.title}`}
+                      aria-label={`${t('projects.cta.download')} — ${title}`}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -172,7 +207,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                       target="_blank"
                       rel="noopener noreferrer"
                       class="btn btn-ghost"
-                      aria-label={`${t('projects.cta.pdf')} — ${project.title}`}
+                      aria-label={`${t('projects.cta.pdf')} — ${title}`}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -292,7 +327,12 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     color: var(--color-accent);
   }
 
-  .project-group.is-client::after {
+  .project-group.is-professional {
+    color: var(--color-accent);
+  }
+
+  .project-group.is-client::after,
+  .project-group.is-professional::after {
     background: var(--color-border-accent);
   }
 
@@ -314,14 +354,16 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     align-items: center;
   }
 
-  /* ---- Shot ---- */
+  .project-main.is-text-only {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* ---- Shot: browser window with the phone version overlapping its corner ---- */
   .project-shot {
     position: relative;
     display: block;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: 1px solid var(--color-border-strong);
-    background: var(--color-bg-elevated);
+    /* room for the phone hanging below the window */
+    margin-bottom: 1.75rem;
     transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     will-change: transform;
   }
@@ -335,17 +377,67 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
   }
 
   .project-shot:not(.is-tilting) {
+    transition: transform 500ms var(--ease-out-soft);
+  }
+
+  .browser {
+    position: relative;
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border-strong);
+    background: #0b1220;
+    box-shadow: var(--shadow-photo);
     transition:
-      transform 500ms var(--ease-out-soft),
       border-color var(--transition-base),
       box-shadow var(--transition-base);
   }
 
   @media (hover: hover) {
-    .project-shot:hover {
+    .project-shot:hover .browser {
       border-color: var(--color-border-accent);
-      box-shadow: 0 0 40px color-mix(in srgb, var(--color-accent) 8%, transparent), var(--shadow-card);
+      box-shadow: 0 0 40px color-mix(in srgb, var(--color-accent) 8%, transparent), var(--shadow-photo);
     }
+  }
+
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    background: #0f1626;
+    border-bottom: 1px solid #1c2840;
+  }
+
+  .browser-dots {
+    display: flex;
+    gap: 0.35rem;
+    flex: none;
+  }
+
+  .browser-dots i {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #2a3a58;
+  }
+
+  .browser-url {
+    flex: 1;
+    min-width: 0;
+    max-width: 62%;
+    margin-inline: auto;
+    padding: 0.2rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid #1c2840;
+    background: #0a0f1c;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-align: center;
+    color: #a9b4c9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .project-img {
@@ -369,9 +461,79 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
     }
   }
 
+  .phone {
+    position: absolute;
+    right: -0.6rem;
+    bottom: -1.75rem;
+    width: 22%;
+    border-radius: 1.1rem;
+    overflow: hidden;
+    border: 4px solid #0b1220;
+    outline: 1px solid var(--color-border-strong);
+    background: #0b1220;
+    box-shadow: 0 18px 40px -12px #000000b3;
+  }
+
+  .phone-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 600 / 1022;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 0.75rem;
+  }
+
+  :global(html[data-theme='dark']) .phone-img {
+    filter: brightness(0.92);
+  }
+
+  /* Staggered entrance: the window settles first, the phone slides in after it */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    :global(.js) .project:not(.is-visible) .browser {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+
+    :global(.js) .project:not(.is-visible) .phone {
+      opacity: 0;
+      transform: translateY(2.5rem) scale(0.94);
+    }
+
+    .browser {
+      transition:
+        opacity 0.8s var(--ease-out-soft),
+        transform 0.8s var(--ease-out-soft),
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+    }
+
+    .phone {
+      transition:
+        opacity 0.8s var(--ease-out-soft) 0.35s,
+        transform 0.9s var(--ease-out-soft) 0.35s;
+    }
+  }
+
+  /* The phone drifts a little against the window as the card scrolls by */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+      .phone {
+        animation: phone-drift linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+      }
+
+      @keyframes phone-drift {
+        from { translate: 0 1.1rem; }
+        to   { translate: 0 -1.1rem; }
+      }
+    }
+  }
+
   .status-badge {
     position: absolute;
-    top: 0.85rem;
+    top: 3rem;
     left: 0.85rem;
     display: inline-flex;
     align-items: center;
@@ -523,6 +685,11 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
   }
 
   @media (max-width: 900px) {
+    .phone {
+      width: 28%;
+      right: -0.25rem;
+    }
+
     .project-main {
       grid-template-columns: 1fr;
     }

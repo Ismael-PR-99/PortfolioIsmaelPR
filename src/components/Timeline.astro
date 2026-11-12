@@ -98,7 +98,7 @@ function badgeLabel(badge: string, l: Lang): string {
             <!-- Body -->
             <div class="entry-body">
               <div class="entry-heading">
-                <h3 class="entry-title">{item.title}</h3>
+                <h3 class="entry-title">{lang === 'en' && item.titleEn ? item.titleEn : item.title}</h3>
                 {item.current && (
                   <span class="entry-current">
                     <span class="current-dot" aria-hidden="true" />
@@ -110,17 +110,17 @@ function badgeLabel(badge: string, l: Lang): string {
               <p class="entry-org">
                 <span class="entry-institution">{item.institution}</span>
                 <span class="entry-dot" aria-hidden="true">·</span>
-                <span class="entry-location">{item.location}</span>
+                <span class="entry-location">{lang === 'en' && item.locationEn ? item.locationEn : item.location}</span>
               </p>
 
-              <p class="entry-desc">{item.description}</p>
+              <p class="entry-desc">{lang === 'en' && item.descriptionEn ? item.descriptionEn : item.description}</p>
 
               {item.tags && item.tags.length > 0 && (
                 <ul
                   class="entry-tags"
                   aria-label={lang === 'es' ? 'Tecnologías' : 'Technologies'}
                 >
-                  {item.tags.map((tag) => (
+                  {(lang === 'en' && item.tagsEn ? item.tagsEn : item.tags).map((tag) => (
                     <li>{tag}</li>
                   ))}
                 </ul>
@@ -289,6 +289,39 @@ function badgeLabel(badge: string, l: Lang): string {
   .entry.is-current .entry-node::after {
     border-color: var(--color-accent);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  }
+
+  /* The spine fills with the accent colour as each entry scrolls through,
+     and its dot lights up when the line reaches it. Native scroll timelines,
+     so it tracks the scrollbar exactly; without support the static line stays. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+      .entry-node::before {
+        background:
+          linear-gradient(var(--color-accent), var(--color-accent)) top / 100% 0% no-repeat,
+          var(--color-border);
+        animation: spine-fill linear both;
+        animation-timeline: view();
+        animation-range: entry 45% entry 100%;
+      }
+
+      .entry:not(.is-current) .entry-node::after {
+        animation: node-light linear both;
+        animation-timeline: view();
+        animation-range: entry 40% entry 60%;
+      }
+
+      @keyframes spine-fill {
+        to { background-size: 100% 100%; }
+      }
+
+      @keyframes node-light {
+        to {
+          border-color: var(--color-accent);
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 14%, transparent);
+        }
+      }
+    }
   }
 
   @media (hover: hover) {

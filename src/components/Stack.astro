@@ -39,8 +39,8 @@ const t = useTranslations(lang);
               class="tech-list"
               aria-label={`${t('stack.label')}: ${t(`stack.${category.id}.title` as any)}`}
             >
-              {category.techs.map((tech) => (
-                <li class={tech.level === 'primary' ? 'tech is-primary' : 'tech'}>
+              {category.techs.map((tech, j) => (
+                <li class={tech.level === 'primary' ? 'tech is-primary' : 'tech'} style={`--ti: ${j}`}>
                   {tech.name}
                 </li>
               ))}
@@ -135,6 +135,7 @@ const t = useTranslations(lang);
       color var(--transition-fast),
       border-color var(--transition-fast),
       transform var(--transition-fast),
+      box-shadow var(--transition-fast),
       background var(--transition-fast);
   }
 
@@ -153,9 +154,31 @@ const t = useTranslations(lang);
 
   @media (hover: hover) {
     .tech:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       border-color: var(--color-border-accent);
       background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-elevated));
+      box-shadow: 0 8px 18px -10px color-mix(in srgb, var(--color-accent) 60%, transparent);
+    }
+  }
+
+  /* Cascade: techs pop in one after another when their row is revealed.
+     An animation with a backwards fill (not a transition) so the delay
+     never leaks into the hover feel afterwards. */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    :global(.js) .stack-row:not(.is-visible) .tech {
+      opacity: 0;
+    }
+
+    :global(.js) .stack-row.is-visible .tech {
+      animation: tech-in 0.55s var(--ease-out-soft) backwards;
+      animation-delay: calc(0.25s + var(--ti, 0) * 40ms);
+    }
+
+    @keyframes tech-in {
+      from {
+        opacity: 0;
+        transform: translateY(0.6rem) scale(0.94);
+      }
     }
   }
 

@@ -1,13 +1,41 @@
 [
   {
-    "id": "dtf-al-metro",
+    "id": "kentia-calibration-manager",
     "number": "01",
+    "kind": "professional",
+    "category": { "es": "Software automotriz", "en": "Automotive software" },
+    "title": { "es": "KENTIA Calibration Manager", "en": "KENTIA Calibration Manager" },
+    "description": {
+      "es": "Aplicación web y de escritorio para gestionar el ciclo de vida de calibraciones de ECUs.",
+      "en": "Web and desktop application for managing the lifecycle of ECU calibrations."
+    },
+    "longDescription": {
+      "es": "Producto de Kentia Engineering para gestionar releases de software y datasets de calibración de ECUs, con flujos de aprobación y trazabilidad de cambios. Contribuyo a su desarrollo y a tareas de seguridad de aplicaciones.",
+      "en": "Kentia Engineering product for managing software releases and ECU calibration datasets, with approval workflows and change traceability. I contribute to its development and application security work."
+    },
+    "year": "2026",
+    "role": {
+      "es": "Desarrollo de producto y seguridad de aplicaciones",
+      "en": "Product development & application security"
+    },
+    "context": {
+      "es": "Experiencia profesional · Kentia Engineering",
+      "en": "Professional experience · Kentia Engineering"
+    },
+    "tags": ["React", "Tauri", "FastAPI", "Python", "PostgreSQL", "Docker"],
+    "featured": true,
+    "status": "in-progress"
+  },
+  {
+    "id": "dtf-al-metro",
+    "number": "02",
     "kind": "client",
     "category": "E-commerce",
     "title": "DTF al metro — RM Ingenia",
     "description": "Tienda online de impresión DTF por metros para un taller de Sevilla: presupuesto al instante, revisión automática del archivo, pago con tarjeta y panel de pedidos de escritorio.",
     "longDescription": "Proyecto real para un cliente, de la maqueta al servidor. El cliente sube su PDF o imagen, la API comprueba resolución y medidas, calcula el precio y cobra con TPV Redsys. Incluye un montador de pliegos que encaja los diseños y genera el PDF a tamaño real, un personalizador de ropa sobre foto con la tarifa de casi 900 prendas, bonos, SEO local y cumplimiento LSSI/RGPD. El taller gestiona pedidos, envíos y correos desde una app de escritorio hecha con Tauri que se actualiza sola. Desplegada con Docker y Caddy en un VPS propio.",
     "image": "/images/dtf-al-metro.png",
+    "mobileImage": "/images/dtf-al-metro-mobile.png",
     "year": "2026",
     "role": { "es": "Full stack y despliegue", "en": "Full stack & deployment" },
     "context": { "es": "Cliente real · RM Ingenia (Sevilla)", "en": "Real client · RM Ingenia (Seville)" },
@@ -18,13 +46,14 @@
   },
   {
     "id": "refrigeraspace",
-    "number": "02",
+    "number": "03",
     "kind": "personal",
     "category": "Aplicación Web",
     "title": "RefrigeraSpace",
     "description": "Aplicación web para el cálculo de frigorías y selección de equipos de aire acondicionado. Incluye scraping automático de catálogos, generación de PDF personalizada, panel de administración completo y sistema de usuarios con roles.",
     "longDescription": "Desarrollada con Laravel 12 como proyecto final del Grado Superior DAW. El sistema calcula automáticamente las necesidades de climatización de un espacio según sus dimensiones y orientación, cruza los resultados con un catálogo obtenido mediante scraping y recomienda el equipo más adecuado. Los presupuestos se exportan a PDF directamente desde el navegador.",
     "image": "/images/RefrigeraSpace.png",
+    "mobileImage": "/images/RefrigeraSpace-mobile.png",
     "year": "2025",
     "role": { "es": "Full stack en solitario", "en": "Solo full stack" },
     "context": { "es": "Proyecto final · Grado Superior DAW", "en": "Final project · Higher Diploma in Web Development" },
@@ -36,13 +65,14 @@
   },
   {
     "id": "4bito",
-    "number": "03",
+    "number": "04",
     "kind": "personal",
     "category": "E-commerce",
     "title": "4BITO — Retro Sports",
     "description": "E-commerce de camisetas y cuadros de fútbol retro. Backend Node/Express con PostgreSQL 18, frontend Angular 19, panel de administración completo y cliente de escritorio empaquetado con Tauri.",
     "longDescription": "Tienda con búsqueda full-text, pagos por PayPal y tarjeta, stock por talla, lista de deseos, comparador, reseñas moderadas, devoluciones y chat de soporte con motor de intenciones propio. El panel de administración cubre pedidos, inventario, ventas y moderación. La misma app Angular se empaqueta además como ejecutable de escritorio nativo con Tauri 2 (instaladores MSI y NSIS para Windows).",
     "image": "/images/4bito.png",
+    "mobileImage": "/images/4bito-mobile.png",
     "year": "2026",
     "role": { "es": "Full stack en solitario", "en": "Solo full stack" },
     "context": { "es": "Proyecto personal", "en": "Personal project" },

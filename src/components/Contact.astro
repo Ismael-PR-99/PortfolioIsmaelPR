@@ -119,10 +119,47 @@ const socialLinks = [
 
 <style>
   .contact-title {
-    background: linear-gradient(120deg, var(--color-text) 45%, var(--color-accent));
+    background:
+      linear-gradient(
+        105deg,
+        transparent 42%,
+        color-mix(in srgb, var(--color-accent) 55%, white) 50%,
+        transparent 58%
+      )
+      120% 0 / 260% 100% no-repeat,
+      linear-gradient(120deg, var(--color-text) 45%, var(--color-accent));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  /* One slow light sweep across the heading when the section arrives */
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    :global(.js) .is-visible .contact-title {
+      animation: title-sheen 1.8s var(--ease-out-soft) 0.5s 1 both;
+    }
+
+    @keyframes title-sheen {
+      from { background-position: 120% 0, 0 0; }
+      to   { background-position: -40% 0, 0 0; }
+    }
+
+    /* Rows slide in one after another (animation, so hover timing stays untouched) */
+    :global(.js) .social-list:not(.is-visible) .social-row {
+      opacity: 0;
+    }
+
+    :global(.js) .social-list.is-visible .social-row {
+      animation: row-in 0.7s var(--ease-out-soft) backwards;
+      animation-delay: calc(0.2s + var(--delay, 0ms));
+    }
+
+    @keyframes row-in {
+      from {
+        opacity: 0;
+        transform: translateX(-1rem);
+      }
+    }
   }
 
   .contact-grid {
