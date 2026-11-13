@@ -24,7 +24,20 @@
     },
     "tags": ["React", "Tauri", "FastAPI", "Python", "PostgreSQL", "Docker"],
     "featured": true,
-    "status": "in-progress"
+    "status": "in-progress",
+    "brand": {
+      "name": "Kentia Engineering",
+      "logo": "/images/kentia-mark-white.png",
+      "url": "https://www.kentia-engineering.com/products/k-libration",
+      "cta": {
+        "es": "Contacta con Kentia para probar la aplicación",
+        "en": "Contact Kentia to try the application"
+      },
+      "note": {
+        "es": "Para ver el proyecto y conocer más, entra en el enlace:",
+        "en": "To see the project and learn more, follow the link:"
+      }
+    }
   },
   {
     "id": "dtf-al-metro",
