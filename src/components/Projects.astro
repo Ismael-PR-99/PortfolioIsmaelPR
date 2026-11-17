@@ -30,6 +30,8 @@ interface Project {
   pdfUrl?: string;
   featured: boolean;
   status: string;
+  /** Address shown in the browser bar when the screenshot has no link yet. */
+  shotHost?: string;
   // A product shown through its company page (no screenshot): logo card linking to it.
   brand?: { name: string; logo: string; url: string; cta: Localised; note: Localised };
 }
@@ -73,6 +75,8 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
           : '';
         const startsGroup = i === 0 || typedProjects[i - 1].kind !== project.kind;
         const brand = !project.image && project.brand;
+        // Screenshot without a public URL yet (e.g. site awaiting its domain): shown, not linked.
+        const Shot = projectUrl ? 'a' : 'div';
         const brandHost = brand ? (({ host, pathname }) => host.replace(/^www\./, '') + pathname.replace(/\/$/, ''))(new URL(brand.url)) : '';
 
         return (
@@ -83,15 +87,17 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
             </h3>
           )}
           <article class:list={['project', { 'is-client': project.kind === 'client', 'is-professional': project.kind === 'professional' }]} data-reveal style={`--delay: ${i * 90}ms`}>
-            <div class:list={['project-main', { 'is-text-only': !brand && (!project.image || !projectUrl), 'has-brand': brand }]}>
-              {project.image && projectUrl && (
-                <a
+            <div class:list={['project-main', { 'is-text-only': !brand && !project.image, 'has-brand': brand }]}>
+              {project.image && (
+                <Shot
                   href={projectUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={projectUrl ? '_blank' : undefined}
+                  rel={projectUrl ? 'noopener noreferrer' : undefined}
                   class="project-shot"
                   aria-label={
-                    hasDeployedUrl
+                    !projectUrl
+                      ? undefined
+                      : hasDeployedUrl
                       ? lang === 'es'
                         ? `Ver ${title} en producción (abre en nueva pestaña)`
                         : `View ${title} live (opens in new tab)`
@@ -101,7 +107,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                   <span class="browser">
                     <span class="browser-bar" aria-hidden="true">
                       <span class="browser-dots"><i></i><i></i><i></i></span>
-                      <span class="browser-url">{shotUrl}</span>
+                      <span class="browser-url">{shotUrl || project.shotHost}</span>
                     </span>
                     <picture>
                       <source srcset={`${imageBase(project.image)}.avif`} type="image/avif" />
@@ -140,7 +146,7 @@ const imageBase = (image: string) => `${BASE_URL}${image.replace(/\.\w+$/, '')}`
                       />
                     </picture>
                   )}
-                </a>
+                </Shot>
               )}
 
               {brand && (
