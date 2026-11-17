@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="7" fill="#0a0a0a"/>
+
+  <!-- Crown: 3 bold leaves -->
+  <path d="M16 15 L9 3 L15 9Z" fill="#65a30d"/>
+  <path d="M16 15 L23 3 L17 9Z" fill="#65a30d"/>
+  <path d="M16 15 L16 1 L19 8Z" fill="#a3e635"/>
+  <path d="M16 15 L16 1 L13 8Z" fill="#a3e635"/>
+
+  <!-- Body: bold solid pineapple -->
+  <path d="M16 13
+    C21 13 24.5 17.5 23.5 22.5
+    C22.7 26.6 19.5 30 16 30
+    C12.5 30 9.3 26.6 8.5 22.5
+    C7.5 17.5 11 13 16 13Z" fill="#a3e635"/>
+
+  <!-- Two bold accent bands for texture, no fine lines -->
+  <path d="M11 17.5 C13 19.5 19 19.5 21 17.5" stroke="#0a0a0a" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.55"/>
+  <path d="M10.3 23 C13 25.3 19 25.3 21.7 23" stroke="#0a0a0a" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.55"/>
+</svg>
